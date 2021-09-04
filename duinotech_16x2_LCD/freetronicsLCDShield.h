@@ -21,6 +21,7 @@
  */
  
 #include "Stream.h"
+#include "mbed.h"
 
 #ifndef FREETRONICSLCDSHIELD_H
 #define FREETRONICSLCDSHIELD_H
