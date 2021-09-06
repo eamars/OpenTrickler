@@ -8,6 +8,7 @@
 #include "FloatRingBuffer.h"
 #include "Stepper.h"
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 
 
@@ -65,8 +66,8 @@ typedef union {
 } ScaleStandardOutputDataFormat_t;
 
 
-MemoryPool<ScaleMeasurement_t, 6> ScaleMeasurementQueueMemoryPool;
-Queue<ScaleMeasurement_t, 5> ScaleMeasurementQueue;
+MemoryPool<ScaleMeasurement_t, 2> ScaleMeasurementQueueMemoryPool;
+Queue<ScaleMeasurement_t, 1> ScaleMeasurementQueue;
 
 
 typedef enum 
@@ -81,7 +82,18 @@ typedef enum
     POWDER_TRICKLE,
     POWDER_TRICKLE_WAIT_FOR_INPUT,
     POWDER_TRICKLE_WAIT_FOR_STABLE,
+    POWDER_TRICKLE_WAIT_FOR_CONFIRM,
 } TricklerState_t;
+
+typedef enum
+{
+    TRICKLER_FINAL_STATE_0_WAIT_FOR_STABLE,
+    TRICKLER_FINAL_STATE_0_TRICKLE,
+    TRICKLER_FINAL_STATE_1_WAIT_FOR_STABLE,
+    TRICKLER_FINAL_STATE_1_TRICKLE,
+    TRICKLER_FINAL_STATE_2_WAIT_FOR_STABLE,
+    TRICKLER_FINAL_STATE_2_TRICKLE, 
+} TricklerFinalState_t;
 
 
 FileHandle *mbed::mbed_override_console(int fd)
@@ -169,7 +181,7 @@ void scale_stream_measurement_handler(void){
             
             if (string_buf_idx == 17) {
                 // full data
-                printf("%s", string_buf);
+                // printf("%s", string_buf);
                 
                 // Decode received data and generate measurement data
                 ScaleMeasurement_t *measurement = ScaleMeasurementQueueMemoryPool.alloc();
@@ -213,7 +225,7 @@ int main(void) {
     lcd.printf("OpenTrickler");
     lcd.setCursorPosition(0, 0);
     lcd.printf("OpenTrickler");
-    ThisThread::sleep_for(2s);
+    ThisThread::sleep_for(1s);
     lcd.cls();
     
     // Initialize thread
@@ -221,18 +233,28 @@ int main(void) {
     ScaleStreamThread.start(scale_stream_measurement_handler);
     
     // Initialize the scale
-    // ScaleSerial.set_format(7, BufferedSerial::Even, 1);
     // ScaleSerial.write("SIR\r\n", 5);  // put the scale to continuous reporting mode
 
     trickler.period_ms(1);  // 1khz output
-    trickler.write(0.0f);  // 50% duty cycle
+    trickler.write(0.0f);  // 0 duty cycle
     
     TricklerState_t TricklerState = SELECT_WEIGHT;
     
-    size_t average_buffer_length = 16;
+    size_t average_buffer_length = 1;
     int8_t cursor_loc = 0;
-    int8_t charge_weight[5];
+    char charge_weight[6];  // include the trailing '\0'
     int pwm_percentage = 0;
+    int stepper_motor_delay_us = 900;
+
+    // PID control related variables
+    float trickler_setpoint = 0.0f;
+    float trickler_max_pwm = 0.25;
+    float trickler_min_pwm = 0.19;
+
+    float kp = 0.10f;
+    float ki = 0.00001f;
+
+
     
     while (true)
     {
@@ -248,7 +270,7 @@ int main(void) {
             
             lcd.setCursorPosition(1, 0);
             lcd.printf("00.00 gn");
-            memset(charge_weight, 0, sizeof(charge_weight));
+            memset(charge_weight, '0', sizeof(charge_weight));
             
             lcd.setCursor(true, false);
             lcd.setCursorPosition(1, 0);
@@ -281,23 +303,27 @@ int main(void) {
             }
             else if (*button_press == freetronicsLCDShield::BTN_UP){
                 charge_weight[cursor_loc] += 1;
-                if (charge_weight[cursor_loc] > 9){
-                    charge_weight[cursor_loc] = 0;
+                if (charge_weight[cursor_loc] > '9'){
+                    charge_weight[cursor_loc] = '0';
                 }
             }
             else if (*button_press == freetronicsLCDShield::BTN_DOWN){
                 charge_weight[cursor_loc] -= 1;
-                if (charge_weight[cursor_loc] < 0){
-                    charge_weight[cursor_loc] = 9;
+                if (charge_weight[cursor_loc] < '0'){
+                    charge_weight[cursor_loc] = '9';
                 }
             }
             else if (*button_press == freetronicsLCDShield::BTN_SELECT){
+                // Turn charge weight to trickler setpoint
+                charge_weight[2] = '.';
+                trickler_setpoint = float(atof(charge_weight));
+                printf("trickler_setpoint: %f\r\n", trickler_setpoint);
                 TricklerState = POWDER_THROW;
             }
             
             // Display current cursor
             lcd.setCursorPosition(1, cursor_loc);
-            lcd.printf("%d", charge_weight[cursor_loc]);
+            lcd.printf("%c", charge_weight[cursor_loc]);
             // printf will auto shift 
             lcd.setCursorPosition(1, cursor_loc);
         }
@@ -321,56 +347,45 @@ int main(void) {
             if (*button_press == freetronicsLCDShield::BTN_SELECT){
                 lcd.setCursorPosition(1, 0);
                 lcd.printf("                ");
+
+                ScaleSerial.write("Z\r\n", 3);
+                ThisThread::sleep_for(1s);  // Zero takes about 1s to take in effect
+
                 TricklerState = POWDER_THROW_WAIT_FOR_COMPLETE;
             }
         }
         else if (TricklerState == POWDER_THROW_WAIT_FOR_COMPLETE){
             lcd.setCursorPosition(1, 0);
             // lcd.printf("                ");
-            
-            // Rapid reading the measurement
-            // TODO: Show measurement for about 2s then move on. 
             if (*button_press == NULL){
                 continue;
             }
 
-            float percentage = 0.0;
-                
             if (*button_press == freetronicsLCDShield::BTN_UP){
-                pwm_percentage += 5;
-                if (pwm_percentage > 100) {
-                    pwm_percentage = 100;
-                }
+                stepper_motor_delay_us += 50;
             }
             else if (*button_press == freetronicsLCDShield::BTN_DOWN){
-                pwm_percentage -= 5;
-                if (pwm_percentage < 0) {
-                    pwm_percentage = 0;
-                }
+                stepper_motor_delay_us -= 50;
             }
             else if (*button_press == freetronicsLCDShield::BTN_LEFT){
-                StepMotor.step(50);
+                StepMotor.step(400);
             }
             else if (*button_press == freetronicsLCDShield::BTN_RIGHT){
-                StepMotor.step(-50);
+                StepMotor.step(-400);
             }
 
-            percentage = pwm_percentage / 100.0f;
-            trickler.write(pwm_percentage / 100.0f); 
+            StepMotor.setStepDelayUs(stepper_motor_delay_us);
             
             lcd.setCursorPosition(1, 0);
-            lcd.printf("%03d%%", pwm_percentage);
+            lcd.printf("%016d", stepper_motor_delay_us);
             
             // Auto enter trickle state
-            // TricklerState = POWDER_TRICKLE;
+            TricklerState = POWDER_TRICKLE;
         }
         else if (TricklerState == POWDER_TRICKLE){
             lcd.cls();
             lcd.setCursorPosition(0, 0);
             lcd.printf("Powder Trickle");
-            
-            lcd.setCursorPosition(1, 0);
-            lcd.printf("> AUTO");
             
             TricklerState = POWDER_TRICKLE_WAIT_FOR_INPUT;
         }
@@ -380,60 +395,167 @@ int main(void) {
         else if (TricklerState == POWDER_TRICKLE_WAIT_FOR_STABLE){
             lcd.setCursorPosition(1, 0);
             lcd.printf("                ");
-            
-            // Use PID controller to fine adjust the amount of powder to trickle
-            
+
+            TricklerFinalState_t TricklerFinalState = TRICKLER_FINAL_STATE_0_WAIT_FOR_STABLE;
+            bool trickle_complete = false;
+
+            int s1_measurement_buffer_length = 5;
+            FloatRingBuffer S1MeasurementBuffer(s1_measurement_buffer_length);
+
+            int s2_measurement_buffer_length = 32;
+            FloatRingBuffer S2MeasurementBuffer(s2_measurement_buffer_length);
+
             // Rapid reading the measurement
-            FloatRingBuffer MeasurementBuffer(average_buffer_length);
-            float sd = 0;
-            float mean = 0;
             char display_buffer[16];
 
-            while (true) {
-                ScaleMeasurement_t *measurement = NULL;
-                ScaleMeasurementQueue.try_get_for(0s, &measurement);
-                if (measurement != NULL) {
-                    lcd.setCursorPosition(1, 0);
+            while (!trickle_complete) {
+                ScaleMeasurement_t *measurement_ptr = NULL;
+                ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
 
-                    // Have enought data to calculate mean and SD
-                    MeasurementBuffer.enqueue(measurement->measurement);
-                    if (MeasurementBuffer.getCounter() > average_buffer_length){
-                        sd = MeasurementBuffer.getSd();
-                        mean = MeasurementBuffer.getMean();
-                        // printf("%f\r\n", MeasurementBuffer.getSd());
+                if (measurement_ptr != NULL) {
+                    // Make a copy of the measurement
+                    ScaleMeasurement_t measurement;
+                    memcpy(&measurement, measurement_ptr, sizeof(measurement));
+                    ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
 
-                        memset(display_buffer, 0, sizeof(display_buffer));
+                    float error = trickler_setpoint - measurement.measurement;
 
-                        // Determine sign
-                        char sign = '+';
-                        if (mean < 0){
-                            sign = '-';
-                        }
+                    printf("STATE=%d Err=%f\r\n", TricklerFinalState, error);
 
-                        // Determine unit
-                        char unit[2];
-                        if (measurement->unit == SCALE_UNIT_GRAM){
-                            memcpy(unit, " g", 2);
-                        }
-                        else if (measurement->unit == SCALE_UNIT_GRAIN){
-                            memcpy(unit, "gn", 2);
-                        }
-
-                        snprintf(display_buffer, sizeof(display_buffer), "%c%08.4f %s", sign, mean, unit);
-
-                        // Update display
-                        lcd.setCursorPosition(1, 0);
-                        lcd.printf("%s", display_buffer);
+                    if (error < 0) {
+                        trickle_complete = true;
+                        continue;
                     }
-                    
-                    ScaleMeasurementQueueMemoryPool.free(measurement);
+
+                    // Final trickling stage
+                    switch (TricklerFinalState){
+                        case TRICKLER_FINAL_STATE_0_WAIT_FOR_STABLE:  // 0
+                        {
+                            // Wait for any measurement error to be less than 1.5
+                            if (error > 0.5) {
+                                TricklerFinalState = TRICKLER_FINAL_STATE_0_TRICKLE;
+                            }
+                            else {
+                                TricklerFinalState = TRICKLER_FINAL_STATE_1_WAIT_FOR_STABLE;
+                            }
+                            break;
+                        }
+                        case TRICKLER_FINAL_STATE_0_TRICKLE:  // 1
+                        {
+                            trickler.write(0.23f);
+                            TricklerFinalState = TRICKLER_FINAL_STATE_0_WAIT_FOR_STABLE;
+                            break;
+                        }
+
+                        case TRICKLER_FINAL_STATE_1_WAIT_FOR_STABLE:  // 2
+                        {
+                            trickler.write(0.0f);
+                            if (measurement.header == SCALE_HEADER_STABLE) {
+                                S1MeasurementBuffer.enqueue(measurement.measurement);
+                            }
+                            else {
+                                S1MeasurementBuffer.reset();
+                            }
+
+                            if (S1MeasurementBuffer.getCounter() == s1_measurement_buffer_length && S1MeasurementBuffer.getSd() <= 0.02) {
+                                float precise_error = trickler_setpoint - S1MeasurementBuffer.getMean();
+                                if (precise_error > 0.15) {
+                                    TricklerFinalState = TRICKLER_FINAL_STATE_1_TRICKLE;
+                                }
+                                else {
+                                    TricklerFinalState = TRICKLER_FINAL_STATE_2_WAIT_FOR_STABLE;
+                                }
+                            }
+
+                            break;
+                        }
+
+                        case TRICKLER_FINAL_STATE_1_TRICKLE:  // 3
+                        {
+
+                            trickler.write(0.23);
+                            ThisThread::sleep_for(220ms);
+                            trickler.write(0.0f);
+
+                            S1MeasurementBuffer.reset();
+
+                            TricklerFinalState = TRICKLER_FINAL_STATE_1_WAIT_FOR_STABLE;
+                            break;
+                        }
+
+                        case TRICKLER_FINAL_STATE_2_WAIT_FOR_STABLE:  // 4
+                        {
+                            trickler.write(0.0f);
+                            if (measurement.header == SCALE_HEADER_STABLE) {
+                                S2MeasurementBuffer.enqueue(measurement.measurement);
+                            }
+                            else {
+                                S2MeasurementBuffer.reset();
+                            }
+
+                            if (S2MeasurementBuffer.getCounter() == s2_measurement_buffer_length && S2MeasurementBuffer.getSd() <= 0.02) {
+                                float precise_error = trickler_setpoint - S2MeasurementBuffer.getMean();
+                                if (precise_error > 0.01) {
+                                    TricklerFinalState = TRICKLER_FINAL_STATE_2_TRICKLE;
+                                }
+                                else {
+                                    trickle_complete = true;
+                                }
+                            }
+
+                            break;
+                        }
+
+                        case TRICKLER_FINAL_STATE_2_TRICKLE:  // 5
+                        {
+                            trickler.write(0.20);
+                            ThisThread::sleep_for(220ms);
+                            trickler.write(0.0f);
+
+                            ThisThread::sleep_for(200ms);
+                            S2MeasurementBuffer.reset();
+
+                            TricklerFinalState = TRICKLER_FINAL_STATE_2_WAIT_FOR_STABLE;
+                            break;
+                        }
+                    }
+
+
+                    // Display
+                    memset(display_buffer, 0, sizeof(display_buffer));
+
+                    // Determine sign
+                    char sign = '+';
+                    if (measurement.measurement < 0){
+                        sign = '-';
+                    }
+
+                    // Determine unit
+                    if (measurement.unit == SCALE_UNIT_GRAM){
+                        snprintf(display_buffer, sizeof(display_buffer), "%c%07.4f g ", sign, abs(measurement.measurement));
+                    }
+                    else if (measurement.unit == SCALE_UNIT_GRAIN){
+                        snprintf(display_buffer, sizeof(display_buffer), "%c%05.2f gn", sign, abs(measurement.measurement));
+                    }
+
+                    // Update display
+                    lcd.setCursorPosition(1, 0);
+                    lcd.printf("%s", display_buffer);                    
                 }
             }
             
             // Auto enter trickle state
-            TricklerState = POWDER_THROW;
+            TricklerState = POWDER_TRICKLE_WAIT_FOR_CONFIRM;
         }
-        
+        else if (TricklerState == POWDER_TRICKLE_WAIT_FOR_CONFIRM){
+            if (*button_press == NULL){
+                continue;
+            }
+
+            if (*button_press == freetronicsLCDShield::BTN_SELECT){
+                TricklerState = POWDER_THROW;
+            }
+        }
         
         ButtonQueueMemoryPool.free(button_press);
     }

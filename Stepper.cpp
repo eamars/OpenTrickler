@@ -7,13 +7,20 @@ Stepper::Stepper(PinName ENA, PinName ENB, PinName IN1, PinName IN2, PinName IN3
     _total_steps = total_steps;
     _current_step = 0;
 
-    // Set output high for ENA and ENB
-    _ENA.write(1);
-    _ENB.write(1);
+    setStepDelayUs(900);
+}
+
+
+void Stepper::setStepDelayUs(int step_delay_us){
+    _step_delay_us = step_delay_us;
 }
 
 
 void Stepper::step(int num_of_steps) {
+    _ENA.write(1);
+    _ENB.write(1);
+    wait_us(950);
+
     int step_left = abs(num_of_steps);
     
     bool direction = true;
@@ -40,8 +47,14 @@ void Stepper::step(int num_of_steps) {
         step_left -= 1;
 
         stepMotor(_current_step % 4);
-        ThisThread::sleep_for(1ms);
+        // ThisThread::sleep_for(5ms);
+        wait_us(_step_delay_us);
+        
     }
+
+    wait_us(950);
+    _ENA.write(0);
+    _ENB.write(0);
 
     // _IN1.write(0);
     // _IN2.write(0);

@@ -39,6 +39,7 @@ public:
     // enqueue and dequeue
     void enqueue(float in);
     float dequeue();
+    void reset();
     
     // pointer operation
     size_t getReadPtr();

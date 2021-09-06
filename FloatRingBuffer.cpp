@@ -37,15 +37,7 @@ float FloatRingBuffer::getMean(void){
 FloatRingBuffer::FloatRingBuffer(const size_t size)
     :buffer_size(size)
 {
-    read_ptr = 0;
-    write_ptr = 0;
-    count = 0;
-    
-    // mutex lock
-    mux = false; 
-    
-    // initialize overflow
-    clearOverFlow();
+    reset();
     
     // container
     // data = new T[buffer_size];
@@ -80,17 +72,36 @@ void FloatRingBuffer::enqueue(float in)
     data[write_ptr++] = in;
     write_ptr %= buffer_size;
     
-    count++;
+    if (count < buffer_size){
+        count++;
+    }
 }
 
 float FloatRingBuffer::dequeue()
 {
     float temp = data[read_ptr++];
     read_ptr %= buffer_size;
+
+    if (count > 0) {
+        count--;
+    }
     
-    count--;
     return temp;   
 }
+
+void FloatRingBuffer::reset()
+{
+    read_ptr = 0;
+    write_ptr = 0;
+    count = 0;
+    
+    // mutex lock
+    mux = false; 
+    
+    // initialize overflow
+    clearOverFlow();
+}
+
 
 size_t FloatRingBuffer::getReadPtr()
 {
