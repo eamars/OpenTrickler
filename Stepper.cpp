@@ -88,7 +88,7 @@ void Stepper::stepMotor(int encoded_step) {
             _IN4.write(1);
             break;
         }
-        case 4:  // 1001
+        case 3:  // 1001
         {
             _IN1.write(1);
             _IN2.write(0);

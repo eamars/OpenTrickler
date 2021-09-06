@@ -244,16 +244,10 @@ int main(void) {
     int8_t cursor_loc = 0;
     char charge_weight[6];  // include the trailing '\0'
     int pwm_percentage = 0;
-    int stepper_motor_delay_us = 900;
+    int stepper_motor_delay_us = 2000;
 
     // PID control related variables
     float trickler_setpoint = 0.0f;
-    float trickler_max_pwm = 0.25;
-    float trickler_min_pwm = 0.19;
-
-    float kp = 0.10f;
-    float ki = 0.00001f;
-
 
     
     while (true)
@@ -373,14 +367,16 @@ int main(void) {
             else if (*button_press == freetronicsLCDShield::BTN_RIGHT){
                 StepMotor.step(-400);
             }
+            else if (*button_press == freetronicsLCDShield::BTN_SELECT){
+                // Auto enter trickle state
+                TricklerState = POWDER_TRICKLE;
+            }
 
             StepMotor.setStepDelayUs(stepper_motor_delay_us);
             
             lcd.setCursorPosition(1, 0);
             lcd.printf("%016d", stepper_motor_delay_us);
             
-            // Auto enter trickle state
-            TricklerState = POWDER_TRICKLE;
         }
         else if (TricklerState == POWDER_TRICKLE){
             lcd.cls();
@@ -408,6 +404,22 @@ int main(void) {
             // Rapid reading the measurement
             char display_buffer[16];
 
+            // PID related
+            Timer timer;
+            float max_on_time_ms = 500;
+            float min_on_time_ms = 90;
+
+            float max_integral = 10;
+
+            float kp = 400.0f;
+            float ki = 5.0f;
+            float kd = 250.0f;
+
+            float integral = 0.0f;
+            float last_error = 0.0;
+
+            timer.start();
+
             while (!trickle_complete) {
                 ScaleMeasurement_t *measurement_ptr = NULL;
                 ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
@@ -420,106 +432,52 @@ int main(void) {
 
                     float error = trickler_setpoint - measurement.measurement;
 
-                    printf("STATE=%d Err=%f\r\n", TricklerFinalState, error);
-
-                    if (error < 0) {
+                    if (error < 0 || abs(error) < 0.02) {
+                        trickler.write(0.0f);
                         trickle_complete = true;
                         continue;
                     }
 
-                    // Final trickling stage
-                    switch (TricklerFinalState){
-                        case TRICKLER_FINAL_STATE_0_WAIT_FOR_STABLE:  // 0
-                        {
-                            // Wait for any measurement error to be less than 1.5
-                            if (error > 0.5) {
-                                TricklerFinalState = TRICKLER_FINAL_STATE_0_TRICKLE;
-                            }
-                            else {
-                                TricklerFinalState = TRICKLER_FINAL_STATE_1_WAIT_FOR_STABLE;
-                            }
-                            break;
-                        }
-                        case TRICKLER_FINAL_STATE_0_TRICKLE:  // 1
-                        {
-                            trickler.write(0.23f);
-                            TricklerFinalState = TRICKLER_FINAL_STATE_0_WAIT_FOR_STABLE;
-                            break;
-                        }
+                    timer.stop();
+                    float elapse_time = timer.read();
+                    timer.start();
 
-                        case TRICKLER_FINAL_STATE_1_WAIT_FOR_STABLE:  // 2
-                        {
-                            trickler.write(0.0f);
-                            if (measurement.header == SCALE_HEADER_STABLE) {
-                                S1MeasurementBuffer.enqueue(measurement.measurement);
-                            }
-                            else {
-                                S1MeasurementBuffer.reset();
-                            }
+                    integral += error;
+                    float derivative = (error - last_error) / elapse_time;
+                    last_error = error;
 
-                            if (S1MeasurementBuffer.getCounter() == s1_measurement_buffer_length && S1MeasurementBuffer.getSd() <= 0.02) {
-                                float precise_error = trickler_setpoint - S1MeasurementBuffer.getMean();
-                                if (precise_error > 0.15) {
-                                    TricklerFinalState = TRICKLER_FINAL_STATE_1_TRICKLE;
-                                }
-                                else {
-                                    TricklerFinalState = TRICKLER_FINAL_STATE_2_WAIT_FOR_STABLE;
-                                }
-                            }
-
-                            break;
-                        }
-
-                        case TRICKLER_FINAL_STATE_1_TRICKLE:  // 3
-                        {
-
-                            trickler.write(0.23);
-                            ThisThread::sleep_for(220ms);
-                            trickler.write(0.0f);
-
-                            S1MeasurementBuffer.reset();
-
-                            TricklerFinalState = TRICKLER_FINAL_STATE_1_WAIT_FOR_STABLE;
-                            break;
-                        }
-
-                        case TRICKLER_FINAL_STATE_2_WAIT_FOR_STABLE:  // 4
-                        {
-                            trickler.write(0.0f);
-                            if (measurement.header == SCALE_HEADER_STABLE) {
-                                S2MeasurementBuffer.enqueue(measurement.measurement);
-                            }
-                            else {
-                                S2MeasurementBuffer.reset();
-                            }
-
-                            if (S2MeasurementBuffer.getCounter() == s2_measurement_buffer_length && S2MeasurementBuffer.getSd() <= 0.02) {
-                                float precise_error = trickler_setpoint - S2MeasurementBuffer.getMean();
-                                if (precise_error > 0.01) {
-                                    TricklerFinalState = TRICKLER_FINAL_STATE_2_TRICKLE;
-                                }
-                                else {
-                                    trickle_complete = true;
-                                }
-                            }
-
-                            break;
-                        }
-
-                        case TRICKLER_FINAL_STATE_2_TRICKLE:  // 5
-                        {
-                            trickler.write(0.20);
-                            ThisThread::sleep_for(220ms);
-                            trickler.write(0.0f);
-
-                            ThisThread::sleep_for(200ms);
-                            S2MeasurementBuffer.reset();
-
-                            TricklerFinalState = TRICKLER_FINAL_STATE_2_WAIT_FOR_STABLE;
-                            break;
-                        }
+                    if (integral > max_integral){
+                        integral = max_integral;
                     }
 
+                    
+
+                    // Final trickling stage
+                    float p_term = kp * error;
+                    float i_term = ki * integral;
+                    float d_term = kd * derivative;
+
+                    float new_on_time = p_term + i_term + d_term;
+
+                    if (new_on_time > max_on_time_ms){
+                        new_on_time = max_on_time_ms;
+                    }
+                    else if (new_on_time < min_on_time_ms) {
+                        new_on_time = min_on_time_ms;
+                    }
+
+                    trickler.write(0.23f);
+                    thread_sleep_for(new_on_time);
+                    trickler.write(0);
+                    if (error > 0.05) {
+                        thread_sleep_for(500);
+                    }
+                    else{
+                        thread_sleep_for(1000);
+                    }
+                    
+
+                    printf("P=%f, I=%f, D=%f, CTRL=%f\r\n", p_term, i_term, d_term, new_on_time);
 
                     // Display
                     memset(display_buffer, 0, sizeof(display_buffer));
