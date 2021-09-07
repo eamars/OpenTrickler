@@ -6,6 +6,7 @@ Stepper::Stepper(PinName ENA, PinName ENB, PinName IN1, PinName IN2, PinName IN3
     
     _total_steps = total_steps;
     _current_step = 0;
+    _enable_hold = true;
 
     setStepDelayUs(900);
 }
@@ -16,10 +17,19 @@ void Stepper::setStepDelayUs(int step_delay_us){
 }
 
 
+void Stepper::enableHold(bool enable) {
+    _enable_hold = enable;
+}
+
+void Stepper::setRPM(int rpm) {
+    _step_delay_us = 60 * 1000 * 1000 / _total_steps / rpm;
+    printf("DELAY:%d\r\n", _step_delay_us);
+}
+
+
 void Stepper::step(int num_of_steps) {
     _ENA.write(1);
     _ENB.write(1);
-    wait_us(950);
 
     int step_left = abs(num_of_steps);
     
@@ -52,14 +62,10 @@ void Stepper::step(int num_of_steps) {
         
     }
 
-    wait_us(950);
-    _ENA.write(0);
-    _ENB.write(0);
-
-    // _IN1.write(0);
-    // _IN2.write(0);
-    // _IN3.write(0);
-    // _IN4.write(0);
+    if (!_enable_hold){
+        _ENA.write(0);
+        _ENB.write(0);
+    }
 }
 
 void Stepper::stepMotor(int encoded_step) {
