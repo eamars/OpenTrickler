@@ -49,7 +49,6 @@ typedef enum
 
 typedef struct {
     float measurement;
-    char raw_measurement[10];  // 9 + '\0'
     ScaleMeasurementHeader_e header;
     ScaleMesasurementUnit_e unit; 
 } ScaleMeasurement_t;
@@ -153,9 +152,10 @@ void decode_and_standard_format(ScaleStandardOutputDataFormat_t *received_data, 
     }
     
     // Decode data
-    memcpy(measurement->raw_measurement, received_data->data, 9);
-    measurement->raw_measurement[9] = 0;  // correct termination for atof
-    measurement->measurement = (float)atof(measurement->raw_measurement);
+    char buf[10];
+    memcpy(buf, received_data->data, 9);
+    buf[9] = 0;  // correct termination for atof
+    measurement->measurement = (float)atof(buf);
     
     // Decode unit
     if (strncmp(received_data->unit, "  g", 3) == 0){
@@ -382,10 +382,9 @@ int main(void) {
 
                 ScaleSerial.write("Z\r\n", 3);
                 ThisThread::sleep_for(1s);  // Zero takes about 1s to take in effect
-                
+
                 // Show weight after trickle
                 lcdWeightPrintEnable.release();
-
 
                 TricklerState = POWDER_THROW_WAIT_FOR_COMPLETE;
             }
@@ -449,9 +448,6 @@ int main(void) {
                     memcpy(&measurement, measurement_ptr, sizeof(measurement));
                     ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
 
-                    // Enable weighting display
-                    lcdWeightPrintEnable.release();
-
                     float error = trickler_setpoint - measurement.measurement;
 
                     if (error < 0 || abs(error) < 0.02) {
@@ -489,6 +485,10 @@ int main(void) {
                     trickler.write(0.23f);
                     thread_sleep_for(new_on_time);
                     trickler.write(0);
+
+                    // Enable weighting display. The display can be called while waiting for stable
+                    lcdWeightPrintEnable.release();
+
                     if (error > 0.05) {
                         thread_sleep_for(500);
                     }
