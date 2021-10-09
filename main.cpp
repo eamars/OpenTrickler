@@ -74,6 +74,9 @@ typedef enum
 {
     MAIN_MENU,
     MAIN_MENU_WAIT_FOR_INPUT,
+    CLEANUP_MODE_MENU,
+    CLEANUP_MODE_WAIT_FOR_INPUT,
+    CALIBRATION_MODE_MENU,
     SELECT_WEIGHT,
     SELECT_WEIGHT_WAIT_FOR_INPUT,
     POWDER_THROW,
@@ -85,15 +88,13 @@ typedef enum
     POWDER_TRICKLE_WAIT_FOR_CONFIRM,
 } TricklerState_t;
 
-typedef enum
-{
-    TRICKLER_FINAL_STATE_0_WAIT_FOR_STABLE,
-    TRICKLER_FINAL_STATE_0_TRICKLE,
-    TRICKLER_FINAL_STATE_1_WAIT_FOR_STABLE,
-    TRICKLER_FINAL_STATE_1_TRICKLE,
-    TRICKLER_FINAL_STATE_2_WAIT_FOR_STABLE,
-    TRICKLER_FINAL_STATE_2_TRICKLE, 
-} TricklerFinalState_t;
+
+const char *main_menu_items[] = {
+    "Charge Mode",
+    "Cleanup Mode",
+    "Calibrate Mode",
+    NULL,
+};
 
 
 FileHandle *mbed::mbed_override_console(int fd)
@@ -277,10 +278,18 @@ int main(void) {
     trickler.period_ms(1);  // 1khz output
     trickler.write(0.0f);  // 0 duty cycle
     
-    TricklerState_t TricklerState = SELECT_WEIGHT;
+    TricklerState_t TricklerState = MAIN_MENU;
     
+    // Weight selection menu variables
     int8_t cursor_loc = 0;
     char charge_weight[6];  // include the trailing '\0'
+
+    // Main menu variables
+    int main_manu_items_count = 0;
+    while (main_menu_items[++main_manu_items_count] != NULL);
+    int current_main_menu_selection = 0;
+    printf("Main menu item count: %d\r\n", main_manu_items_count);
+    
 
     // PID control related variables
     float trickler_setpoint = 0.0f;
@@ -294,8 +303,63 @@ int main(void) {
         ButtonQueue.try_get_for(20ms, &button_press);
 
         // printf("%d\r\n", TricklerState);
+        if (TricklerState == MAIN_MENU){
+            lcd.cls();
+            lcd.setCursorPosition(0, 0);
+
+            int next_main_menu_selection = current_main_menu_selection + 1;
+            if (next_main_menu_selection >=main_manu_items_count){
+                next_main_menu_selection = 0;
+            }
+            lcd.printf("> %s", main_menu_items[current_main_menu_selection]);
+            lcd.setCursorPosition(1, 0);
+            lcd.printf("%s", main_menu_items[next_main_menu_selection]);
+            
+            TricklerState = MAIN_MENU_WAIT_FOR_INPUT;
+        }
+        else if (TricklerState == MAIN_MENU_WAIT_FOR_INPUT){
+            if (*button_press == NULL){
+                continue;
+            }
+                
+            if (*button_press == freetronicsLCDShield::BTN_UP){
+                current_main_menu_selection -= 1;
+                if (current_main_menu_selection < 0){
+                    current_main_menu_selection = main_manu_items_count - 1;
+                }
+            }
+            else if (*button_press == freetronicsLCDShield::BTN_DOWN){
+                current_main_menu_selection += 1;
+                if (current_main_menu_selection >= main_manu_items_count){
+                    current_main_menu_selection = 0;
+                }
+            }
+            else if (*button_press == freetronicsLCDShield::BTN_SELECT){
+                if (current_main_menu_selection == 0) {
+                    TricklerState = SELECT_WEIGHT;
+                }
+                else if (current_main_menu_selection == 1){
+                    TricklerState = CLEANUP_MODE_MENU;
+                }
+                else if (current_main_menu_selection == 2){
+                    TricklerState = CALIBRATION_MODE_MENU;
+                }
+            }
+            
+            int next_main_menu_selection = current_main_menu_selection + 1;
+            if (next_main_menu_selection >=main_manu_items_count){
+                next_main_menu_selection = 0;
+            }
+
+            // Display current mode selection
+            lcd.cls();
+            lcd.setCursorPosition(0, 0);
+            lcd.printf("> %s", main_menu_items[current_main_menu_selection]);
+            lcd.setCursorPosition(1, 0);
+            lcd.printf("%s", main_menu_items[next_main_menu_selection]);
+        }
         
-        if (TricklerState == SELECT_WEIGHT) {
+        else if (TricklerState == SELECT_WEIGHT) {
             lcd.cls();
             lcd.setCursorPosition(0, 0);
             lcd.printf("Select Weight");
@@ -402,7 +466,7 @@ int main(void) {
             // Show weight after trickle
             lcdWeightPrintEnable.release();
 
-            TricklerState = POWDER_TRICKLE;
+            // TricklerState = POWDER_TRICKLE;
             
         }
         else if (TricklerState == POWDER_TRICKLE){
@@ -416,7 +480,6 @@ int main(void) {
             lcd.setCursorPosition(0, 0);
             lcd.printf("Trickling...");
 
-            TricklerFinalState_t TricklerFinalState = TRICKLER_FINAL_STATE_0_WAIT_FOR_STABLE;
             bool trickle_complete = false;
 
             int s1_measurement_buffer_length = 5;
