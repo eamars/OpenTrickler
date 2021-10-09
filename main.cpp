@@ -271,7 +271,8 @@ int main(void) {
     
     // Initialize stepper motor
     StepMotor.enableHold(false);
-    StepMotor.setRPM(200);
+    StepMotor.setRPM(170);
+    int stepper_position = 0;
 
     trickler.period_ms(1);  // 1khz output
     trickler.write(0.0f);  // 0 duty cycle
@@ -391,11 +392,13 @@ int main(void) {
         }
 
         else if (TricklerState == POWDER_THROW_WAIT_FOR_COMPLETE){
-            StepMotor.step(400);
-            ThisThread::sleep_for(1s);
-            StepMotor.step(-400);
+            StepMotor.enableHold(true);
+            StepMotor.step(170);
             ThisThread::sleep_for(500ms);
-
+            StepMotor.step(-170);
+            ThisThread::sleep_for(500ms);
+            StepMotor.enableHold(false);
+            
             // Show weight after trickle
             lcdWeightPrintEnable.release();
 

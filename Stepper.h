@@ -29,6 +29,7 @@ public:
     void setStepDelayUs(int step_delay_us);
 
     void enableHold(bool enable);
+    void enable(bool enable);
     void setRPM(int rpm);
 };
 

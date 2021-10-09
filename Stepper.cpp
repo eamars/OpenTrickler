@@ -16,9 +16,22 @@ void Stepper::setStepDelayUs(int step_delay_us){
     _step_delay_us = step_delay_us;
 }
 
+void Stepper::enable(bool enable){
+    if (enable){
+        _ENA.write(1);
+        _ENB.write(1);
+    }
+    else{
+        _ENA.write(0);
+        _ENB.write(0);
+    }
+}
+
 
 void Stepper::enableHold(bool enable) {
     _enable_hold = enable;
+
+    this->enable(enable);
 }
 
 void Stepper::setRPM(int rpm) {
@@ -28,8 +41,7 @@ void Stepper::setRPM(int rpm) {
 
 
 void Stepper::step(int num_of_steps) {
-    _ENA.write(1);
-    _ENB.write(1);
+    enable(true);
 
     int step_left = abs(num_of_steps);
     
@@ -63,8 +75,7 @@ void Stepper::step(int num_of_steps) {
     }
 
     if (!_enable_hold){
-        _ENA.write(0);
-        _ENB.write(0);
+        enable(false);
     }
 }
 
