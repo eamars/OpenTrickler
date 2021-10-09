@@ -76,6 +76,7 @@ typedef enum
     MAIN_MENU_WAIT_FOR_INPUT,
     CLEANUP_MODE_MENU,
     CLEANUP_MODE_WAIT_FOR_INPUT,
+    CLEANUP_MODE_WAIT_FOR_COMPLETE,
     CALIBRATION_MODE_MENU,
     SELECT_WEIGHT,
     SELECT_WEIGHT_WAIT_FOR_INPUT,
@@ -358,6 +359,43 @@ int main(void) {
             lcd.setCursorPosition(1, 0);
             lcd.printf("%s", main_menu_items[next_main_menu_selection]);
         }
+
+        else if (TricklerState == CLEANUP_MODE_MENU){
+            lcd.cls();
+            lcd.setCursorPosition(0, 0);
+            lcd.printf("Press Select");
+
+            TricklerState = CLEANUP_MODE_WAIT_FOR_INPUT;
+        }
+
+        else if (TricklerState == CLEANUP_MODE_WAIT_FOR_INPUT) {
+            StepMotor.enableHold(true);
+
+            if (*button_press == NULL){
+                continue;
+            }
+
+            if (*button_press == freetronicsLCDShield::BTN_SELECT){
+                TricklerState = CLEANUP_MODE_WAIT_FOR_COMPLETE;
+            }
+            
+        }
+
+        else if (TricklerState == CLEANUP_MODE_WAIT_FOR_COMPLETE) {
+            lcd.cls();
+            lcd.setCursorPosition(0, 0);
+            lcd.printf("Discharging");
+
+            StepMotor.step(170);
+            ThisThread::sleep_for(500ms);
+
+            lcd.cls();
+            lcd.setCursorPosition(0, 0);
+            lcd.printf("Charging");
+
+            StepMotor.step(-170);
+            ThisThread::sleep_for(500ms);
+        }
         
         else if (TricklerState == SELECT_WEIGHT) {
             lcd.cls();
@@ -466,7 +504,7 @@ int main(void) {
             // Show weight after trickle
             lcdWeightPrintEnable.release();
 
-            // TricklerState = POWDER_TRICKLE;
+            TricklerState = POWDER_TRICKLE;
             
         }
         else if (TricklerState == POWDER_TRICKLE){
