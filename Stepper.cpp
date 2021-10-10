@@ -36,7 +36,6 @@ void Stepper::enableHold(bool enable) {
 
 void Stepper::setRPM(int rpm) {
     _step_delay_us = 60 * 1000 * 1000 / _total_steps / rpm;
-    printf("DELAY:%d\r\n", _step_delay_us);
 }
 
 

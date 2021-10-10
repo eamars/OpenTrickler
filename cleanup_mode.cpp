@@ -8,9 +8,10 @@
 // Invoke peripheral declared in main
 extern freetronicsLCDShield lcd;
 extern Stepper StepMotor;
+extern int cfg_powder_measure_discharge_angle_step;
 
 // Configs and control variables
-const int cfg_discharge_cycles = 10;
+int cfg_discharge_cycles = 10;
 static int _current_discharge_cycle_count = 1;
 
 
@@ -46,7 +47,7 @@ TricklerState_t cleanup_mode_wait_for_complete(void){
     lcd.setCursorPosition(1, 0);
     lcd.printf("%d/%d cycles", _current_discharge_cycle_count, cfg_discharge_cycles);
 
-    StepMotor.step(170);
+    StepMotor.step(cfg_powder_measure_discharge_angle_step);
     ThisThread::sleep_for(500ms);
 
     lcd.cls();
@@ -56,7 +57,7 @@ TricklerState_t cleanup_mode_wait_for_complete(void){
     lcd.setCursorPosition(1, 0);
     lcd.printf("%d/%d cycles", _current_discharge_cycle_count, cfg_discharge_cycles);
 
-    StepMotor.step(-170);
+    StepMotor.step(-cfg_powder_measure_discharge_angle_step);
     ThisThread::sleep_for(500ms);
 
     // Determine stop condition

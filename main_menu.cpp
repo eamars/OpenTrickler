@@ -64,7 +64,7 @@ TricklerState_t main_menu_wait_for_input(freetronicsLCDShield::ButtonType_t *but
     }
     else if (*button_press == freetronicsLCDShield::BTN_SELECT){
         if (_current_main_menu_selection == 0) {
-            next_state = SELECT_WEIGHT;
+            next_state = CHARGE_MODE_SELECT_WEIGHT;
         }
         else if (_current_main_menu_selection == 1){
             next_state = CLEANUP_MODE_MENU;

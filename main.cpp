@@ -14,17 +14,17 @@
 #include "app.h"
 #include "cleanup_mode.h"
 #include "main_menu.h"
+#include "charge_mode.h"
 
 
 // External peripherals
 freetronicsLCDShield lcd(D8, D9, D4, D5, D6, D7, D10, A0); // rs, e, d0, d1, d2, d3, bl, a0
 BufferedSerial pc(USBTX, USBRX, 115200);
-PwmOut trickler(PC_8);
+PwmOut Trickler(PC_8);
 Stepper StepMotor(PA_15, PB_7, PA_13, PA_14, PC_2, PC_3, 200);
 
 // RTOS control
 Semaphore lcdWeightPrintEnable(0, 1);
-
 Thread ButtonPollThread;
 MemoryPool<freetronicsLCDShield::ButtonType_t, 6> ButtonQueueMemoryPool;
 Queue<freetronicsLCDShield::ButtonType_t, 5> ButtonQueue;
@@ -37,25 +37,9 @@ Queue<freetronicsLCDShield::ButtonType_t, 5> ButtonQueue;
 BufferedSerial ScaleSerial(PC_10, PC_5, 19200);
 Thread ScaleStreamThread;
 
-typedef enum 
-{
-    SCALE_HEADER_STABLE,
-    SCALE_HEADER_UNSTABLE,
-    SCALE_HEADER_OVERLOAD,
-    SCALE_HEADER_STABLE_COUNTING,
-} ScaleMeasurementHeader_e;
+MemoryPool<ScaleMeasurement_t, 2> ScaleMeasurementQueueMemoryPool;
+Queue<ScaleMeasurement_t, 1> ScaleMeasurementQueue;
 
-typedef enum
-{
-    SCALE_UNIT_GRAM,
-    SCALE_UNIT_GRAIN,
-} ScaleMesasurementUnit_e;
-
-typedef struct {
-    float measurement;
-    ScaleMeasurementHeader_e header;
-    ScaleMesasurementUnit_e unit; 
-} ScaleMeasurement_t;
 
 
 typedef union {
@@ -70,8 +54,11 @@ typedef union {
 } ScaleStandardOutputDataFormat_t;
 
 
-MemoryPool<ScaleMeasurement_t, 2> ScaleMeasurementQueueMemoryPool;
-Queue<ScaleMeasurement_t, 1> ScaleMeasurementQueue;
+
+
+
+// Configuration
+int cfg_powder_measure_discharge_angle_step = 170;
 
 
 FileHandle *mbed::mbed_override_console(int fd)
@@ -250,19 +237,11 @@ int main(void) {
     // Initialize stepper motor
     StepMotor.enableHold(false);
     StepMotor.setRPM(170);
-    int stepper_position = 0;
 
-    trickler.period_ms(1);  // 1khz output
-    trickler.write(0.0f);  // 0 duty cycle
+    Trickler.period_ms(1);  // 1khz output
+    Trickler.write(0.0f);  // 0 duty cycle
     
     TricklerState_t TricklerState = MAIN_MENU;
-    
-    // Weight selection menu variables
-    int8_t cursor_loc = 0;
-    char charge_weight[6];  // include the trailing '\0'
-
-    // PID control related variables
-    float trickler_setpoint = 0.0f;
 
     
     while (true)
@@ -300,243 +279,51 @@ int main(void) {
             TricklerState = cleanup_mode_wait_for_complete();
         }
         
-        else if (TricklerState == SELECT_WEIGHT) {
-            lcd.cls();
-            lcd.setCursorPosition(0, 0);
-            lcd.printf("Select Weight");
-            
-            lcd.setCursorPosition(1, 0);
-            lcd.printf("00.00 gn");
-            memset(charge_weight, '0', sizeof(charge_weight));
-            
-            lcd.setCursor(true, false);
-            lcd.setCursorPosition(1, 0);
-            TricklerState = SELECT_WEIGHT_WAIT_FOR_INPUT;
+        else if (TricklerState == CHARGE_MODE_SELECT_WEIGHT) {
+            TricklerState = charge_mode_select_weight();
         }
-        else if (TricklerState == SELECT_WEIGHT_WAIT_FOR_INPUT) {
+
+        else if (TricklerState == CHARGE_MODE_SELECT_WEIGHT_WAIT_FOR_INPUT) {
             if (*button_press == NULL){
                 continue;
             }
                 
-            if (*button_press == freetronicsLCDShield::BTN_LEFT){
-                cursor_loc -= 1;
-                if (cursor_loc < 0){
-                    cursor_loc = 4;
-                }
-                else if (cursor_loc == 2){
-                    // Skip the dot
-                    cursor_loc = 1;
-                }
-            }
-            else if (*button_press == freetronicsLCDShield::BTN_RIGHT) {
-                cursor_loc += 1;
-                if (cursor_loc > 4){
-                    cursor_loc = 0;
-                }
-                else if (cursor_loc == 2){
-                    // Skip the dot
-                    cursor_loc = 3;
-                }
-            }
-            else if (*button_press == freetronicsLCDShield::BTN_UP){
-                charge_weight[cursor_loc] += 1;
-                if (charge_weight[cursor_loc] > '9'){
-                    charge_weight[cursor_loc] = '0';
-                }
-            }
-            else if (*button_press == freetronicsLCDShield::BTN_DOWN){
-                charge_weight[cursor_loc] -= 1;
-                if (charge_weight[cursor_loc] < '0'){
-                    charge_weight[cursor_loc] = '9';
-                }
-            }
-            else if (*button_press == freetronicsLCDShield::BTN_SELECT){
-                // Turn charge weight to trickler setpoint
-                charge_weight[2] = '.';
-                trickler_setpoint = float(atof(charge_weight));
-                printf("trickler_setpoint: %f\r\n", trickler_setpoint);
+            TricklerState = charge_mode_select_weight_wait_for_input(button_press);
+        }
 
-                // disable cursor from now on
-                lcd.setCursor(false, false);
-                TricklerState = POWDER_THROW;
-            }
-            
-            // Display current cursor
-            lcd.setCursorPosition(1, cursor_loc);
-            lcd.printf("%c", charge_weight[cursor_loc]);
-            // printf will auto shift 
-            lcd.setCursorPosition(1, cursor_loc);
+        else if (TricklerState == CHARGE_MODE_POWDER_THROW) {
+            TricklerState = charge_mode_powder_throw();
         }
-        else if (TricklerState == POWDER_THROW) {
-            lcd.cls();
-            lcd.setCursorPosition(0, 0);
-            lcd.printf("Press Select");
-            
-            TricklerState = POWDER_THROW_WAIT_FOR_INPUT;
-        }
-        else if (TricklerState == POWDER_THROW_WAIT_FOR_INPUT){
-            // Enable weight display while waiting for input
+
+        else if (TricklerState == CHARGE_MODE_POWDER_THROW_WAIT_FOR_INPUT){
+            // Enable weight display regardless the user input
             lcdWeightPrintEnable.release();
 
             if (*button_press == NULL){
                 continue;
             }
-            if (*button_press == freetronicsLCDShield::BTN_SELECT){
-                lcd.cls();
-                lcd.setCursorPosition(0, 0);
-                lcd.printf("Throwing...");
-
-                ScaleSerial.write("Z\r\n", 3);
-                ThisThread::sleep_for(1s);  // Zero takes about 1s to take in effect
-
-                // Show weight after trickle
-                lcdWeightPrintEnable.release();
-
-                TricklerState = POWDER_THROW_WAIT_FOR_COMPLETE;
-            }
+            TricklerState = charge_mode_powder_throw_wait_for_input(button_press);
         }
 
-        else if (TricklerState == POWDER_THROW_WAIT_FOR_COMPLETE){
-            StepMotor.enableHold(true);
-            StepMotor.step(170);
-            ThisThread::sleep_for(500ms);
-            StepMotor.step(-170);
-            ThisThread::sleep_for(500ms);
-            StepMotor.enableHold(false);
-            
-            // Show weight after trickle
-            lcdWeightPrintEnable.release();
+        else if (TricklerState == CHARGE_MODE_POWDER_THROW_WAIT_FOR_COMPLETE){
+            TricklerState = charge_mode_powder_throw_wait_for_complete();
+        }
 
-            TricklerState = POWDER_TRICKLE;
-            
+        else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_COMPLETE){
+            TricklerState = charge_mode_powder_trickle_wait_for_complete();
         }
-        else if (TricklerState == POWDER_TRICKLE){
-            TricklerState = POWDER_TRICKLE_WAIT_FOR_INPUT;
+
+        else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_REMOVAL){
+            TricklerState = charge_mode_powder_trickle_wait_for_cup_removal();
         }
-        else if (TricklerState == POWDER_TRICKLE_WAIT_FOR_INPUT){
-            TricklerState = POWDER_TRICKLE_WAIT_FOR_STABLE;
-        }
-        else if (TricklerState == POWDER_TRICKLE_WAIT_FOR_STABLE){
+
+        else{
             lcd.cls();
             lcd.setCursorPosition(0, 0);
-            lcd.printf("Trickling...");
+            lcd.printf("Not Implemented");
 
-            bool trickle_complete = false;
-
-            int s1_measurement_buffer_length = 5;
-            FloatRingBuffer S1MeasurementBuffer(s1_measurement_buffer_length);
-
-            int s2_measurement_buffer_length = 32;
-            FloatRingBuffer S2MeasurementBuffer(s2_measurement_buffer_length);
-
-            // PID related
-            Timer timer;
-            float max_on_time_ms = 500;
-            float min_on_time_ms = 90;
-
-            float max_integral = 10;
-
-            float kp = 400.0f;
-            float ki = 5.0f;
-            float kd = 250.0f;
-
-            float integral = 0.0f;
-            float last_error = 0.0;
-
-            timer.start();
-
-            while (!trickle_complete) {
-                ScaleMeasurement_t *measurement_ptr = NULL;
-                ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
-
-                if (measurement_ptr != NULL) {
-                    // Make a copy of the measurement
-                    ScaleMeasurement_t measurement;
-                    memcpy(&measurement, measurement_ptr, sizeof(measurement));
-                    ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
-
-                    float error = trickler_setpoint - measurement.measurement;
-
-                    if (error < 0 || abs(error) < 0.02) {
-                        trickler.write(0.0f);
-                        trickle_complete = true;
-                        continue;
-                    }
-
-                    timer.stop();
-                    float elapse_time = timer.read();
-                    timer.start();
-
-                    integral += error;
-                    float derivative = (error - last_error) / elapse_time;
-                    last_error = error;
-
-                    if (integral > max_integral){
-                        integral = max_integral;
-                    }
-
-                    // Final trickling stage
-                    float p_term = kp * error;
-                    float i_term = ki * integral;
-                    float d_term = kd * derivative;
-
-                    float new_on_time = p_term + i_term + d_term;
-
-                    if (new_on_time > max_on_time_ms){
-                        new_on_time = max_on_time_ms;
-                    }
-                    else if (new_on_time < min_on_time_ms) {
-                        new_on_time = min_on_time_ms;
-                    }
-
-                    trickler.write(0.23f);
-                    thread_sleep_for(new_on_time);
-                    trickler.write(0);
-
-                    // Enable weighting display. The display can be called while waiting for stable
-                    lcdWeightPrintEnable.release();
-
-                    if (error > 0.05) {
-                        thread_sleep_for(500);
-                    }
-                    else{
-                        thread_sleep_for(1000);
-                    }
-
-                    // printf("P=%f, I=%f, D=%f, CTRL=%f\r\n", p_term, i_term, d_term, new_on_time);
-                }
-            }
-
-            // Finish trickling, display final data
-            lcd.setCursorPosition(0, 0);
-            lcd.printf("Trickle Complete");
-
-            TricklerState = POWDER_TRICKLE_WAIT_FOR_CONFIRM;
-        }
-        else if (TricklerState == POWDER_TRICKLE_WAIT_FOR_CONFIRM){
-            bool pan_removed = false;
-
-            while (!pan_removed) {
-                ScaleMeasurement_t *measurement_ptr = NULL;
-                ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
-
-                if (measurement_ptr) {
-                    // Make a copy of the measurement
-                    ScaleMeasurement_t measurement;
-                    memcpy(&measurement, measurement_ptr, sizeof(measurement));
-                    ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
-
-                    // Enable weighting display
-                    lcdWeightPrintEnable.release();
-
-                    // Determine if pan is removed
-                    if (measurement.measurement < -80.0f) {
-                        pan_removed = true;
-                    }
-                }
-            }
-
-            TricklerState = POWDER_THROW;
+            ThisThread::sleep_for(1s);
+            TricklerState = MAIN_MENU;
         }
         
         ButtonQueueMemoryPool.free(button_press);
