@@ -2,11 +2,14 @@
 #include "freetronicsLCDShield.h"
 #include "Stepper.h"
 #include "mbed.h"
+#include "cleanup_mode.h"
 
 
+// Invoke peripheral declared in main
 extern freetronicsLCDShield lcd;
 extern Stepper StepMotor;
 
+// Configs and control variables
 const int cfg_discharge_cycles = 10;
 static int _current_discharge_cycle_count = 1;
 

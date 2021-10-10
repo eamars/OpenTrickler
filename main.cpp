@@ -13,7 +13,7 @@
 
 #include "app.h"
 #include "cleanup_mode.h"
-
+#include "main_menu.h"
 
 
 // External peripherals
@@ -72,14 +72,6 @@ typedef union {
 
 MemoryPool<ScaleMeasurement_t, 2> ScaleMeasurementQueueMemoryPool;
 Queue<ScaleMeasurement_t, 1> ScaleMeasurementQueue;
-
-
-const char *main_menu_items[] = {
-    "Charge Mode",
-    "Cleanup Mode",
-    "Calibrate Mode",
-    NULL,
-};
 
 
 FileHandle *mbed::mbed_override_console(int fd)
@@ -269,13 +261,6 @@ int main(void) {
     int8_t cursor_loc = 0;
     char charge_weight[6];  // include the trailing '\0'
 
-    // Main menu variables
-    int main_manu_items_count = 0;
-    while (main_menu_items[++main_manu_items_count] != NULL);
-    int current_main_menu_selection = 0;
-    printf("Main menu item count: %d\r\n", main_manu_items_count);
-    
-
     // PID control related variables
     float trickler_setpoint = 0.0f;
 
@@ -289,59 +274,14 @@ int main(void) {
 
         // printf("%d\r\n", TricklerState);
         if (TricklerState == MAIN_MENU){
-            lcd.cls();
-            lcd.setCursorPosition(0, 0);
-
-            int next_main_menu_selection = current_main_menu_selection + 1;
-            if (next_main_menu_selection >=main_manu_items_count){
-                next_main_menu_selection = 0;
-            }
-            lcd.printf("> %s", main_menu_items[current_main_menu_selection]);
-            lcd.setCursorPosition(1, 0);
-            lcd.printf("%s", main_menu_items[next_main_menu_selection]);
-            
-            TricklerState = MAIN_MENU_WAIT_FOR_INPUT;
+            TricklerState = main_menu();
         }
         else if (TricklerState == MAIN_MENU_WAIT_FOR_INPUT){
             if (*button_press == NULL){
                 continue;
             }
                 
-            if (*button_press == freetronicsLCDShield::BTN_UP){
-                current_main_menu_selection -= 1;
-                if (current_main_menu_selection < 0){
-                    current_main_menu_selection = main_manu_items_count - 1;
-                }
-            }
-            else if (*button_press == freetronicsLCDShield::BTN_DOWN){
-                current_main_menu_selection += 1;
-                if (current_main_menu_selection >= main_manu_items_count){
-                    current_main_menu_selection = 0;
-                }
-            }
-            else if (*button_press == freetronicsLCDShield::BTN_SELECT){
-                if (current_main_menu_selection == 0) {
-                    TricklerState = SELECT_WEIGHT;
-                }
-                else if (current_main_menu_selection == 1){
-                    TricklerState = CLEANUP_MODE_MENU;
-                }
-                else if (current_main_menu_selection == 2){
-                    TricklerState = CALIBRATION_MODE_MENU;
-                }
-            }
-            
-            int next_main_menu_selection = current_main_menu_selection + 1;
-            if (next_main_menu_selection >=main_manu_items_count){
-                next_main_menu_selection = 0;
-            }
-
-            // Display current mode selection
-            lcd.cls();
-            lcd.setCursorPosition(0, 0);
-            lcd.printf("> %s", main_menu_items[current_main_menu_selection]);
-            lcd.setCursorPosition(1, 0);
-            lcd.printf("%s", main_menu_items[next_main_menu_selection]);
+            TricklerState = main_menu_wait_for_input(button_press);
         }
 
         else if (TricklerState == CLEANUP_MODE_MENU){
