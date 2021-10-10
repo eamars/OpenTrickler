@@ -11,6 +11,10 @@
 #include <cstdlib>
 #include <cstring>
 
+#include "app.h"
+#include "cleanup_mode.h"
+
+
 
 // External peripherals
 freetronicsLCDShield lcd(D8, D9, D4, D5, D6, D7, D10, A0); // rs, e, d0, d1, d2, d3, bl, a0
@@ -68,26 +72,6 @@ typedef union {
 
 MemoryPool<ScaleMeasurement_t, 2> ScaleMeasurementQueueMemoryPool;
 Queue<ScaleMeasurement_t, 1> ScaleMeasurementQueue;
-
-
-typedef enum 
-{
-    MAIN_MENU,
-    MAIN_MENU_WAIT_FOR_INPUT,
-    CLEANUP_MODE_MENU,
-    CLEANUP_MODE_WAIT_FOR_INPUT,
-    CLEANUP_MODE_WAIT_FOR_COMPLETE,
-    CALIBRATION_MODE_MENU,
-    SELECT_WEIGHT,
-    SELECT_WEIGHT_WAIT_FOR_INPUT,
-    POWDER_THROW,
-    POWDER_THROW_WAIT_FOR_INPUT,
-    POWDER_THROW_WAIT_FOR_COMPLETE,
-    POWDER_TRICKLE,
-    POWDER_TRICKLE_WAIT_FOR_INPUT,
-    POWDER_TRICKLE_WAIT_FOR_STABLE,
-    POWDER_TRICKLE_WAIT_FOR_CONFIRM,
-} TricklerState_t;
 
 
 const char *main_menu_items[] = {
@@ -361,40 +345,19 @@ int main(void) {
         }
 
         else if (TricklerState == CLEANUP_MODE_MENU){
-            lcd.cls();
-            lcd.setCursorPosition(0, 0);
-            lcd.printf("Press Select");
-
-            TricklerState = CLEANUP_MODE_WAIT_FOR_INPUT;
+            TricklerState = cleanup_mode_menu();
         }
 
         else if (TricklerState == CLEANUP_MODE_WAIT_FOR_INPUT) {
-            StepMotor.enableHold(true);
-
             if (*button_press == NULL){
                 continue;
             }
 
-            if (*button_press == freetronicsLCDShield::BTN_SELECT){
-                TricklerState = CLEANUP_MODE_WAIT_FOR_COMPLETE;
-            }
-            
+            TricklerState = cleanup_mode_wait_for_input(button_press);
         }
 
         else if (TricklerState == CLEANUP_MODE_WAIT_FOR_COMPLETE) {
-            lcd.cls();
-            lcd.setCursorPosition(0, 0);
-            lcd.printf("Discharging");
-
-            StepMotor.step(170);
-            ThisThread::sleep_for(500ms);
-
-            lcd.cls();
-            lcd.setCursorPosition(0, 0);
-            lcd.printf("Charging");
-
-            StepMotor.step(-170);
-            ThisThread::sleep_for(500ms);
+            TricklerState = cleanup_mode_wait_for_complete();
         }
         
         else if (TricklerState == SELECT_WEIGHT) {
