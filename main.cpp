@@ -317,6 +317,14 @@ int main(void) {
             TricklerState = charge_mode_powder_trickle_wait_for_cup_removal();
         }
 
+        else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_REMOVAL){
+            TricklerState = charge_mode_powder_trickle_wait_for_cup_removal();
+        }
+
+        else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_RETURNED){
+            TricklerState = charge_mode_powder_trickle_wait_for_cup_returned();
+        }
+
         else{
             lcd.cls();
             lcd.setCursorPosition(0, 0);

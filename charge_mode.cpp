@@ -3,6 +3,7 @@
 #include "freetronicsLCDShield.h"
 #include "Stepper.h"
 #include "mbed.h"
+#include "FloatRingBuffer.h"
 
 
 // Invoke peripheral declared in main
@@ -21,6 +22,9 @@ extern int cfg_powder_measure_discharge_angle_step;
 static char _charge_weight_string[6];
 static int _cursor_loc = 0;
 static float _charge_weight_set_point = 0;
+const float cfg_cup_removal_sd_threshold = 5;
+const float cfg_cup_returned_sd_threshold = 0.02;
+const float cfg_cup_returned_zero_threshold = 0.04;
 
 
 TricklerState_t charge_mode_select_weight(void){
@@ -151,13 +155,15 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
     // PID related
     Timer timer;
     float max_on_time_ms = 500;
-    float min_on_time_ms = 90;
+    float min_on_time_ms = 140;
 
     float max_integral = 10;
 
-    float kp = 400.0f;
-    float ki = 5.0f;
-    float kd = 250.0f;
+    float kp = 480.0f;
+    // float ki = 6.0f;
+    // float kd = 400.0f;
+    float ki = 0.0f;
+    float kd = 0.0f;
 
     float integral = 0.0f;
     float last_error = 0.0;
@@ -215,11 +221,17 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
             // Enable weighting display. The display can be called while waiting for stable
             lcdWeightPrintEnable.release();
 
-            if (error > 0.05) {
-                thread_sleep_for(500);
+            if (error < 0.05){
+                thread_sleep_for(1800);
+            }
+            else if (error < 0.1) {
+                thread_sleep_for(1400);
+            }
+            else if (error < 0.5){
+                thread_sleep_for(1000);
             }
             else{
-                thread_sleep_for(1000);
+                thread_sleep_for(500);
             }
 
             // printf("P=%f, I=%f, D=%f, CTRL=%f\r\n", p_term, i_term, d_term, new_on_time);
@@ -235,9 +247,10 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
 
 
 TricklerState_t charge_mode_powder_trickle_wait_for_cup_removal(void){
-    bool cup_removed = false;
 
-    while (!cup_removed) {
+    FloatRingBuffer data_buffer(5);
+
+    while (true) {
         ScaleMeasurement_t *measurement_ptr = NULL;
         ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
 
@@ -247,15 +260,64 @@ TricklerState_t charge_mode_powder_trickle_wait_for_cup_removal(void){
             memcpy(&measurement, measurement_ptr, sizeof(measurement));
             ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
 
+            // Determine the removal of the cup by reading 5 with 0.5 apart, with relative stable reading and all 
+            // measuring negative, then the cup is determined removed. 
+            data_buffer.enqueue(measurement.measurement);
+            if (data_buffer.getCounter() == 5){
+                if (data_buffer.getSd() < cfg_cup_removal_sd_threshold && data_buffer.getMean() < 0){
+                    break;
+                }
+            }
+
             // Enable weighting display
             lcdWeightPrintEnable.release();
 
-            // Determine if pan is removed
-            if (measurement.measurement < -80.0f) {
-                cup_removed = true;
-            }
+            // Wait for next measurement
+            thread_sleep_for(500);
         }
     }
+
+    lcd.setCursorPosition(0, 0);
+    lcd.printf("Cup Removed     ");
+
+    return CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_RETURNED;
+}
+
+
+TricklerState_t charge_mode_powder_trickle_wait_for_cup_returned(void){
+    FloatRingBuffer data_buffer(5);
+
+    while (true) {
+        ScaleMeasurement_t *measurement_ptr = NULL;
+        ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
+
+        if (measurement_ptr) {
+            // Make a copy of the measurement
+            ScaleMeasurement_t measurement;
+            memcpy(&measurement, measurement_ptr, sizeof(measurement));
+            ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
+
+            // Determine the removal of the cup by reading 5 with 0.5s apart, with relative stable reading and all 
+            // measuring negative, then the cup is determined removed. 
+            data_buffer.enqueue(measurement.measurement);
+            if (data_buffer.getCounter() == 5){
+                if (data_buffer.getSd() < cfg_cup_returned_sd_threshold && 
+                    abs(data_buffer.getMean()) < cfg_cup_returned_zero_threshold){
+                    break;
+                }
+            }
+
+            // Enable weighting display
+            lcdWeightPrintEnable.release();
+        }
+    }
+
+    // lcd.cls();
+    // lcd.setCursorPosition(0, 0);
+    // lcd.printf("Throwing...");
+
+    // ScaleSerial.write("Z\r\n", 3);
+    // ThisThread::sleep_for(1s);  // Zero takes about 1s to take in effect
 
     return CHARGE_MODE_POWDER_THROW;
 }

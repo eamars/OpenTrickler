@@ -13,6 +13,7 @@ TricklerState_t charge_mode_powder_throw_wait_for_input(freetronicsLCDShield::Bu
 TricklerState_t charge_mode_powder_throw_wait_for_complete(void);
 TricklerState_t charge_mode_powder_trickle_wait_for_complete(void);
 TricklerState_t charge_mode_powder_trickle_wait_for_cup_removal(void);
+TricklerState_t charge_mode_powder_trickle_wait_for_cup_returned(void);
 
 
 #endif  // CHARGE_MODE_H_
