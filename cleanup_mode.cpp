@@ -11,7 +11,7 @@ extern Stepper StepMotor;
 extern int cfg_powder_measure_discharge_angle_step;
 
 // Configs and control variables
-int cfg_discharge_cycles = 10;
+int cfg_discharge_cycles = 5;
 static int _current_discharge_cycle_count = 1;
 
 
@@ -40,40 +40,39 @@ TricklerState_t cleanup_mode_wait_for_input(freetronicsLCDShield::ButtonType_t *
 
 
 TricklerState_t cleanup_mode_wait_for_complete(void){
-    // Run discharge cycle
-    lcd.cls();
-    lcd.setCursorPosition(0, 0);
-    lcd.printf("Discharging");
-    lcd.setCursorPosition(1, 0);
-    lcd.printf("%d/%d cycles", _current_discharge_cycle_count, cfg_discharge_cycles);
+    while (_current_discharge_cycle_count <= cfg_discharge_cycles){
+        // Run discharge cycle
+        lcd.cls();
+        lcd.setCursorPosition(0, 0);
+        lcd.printf("Discharging");
+        lcd.setCursorPosition(1, 0);
+        lcd.printf("%d/%d cycles", _current_discharge_cycle_count, cfg_discharge_cycles);
 
-    StepMotor.step(cfg_powder_measure_discharge_angle_step);
-    ThisThread::sleep_for(500ms);
-
-    lcd.cls();
-    lcd.setCursorPosition(0, 0);
-    lcd.printf("Charging");
-
-    lcd.setCursorPosition(1, 0);
-    lcd.printf("%d/%d cycles", _current_discharge_cycle_count, cfg_discharge_cycles);
-
-    StepMotor.step(-cfg_powder_measure_discharge_angle_step);
-    ThisThread::sleep_for(500ms);
-
-    // Determine stop condition
-    _current_discharge_cycle_count += 1;
-    if (_current_discharge_cycle_count > cfg_discharge_cycles){
-        _current_discharge_cycle_count = 1;
-
-        StepMotor.enableHold(false);
+        StepMotor.step(cfg_powder_measure_discharge_angle_step);
+        ThisThread::sleep_for(500ms);
 
         lcd.cls();
         lcd.setCursorPosition(0, 0);
-        lcd.printf("Complete");
-        ThisThread::sleep_for(1s);
+        lcd.printf("Charging");
 
-        return MAIN_MENU;
+        lcd.setCursorPosition(1, 0);
+        lcd.printf("%d/%d cycles", _current_discharge_cycle_count, cfg_discharge_cycles);
+
+        StepMotor.step(-cfg_powder_measure_discharge_angle_step);
+        ThisThread::sleep_for(500ms);
+
+        _current_discharge_cycle_count += 1;
     }
 
-    return CLEANUP_MODE_WAIT_FOR_COMPLETE;
+    // Discharge complete
+    _current_discharge_cycle_count = 1;
+
+    StepMotor.enableHold(false);
+
+    lcd.cls();
+    lcd.setCursorPosition(0, 0);
+    lcd.printf("Complete");
+    ThisThread::sleep_for(1s);
+
+    return MAIN_MENU;
 }

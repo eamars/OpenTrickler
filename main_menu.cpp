@@ -10,23 +10,31 @@ extern freetronicsLCDShield lcd;
 
 
 // Configs and control variables
-const char *cfg_main_menu_items[] = {
-    "Charge Mode",
-    "Cleanup Mode",
-    "Calibrate Mode",
-    NULL,
+// const char *cfg_main_menu_items[] = {
+//     "Charge Mode",
+//     "Cleanup Mode",
+//     "Calibrate Mode",
+//     "Scale Setup Mode",
+//     NULL,
+// };
+
+typedef struct {
+    char menu_name[15];  // includes \0
+    TricklerState_t state;
+} main_menu_item_t;
+
+const main_menu_item_t cfg_main_menu_items[] = {
+    {"Charge", CHARGE_MODE_SELECT_WEIGHT},
+    {"Cleanup", CLEANUP_MODE_MENU},
+    {"Calibrate", CALIBRATION_MODE_MENU},
+    {"Scale Setup", SCALE_SETUP_MODE_MENU},
 };
 
-static int _main_menu_item_count = 0;  // Starting with invalid count
+const int _main_menu_item_count = sizeof(cfg_main_menu_items) / sizeof(main_menu_item_t);
 static int _current_main_menu_selection = 0;
 
 
 void _render_menu(void){
-    // Calculate the number if items from the main menu. This will only execute once
-    if (_main_menu_item_count == 0){
-        while (cfg_main_menu_items[++_main_menu_item_count] != NULL);
-    }
-
     int next_main_menu_selection = _current_main_menu_selection + 1;
     if (next_main_menu_selection >= _main_menu_item_count){
         next_main_menu_selection = 0;
@@ -34,9 +42,9 @@ void _render_menu(void){
 
     lcd.cls();
     lcd.setCursorPosition(0, 0);
-    lcd.printf("> %s", cfg_main_menu_items[_current_main_menu_selection]);
+    lcd.printf("> %s", cfg_main_menu_items[_current_main_menu_selection].menu_name);
     lcd.setCursorPosition(1, 0);
-    lcd.printf("%s", cfg_main_menu_items[next_main_menu_selection]);
+    lcd.printf("%s", cfg_main_menu_items[next_main_menu_selection].menu_name);
 }
 
 
@@ -63,15 +71,7 @@ TricklerState_t main_menu_wait_for_input(freetronicsLCDShield::ButtonType_t *but
         }
     }
     else if (*button_press == freetronicsLCDShield::BTN_SELECT){
-        if (_current_main_menu_selection == 0) {
-            next_state = CHARGE_MODE_SELECT_WEIGHT;
-        }
-        else if (_current_main_menu_selection == 1){
-            next_state = CLEANUP_MODE_MENU;
-        }
-        else if (_current_main_menu_selection == 2){
-            next_state = CALIBRATION_MODE_MENU;
-        }
+        next_state = cfg_main_menu_items[_current_main_menu_selection].state;
     }
     
     // Roll over

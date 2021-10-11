@@ -26,8 +26,8 @@ Stepper StepMotor(PA_15, PB_7, PA_13, PA_14, PC_2, PC_3, 200);
 // RTOS control
 Semaphore lcdWeightPrintEnable(0, 1);
 Thread ButtonPollThread;
-MemoryPool<freetronicsLCDShield::ButtonType_t, 6> ButtonQueueMemoryPool;
-Queue<freetronicsLCDShield::ButtonType_t, 5> ButtonQueue;
+MemoryPool<freetronicsLCDShield::ButtonType_t, 2> ButtonQueueMemoryPool;
+Queue<freetronicsLCDShield::ButtonType_t, 1> ButtonQueue;
 
 // Comm protocol: https://www.digitalscalesblog.com/interface-description-rs-232-fx-i-fz-i-precision-balances/
 // TODO: The scale need to change the serial comm to following settings to get maximum performance
@@ -322,7 +322,7 @@ int main(void) {
         }
 
         else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_RETURNED){
-            TricklerState = charge_mode_powder_trickle_wait_for_cup_returned();
+            TricklerState = charge_mode_powder_trickle_wait_for_cup_removal();
         }
 
         else{
