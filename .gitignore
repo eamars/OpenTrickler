@@ -5,4 +5,4 @@ projectfiles
 mbed-os
 BUILD
 
-X_NUCLEO_IHM02A1
+*.hg/
