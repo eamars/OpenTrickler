@@ -2,13 +2,15 @@
 #define APP_H_
 
 
+#define TricklerState_t OpenTricklerStateFlag_e
+
+
 typedef enum 
 {
+    UNDEFINED_STATE,
     MAIN_MENU,
-    MAIN_MENU_WAIT_FOR_INPUT,
 
     CLEANUP_MODE_MENU,
-    CLEANUP_MODE_WAIT_FOR_INPUT,
     CLEANUP_MODE_WAIT_FOR_COMPLETE,
 
     CALIBRATION_MODE_MENU,
@@ -16,14 +18,19 @@ typedef enum
     SCALE_SETUP_MODE_MENU,
 
     CHARGE_MODE_SELECT_WEIGHT,
-    CHARGE_MODE_SELECT_WEIGHT_WAIT_FOR_INPUT,
     CHARGE_MODE_POWDER_THROW,
-    CHARGE_MODE_POWDER_THROW_WAIT_FOR_INPUT,
     CHARGE_MODE_POWDER_THROW_WAIT_FOR_COMPLETE,
     CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_COMPLETE,
     CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_REMOVAL,
     CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_RETURNED,
-} TricklerState_t;
+} OpenTricklerStateFlag_e;
+
+
+typedef struct 
+{
+    TricklerState_t state;
+    TricklerState_t (*func)(void);
+} OpenTricklerState_t;
 
 
 typedef enum 
@@ -46,6 +53,8 @@ typedef struct {
     ScaleMesasurementUnit_e unit; 
 } ScaleMeasurement_t;
 
+// Configs
+extern const int cfg_thrower_microstepping;
 
 
 #endif  // APP_H_

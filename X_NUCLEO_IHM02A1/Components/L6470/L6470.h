@@ -123,6 +123,8 @@ public:
          *   measure = 0;                                                     *
          *   instance_id = number_of_instances++;                             *
          *--------------------------------------------------------------------*/
+        this->busy_irq.mode(PullNone);
+        this->flag_irq.mode(PullNone);
         L6470_Register = &_L6470_Register[0];
         L6470_ApplicationCommand = &_L6470_ApplicationCommand[0];
         L6470_Direction = &_L6470_Direction[0];
@@ -1316,6 +1318,9 @@ public:
         busy_irq.disable_irq();
     }
 
+    bool is_busy(void){
+        return L6470_CheckStatusRegisterFlag(BUSY_ID) == 0;
+    }
 
 protected:
 

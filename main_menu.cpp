@@ -1,33 +1,28 @@
 #include "app.h"
-#include "freetronicsLCDShield.h"
-#include "Stepper.h"
+#include "SH1106.h"
 #include "mbed.h"
 #include "main_menu.h"
+#include "Terminal6x8.h"
+
+#define MENU_LENGTH sizeof(cfg_main_menu_items) / sizeof(main_menu_item_t)
 
 
 // Invoke peripheral declared in main
-extern freetronicsLCDShield lcd;
+extern SH1106 OLEDScreen;
+extern Queue<char, 1> ButtonQueue;
+extern MemoryPool<char, 2> ButtonQueueMemoryPool;
 
-
-// Configs and control variables
-// const char *cfg_main_menu_items[] = {
-//     "Charge Mode",
-//     "Cleanup Mode",
-//     "Calibrate Mode",
-//     "Scale Setup Mode",
-//     NULL,
-// };
 
 typedef struct {
-    char menu_name[15];  // includes \0
+    char menu_name[22];  // includes \0
     TricklerState_t state;
 } main_menu_item_t;
 
 const main_menu_item_t cfg_main_menu_items[] = {
-    {"Charge", CHARGE_MODE_SELECT_WEIGHT},
-    {"Cleanup", CLEANUP_MODE_MENU},
-    {"Calibrate", CALIBRATION_MODE_MENU},
-    {"Scale Setup", SCALE_SETUP_MODE_MENU},
+    {"Charge Mode", CHARGE_MODE_SELECT_WEIGHT},
+    {"Cleanup Mode", CLEANUP_MODE_MENU},
+    {"Calibrate Mode", CALIBRATION_MODE_MENU},
+    {"Configuration", SCALE_SETUP_MODE_MENU},
 };
 
 const int _main_menu_item_count = sizeof(cfg_main_menu_items) / sizeof(main_menu_item_t);
@@ -35,53 +30,69 @@ static int _current_main_menu_selection = 0;
 
 
 void _render_menu(void){
-    int next_main_menu_selection = _current_main_menu_selection + 1;
-    if (next_main_menu_selection >= _main_menu_item_count){
-        next_main_menu_selection = 0;
+    OLEDScreen.cls();
+    OLEDScreen.locate(0, 0);
+    OLEDScreen.set_font((unsigned char *) Terminal6x8);
+    // Iterate over all menu items
+    for (int idx=0; idx < MENU_LENGTH; idx++){
+        if (idx == _current_main_menu_selection){
+            OLEDScreen.background(White);
+            OLEDScreen.foreground(Black);
+        }
+        else{
+            OLEDScreen.background(Black);
+            OLEDScreen.foreground(White);
+        }
+        const char *text = cfg_main_menu_items[idx].menu_name;
+        OLEDScreen.printf("%s", text);
+
+        // Append space
+        for (int i = 0; i < 22 - strlen(text); i++){
+            OLEDScreen.printf("%c", ' ');
+        }
+        OLEDScreen.printf("%c", '\n');
     }
 
-    lcd.cls();
-    lcd.setCursorPosition(0, 0);
-    lcd.printf("> %s", cfg_main_menu_items[_current_main_menu_selection].menu_name);
-    lcd.setCursorPosition(1, 0);
-    lcd.printf("%s", cfg_main_menu_items[next_main_menu_selection].menu_name);
+    OLEDScreen.copy_to_lcd();
 }
 
 
 TricklerState_t main_menu(void){
     _render_menu();
 
-    return MAIN_MENU_WAIT_FOR_INPUT;
-}
+    OpenTricklerStateFlag_e next_state = UNDEFINED_STATE;
 
+    while (next_state == UNDEFINED_STATE){
+        char *button_press = NULL;
+        
+        // Block reading ButtonEvent
+        ButtonQueue.try_get_for(20ms, &button_press);
 
-TricklerState_t main_menu_wait_for_input(freetronicsLCDShield::ButtonType_t *button_press){
-    TricklerState_t next_state = MAIN_MENU_WAIT_FOR_INPUT;
-
-    if (*button_press == freetronicsLCDShield::BTN_UP){
-        _current_main_menu_selection -= 1;
-        if (_current_main_menu_selection < 0){
-            _current_main_menu_selection = _main_menu_item_count - 1;
+        if (button_press == NULL){
+            continue;
         }
-    }
-    else if (*button_press == freetronicsLCDShield::BTN_DOWN){
-        _current_main_menu_selection += 1;
-        if (_current_main_menu_selection >= _main_menu_item_count){
-            _current_main_menu_selection = 0;
-        }
-    }
-    else if (*button_press == freetronicsLCDShield::BTN_SELECT){
-        next_state = cfg_main_menu_items[_current_main_menu_selection].state;
-    }
-    
-    // Roll over
-    int next_main_menu_selection = _current_main_menu_selection + 1;
-    if (next_main_menu_selection >=_main_menu_item_count){
-        next_main_menu_selection = 0;
-    }
 
-    // Display current mode selection
-    _render_menu();
+        char button = *button_press;
+        ButtonQueueMemoryPool.free(button_press);
+
+        if (button == 'C') {
+            next_state = cfg_main_menu_items[_current_main_menu_selection].state;
+        }
+        else if (button == 'E'){
+            _current_main_menu_selection += 1;
+            if (_current_main_menu_selection >= _main_menu_item_count){
+                _current_main_menu_selection = 0;
+            }
+        }
+        else if (button == 'F'){
+            _current_main_menu_selection -= 1;
+            if (_current_main_menu_selection < 0){
+                _current_main_menu_selection = _main_menu_item_count - 1;
+            }
+        }
+
+        _render_menu();
+    }
 
     return next_state;
 }
