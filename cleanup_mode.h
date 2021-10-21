@@ -4,7 +4,11 @@
 #include "app.h"
 
 
-TricklerState_t cleanup_mode_menu(void);
-TricklerState_t cleanup_mode_wait_for_complete(void);
+OpenTricklerStateFlag_e cleanup_trickler_menu(void);
+OpenTricklerStateFlag_e cleanup_trickler_wait_for_complete(void);
+
+OpenTricklerStateFlag_e cleanup_thrower_menu(void);
+OpenTricklerStateFlag_e cleanup_thrower_wait_for_complete(void);
+
 
 #endif  // CLEANUP_MODE_H_

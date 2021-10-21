@@ -6,7 +6,7 @@
 #include "Arial12x12.h"
 #include "L6470.h"
 #include "math.h"
-#include <cmath>    
+#include "Arial28x28.h"
 
 
 // Invoke peripheral declared in main
@@ -14,6 +14,7 @@ extern SH1106 OLEDScreen;
 extern Queue<char, 1> ButtonQueue;
 extern MemoryPool<char, 2> ButtonQueueMemoryPool;
 extern L6470 *ThrowerMotor;
+extern L6470 *TricklerMotor;
 extern void thrower_dispense(uint32_t stay_ms=250, void (*cb)(int)=NULL);
 extern void thrower_discharge(void (*cb)(int)=NULL);
 extern void thrower_charge(void (*cb)(int)=NULL);
@@ -23,20 +24,20 @@ const extern int cfg_thrower_microstepping;
 const int cfg_discharge_cycles = 5;
 static int _current_discharge_cycle_count = 1;
 
-void _render_cleanup_mode_title(){
+void _render_cleanup_thrower_title(){
     OLEDScreen.locate(0, 0);
     OLEDScreen.set_font((unsigned char *) Terminal6x8);
 
     OLEDScreen.background(White);
     OLEDScreen.foreground(Black);
-    OLEDScreen.printf("      Cleanup Mode     \n");
+    OLEDScreen.printf("    Cleanup Thrower   \n");
     OLEDScreen.background(Black);
     OLEDScreen.foreground(White);
 }
 
-TricklerState_t cleanup_mode_menu(void){
+TricklerState_t cleanup_thrower_menu(void){
     OLEDScreen.cls();
-    _render_cleanup_mode_title();
+    _render_cleanup_thrower_title();
 
     OLEDScreen.locate(0, 10);
     OLEDScreen.printf("Please close powder\nhopper valve\n");
@@ -64,7 +65,7 @@ TricklerState_t cleanup_mode_menu(void){
             next_state = MAIN_MENU;
         }
         else if (button == 'C') {
-            next_state = CLEANUP_MODE_WAIT_FOR_COMPLETE;
+            next_state = CLEANUP_THROWER_WAIT_FOR_COMPLETE;
         }
     }
 
@@ -89,7 +90,7 @@ void _render_dispenser_position(int x0, int y0, int r, int motor_position){
 void _render_discharge(int position){
     OLEDScreen.cls();
 
-    _render_cleanup_mode_title();
+    _render_cleanup_thrower_title();
 
     _render_dispenser_position(61, 30, 20, position);
 
@@ -102,7 +103,7 @@ void _render_discharge(int position){
 void _render_charge(int position){
     OLEDScreen.cls();
 
-    _render_cleanup_mode_title();
+    _render_cleanup_thrower_title();
 
     _render_dispenser_position(61, 30, 20, position);
 
@@ -113,7 +114,7 @@ void _render_charge(int position){
 }
 
 
-TricklerState_t cleanup_mode_wait_for_complete(void){
+TricklerState_t cleanup_thrower_wait_for_complete(void){
     // TODO: use scale to determine whether the powder dispenser is empty
     while (_current_discharge_cycle_count <= cfg_discharge_cycles){
 
@@ -132,11 +133,125 @@ TricklerState_t cleanup_mode_wait_for_complete(void){
     ThrowerMotor->soft_hiz();
 
     OLEDScreen.cls();
-    _render_cleanup_mode_title();
+    _render_cleanup_thrower_title();
     OLEDScreen.locate(0, 10);
     OLEDScreen.printf("Discharge Complete\n");
     OLEDScreen.copy_to_lcd();
     ThisThread::sleep_for(1s);
     
     return MAIN_MENU;
+}
+
+
+void _render_cleanup_trickler_title(int motor_speed){
+    OLEDScreen.locate(0, 0);
+    OLEDScreen.set_font((unsigned char *) Terminal6x8);
+
+    OLEDScreen.background(White);
+    OLEDScreen.foreground(Black);
+    OLEDScreen.printf("   Cleanup Trickler   \n");
+    OLEDScreen.background(Black);
+    OLEDScreen.foreground(White);
+
+    OLEDScreen.locate(0, 10);
+    OLEDScreen.printf("Motor Speed\n");
+
+    OLEDScreen.set_font((unsigned char *) Arial28x28);
+    OLEDScreen.locate(0, 22);
+    OLEDScreen.printf("%d", motor_speed);
+    OLEDScreen.set_font((unsigned char *) Terminal6x8);
+}
+
+
+OpenTricklerStateFlag_e cleanup_trickler_menu(void) {
+    OLEDScreen.cls();
+    _render_cleanup_trickler_title(0);
+    
+    // OLEDScreen.locate(0, 10);
+    // OLEDScreen.printf("Please close powder\nhopper valve\n");
+
+    OLEDScreen.locate(0, 55);
+    OLEDScreen.printf("Press C to continue\n");
+    OLEDScreen.copy_to_lcd();
+
+    OpenTricklerStateFlag_e next_state = UNDEFINED_STATE;
+
+    while (next_state == UNDEFINED_STATE){
+        char *button_press = NULL;
+        
+        // Block reading ButtonEvent
+        ButtonQueue.try_get_for(20ms, &button_press);
+
+        if (button_press == NULL){
+            continue;
+        }
+
+        char button = *button_press;
+        ButtonQueueMemoryPool.free(button_press);
+
+        if (button == 'D') {
+            next_state = MAIN_MENU;
+        }
+        else if (button == 'C') {
+            next_state = CLEANUP_TRICKLER_WAIT_FOR_COMPLETE;
+        }
+    }
+
+    return next_state;
+}
+
+
+OpenTricklerStateFlag_e cleanup_trickler_wait_for_complete(void) {
+    int trickler_motor_max_speed = TricklerMotor->get_max_speed();
+    int trickler_motor_speed = min(trickler_motor_max_speed, 500);
+
+    OLEDScreen.cls();
+    _render_cleanup_trickler_title(trickler_motor_speed);
+    OLEDScreen.locate(0, 47);
+    OLEDScreen.printf("F->ACC F->DEC\n");
+    OLEDScreen.printf("Press D to return\n");
+    OLEDScreen.copy_to_lcd();
+
+    TricklerMotor->run(StepperMotor::FWD, trickler_motor_speed);
+
+    
+    OpenTricklerStateFlag_e next_state = UNDEFINED_STATE;
+
+    while (next_state == UNDEFINED_STATE){
+        char *button_press = NULL;
+        
+        // Block reading ButtonEvent
+        ButtonQueue.try_get_for(20ms, &button_press);
+
+        if (button_press == NULL){
+            continue;
+        }
+
+        char button = *button_press;
+        ButtonQueueMemoryPool.free(button_press);
+
+        if (button == 'D') {
+            next_state = MAIN_MENU;
+        }
+
+        else if (button == 'F') {
+            trickler_motor_speed = min(trickler_motor_max_speed, trickler_motor_speed + 50);
+            TricklerMotor->run(StepperMotor::FWD, trickler_motor_speed);
+        }
+        else if (button == 'E') {
+            trickler_motor_speed = max(0, trickler_motor_speed - 50);
+            TricklerMotor->run(StepperMotor::FWD, trickler_motor_speed);
+        }
+
+        OLEDScreen.cls();
+        _render_cleanup_trickler_title(trickler_motor_speed);
+        OLEDScreen.locate(0, 47);
+        OLEDScreen.printf("F->ACC F->DEC\n");
+        OLEDScreen.printf("Press D to return\n");
+        OLEDScreen.copy_to_lcd();
+    }
+
+    TricklerMotor->soft_hiz();
+
+    return next_state;
 }

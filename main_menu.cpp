@@ -20,7 +20,8 @@ typedef struct {
 
 const main_menu_item_t cfg_main_menu_items[] = {
     {"Charge Mode", CHARGE_MODE_SELECT_WEIGHT},
-    {"Cleanup Mode", CLEANUP_MODE_MENU},
+    {"Cleanup Thrower", CLEANUP_THROWER},
+    {"Cleanup Trickler", CLEANUP_TRICKLER},
     {"Calibrate Mode", CALIBRATION_MODE_MENU},
     {"Configuration", SCALE_SETUP_MODE_MENU},
 };

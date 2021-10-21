@@ -85,7 +85,7 @@ L6470_init_t TricklerMotorConfig = {
         300.0,                         /* Motor initial speed [step/s]. */
         500.0,                         /* Motor acceleration [step/s^2] (comment for infinite acceleration mode). */
         500.0,                         /* Motor deceleration [step/s^2] (comment for infinite deceleration mode). */
-        992.0,                         /* Motor maximum speed [step/s]. */
+        1500.0,                         /* Motor maximum speed [step/s]. */
         0.0,                           /* Motor minimum speed [step/s]. */
         602.7,                         /* Motor full-step speed threshold [step/s]. */
         2.45,                          /* Holding kval [V]. */
@@ -384,15 +384,26 @@ int main(void) {
     OLEDScreen.locate(0, 0);
     OLEDScreen.set_font((unsigned char *) Terminal6x8);
 
-    // Initialze motor
-    OLEDScreen.printf("Init Motors");
-    OLEDScreen.copy_to_lcd();
+    // Get motor controller
     L6470 **motors = MotorController.get_components();
     TricklerMotor = motors[0];
     ThrowerMotor = motors[1];
 
+    // Initialze thrower motor
+    OLEDScreen.printf("Init Motor 1");
+    OLEDScreen.copy_to_lcd();
+
     ThrowerMotor->set_home();
     ThrowerMotor->wait_while_active();
+    OLEDScreen.printf(" -- done\n");
+    OLEDScreen.copy_to_lcd();
+
+    // Initialze trickler motor
+    OLEDScreen.printf("Init Motor 2");
+    OLEDScreen.copy_to_lcd();
+
+    TricklerMotor->set_home();
+    TricklerMotor->wait_while_active();
     OLEDScreen.printf(" -- done\n");
     OLEDScreen.copy_to_lcd();
 
@@ -420,11 +431,17 @@ int main(void) {
         if (TricklerState == MAIN_MENU){
             TricklerState = main_menu();
         }
-        else if (TricklerState == CLEANUP_MODE_MENU){
-            TricklerState = cleanup_mode_menu();
+        else if (TricklerState == CLEANUP_THROWER){
+            TricklerState = cleanup_thrower_menu();
         }
-        else if (TricklerState == CLEANUP_MODE_WAIT_FOR_COMPLETE) {
-            TricklerState = cleanup_mode_wait_for_complete();
+        else if (TricklerState == CLEANUP_THROWER_WAIT_FOR_COMPLETE){
+            TricklerState = cleanup_thrower_wait_for_complete();
+        }
+        else if (TricklerState == CLEANUP_TRICKLER) {
+            TricklerState = cleanup_trickler_menu();
+        }
+        else if (TricklerState == CLEANUP_TRICKLER_WAIT_FOR_COMPLETE) {
+            TricklerState = cleanup_trickler_wait_for_complete();
         }
         else if (TricklerState == CHARGE_MODE_SELECT_WEIGHT) {
             TricklerState = charge_mode_select_weight();
