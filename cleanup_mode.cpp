@@ -15,9 +15,8 @@ extern Queue<char, 1> ButtonQueue;
 extern MemoryPool<char, 2> ButtonQueueMemoryPool;
 extern L6470 *ThrowerMotor;
 extern L6470 *TricklerMotor;
-extern void thrower_dispense(uint32_t stay_ms=250, void (*cb)(int)=NULL);
-extern void thrower_discharge(void (*cb)(int)=NULL);
-extern void thrower_charge(void (*cb)(int)=NULL);
+extern void thrower_discharge(void (*cb)(int)=NULL, bool wait=true);
+extern void thrower_charge(void (*cb)(int)=NULL, bool wait=true);
 
 // Configs and control variables
 const extern int cfg_thrower_microstepping;
@@ -73,12 +72,12 @@ TricklerState_t cleanup_thrower_menu(void){
 }
 
 
-void _render_dispenser_position(int x0, int y0, int r, int motor_position){
+void _render_dispenser_position(int x0, int y0, int r, int motor_position, float gear_ratio=1.0){
     // Draw gauge
     OLEDScreen.circle(x0, y0, r, White);
     OLEDScreen.circle(x0, y0, r - 2, White);
     
-    float angle = (float) motor_position / cfg_thrower_microstepping / 200 * 2 * 3.14;
+    float angle = (float) motor_position / cfg_thrower_microstepping / 200 * 2 * 3.14 * gear_ratio;
 
     float x1 = sin(angle) * r + x0;
     float y1 = cos(angle) * r + y0;
@@ -92,7 +91,7 @@ void _render_discharge(int position){
 
     _render_cleanup_thrower_title();
 
-    _render_dispenser_position(61, 30, 20, position);
+    _render_dispenser_position(61, 30, 20, position, 22.0f/60.0f);
 
     OLEDScreen.set_font((unsigned char *) Arial12x12);
     OLEDScreen.locate(35, 51);
@@ -105,7 +104,7 @@ void _render_charge(int position){
 
     _render_cleanup_thrower_title();
 
-    _render_dispenser_position(61, 30, 20, position);
+    _render_dispenser_position(61, 30, 20, position, 22.0f/60.0f);
 
     OLEDScreen.set_font((unsigned char *) Arial12x12);
     OLEDScreen.locate(35, 51);

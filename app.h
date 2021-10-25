@@ -56,6 +56,18 @@ typedef struct {
     ScaleMesasurementUnit_e unit; 
 } ScaleMeasurement_t;
 
+
+typedef union {
+    struct __attribute__((__packed__)){
+        char header[2];
+        char comma;
+        char data[9];
+        char unit[3];
+        char terminator[2];
+    };
+    char packet[17];
+} ScaleStandardOutputDataFormat_t;
+
 // Configs
 extern const int cfg_thrower_microstepping;
 

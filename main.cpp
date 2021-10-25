@@ -142,7 +142,6 @@ const int cfg_thrower_throw_full_step_position = 175;
 
 
 // RTOS control
-Semaphore lcdWeightPrintEnable(0, 1);
 Thread ButtonPollThread;
 MemoryPool<char, 2> ButtonQueueMemoryPool;
 Queue<char, 1> ButtonQueue;
@@ -152,24 +151,12 @@ Queue<char, 1> ButtonQueue;
 // Baud rate: 19200
 // Databits: 8
 // Parity: None
-BufferedSerial ScaleSerial(PC_10, PC_5, 19200);
+BufferedSerial ScaleSerial(PC_10, PC_11, 19200);
 Thread ScaleStreamThread;
 
 MemoryPool<ScaleMeasurement_t, 2> ScaleMeasurementQueueMemoryPool;
 Queue<ScaleMeasurement_t, 1> ScaleMeasurementQueue;
-
-
-
-typedef union {
-    struct __attribute__((__packed__)){
-        char header[2];
-        char comma;
-        char data[9];
-        char unit[3];
-        char terminator[2];
-    };
-    char packet[17];
-} ScaleStandardOutputDataFormat_t;
+ScaleMeasurement_t latched_scale_measurement;
 
 
 FileHandle *mbed::mbed_override_console(int fd)
@@ -254,12 +241,11 @@ void scale_stream_measurement_handler(void){
                 // printf("%s", string_buf);
 
                 // Decode received serial data into the measurement object
-                ScaleMeasurement_t measurement;
-                decode_and_standard_format(((ScaleStandardOutputDataFormat_t *)string_buf), &measurement);
+                decode_and_standard_format(((ScaleStandardOutputDataFormat_t *)string_buf), &latched_scale_measurement);
                 
                 // Decode received data and generate measurement data
                 ScaleMeasurement_t *measurement_to_send = ScaleMeasurementQueueMemoryPool.alloc();
-                memcpy(measurement_to_send, &measurement, sizeof(ScaleMeasurement_t));
+                memcpy(measurement_to_send, &latched_scale_measurement, sizeof(ScaleMeasurement_t));
                 
                 // Send data to the queue
                 while (ScaleMeasurementQueue.try_put(measurement_to_send) != true){
@@ -273,36 +259,6 @@ void scale_stream_measurement_handler(void){
                     ThisThread::sleep_for(20ms);
                 }
 
-                // Optionally, if print weight feature is requested then it will show current measured weight
-                if (lcdWeightPrintEnable.try_acquire()){
-                    // Display
-                    char display_buffer[16];
-                    memset(display_buffer, 0, sizeof(display_buffer));
-
-                    // Determine sign
-                    char sign = '+';
-                    if (measurement.measurement < 0){
-                        sign = '-';
-                    }
-
-                    // Determine unit
-                    if (measurement.unit == SCALE_UNIT_GRAM){
-                        snprintf(display_buffer, sizeof(display_buffer), "%c%08.4f g ", sign, abs(measurement.measurement));
-                    }
-                    else if (measurement.unit == SCALE_UNIT_GRAIN){
-                        snprintf(display_buffer, sizeof(display_buffer), "%c%06.2f gn", sign, abs(measurement.measurement));
-                    }
-
-                    // If not stable then add * to the end of the line
-                    if (measurement.header != SCALE_HEADER_STABLE){
-                        display_buffer[15] = '*';
-                    }
-
-                    // // Update display
-                    // lcd.setCursorPosition(1, 0);
-                    // lcd.printf("%s", display_buffer);                    
-                }
-
                 // reset the pointer and start-off
                 string_buf_idx = 0; 
             }
@@ -313,29 +269,35 @@ void scale_stream_measurement_handler(void){
         }
         else {
             // If no data is received then wait for 20ms for next poll cycle
-            ThisThread::sleep_for(20ms);
+            thread_sleep_for(20);
         }
     }
 }
 
 
-void thrower_charge(void (*cb)(int)=NULL){
+void thrower_charge(void (*cb)(int)=NULL, bool wait=true){
     // Go to charge position
     ThrowerMotor->go_to(0, StepperMotor::BWD);
-    while (ThrowerMotor->is_busy()){
+    while (wait == true && ThrowerMotor->is_busy()){
         if (cb != NULL) {
             cb(ThrowerMotor->get_position());
         }
+        else{
+            thread_sleep_for(20);
+        }
     }
 }
 
-void thrower_discharge(void (*cb)(int)=NULL)
+void thrower_discharge(void (*cb)(int)=NULL, bool wait=true)
 {
     // Go to discharge position
     ThrowerMotor->go_to(cfg_thrower_throw_full_step_position * cfg_thrower_microstepping, StepperMotor::FWD);
-    while (ThrowerMotor->is_busy()){
+    while (wait == true && ThrowerMotor->is_busy()){
         if (cb != NULL) {
             cb(ThrowerMotor->get_position());
+        }
+        else{
+            thread_sleep_for(20);
         }
     }
 }
@@ -373,15 +335,9 @@ int main(void) {
     OLEDScreen.foreground(White);
     OLEDScreen.background(Black);
 
-    OLEDScreen.set_font((unsigned char *) Arial28x28);
-    OLEDScreen.printf("Open\nTrickler\n");
-    OLEDScreen.copy_to_lcd();
-
-    ThisThread::sleep_for(1s);
-
     // Display initializing sequence
     OLEDScreen.cls();
-    OLEDScreen.locate(0, 0);
+    
     OLEDScreen.set_font((unsigned char *) Terminal6x8);
 
     // Get motor controller
@@ -393,6 +349,8 @@ int main(void) {
     OLEDScreen.printf("Init Motor 1");
     OLEDScreen.copy_to_lcd();
 
+    ThrowerMotor->set_step_mode(StepperMotor::STEP_MODE_1_128);
+    ThrowerMotor->set_max_speed(1500);
     ThrowerMotor->set_home();
     ThrowerMotor->wait_while_active();
     OLEDScreen.printf(" -- done\n");
@@ -402,6 +360,8 @@ int main(void) {
     OLEDScreen.printf("Init Motor 2");
     OLEDScreen.copy_to_lcd();
 
+    TricklerMotor->set_step_mode(StepperMotor::STEP_MODE_1_128);
+    TricklerMotor->set_max_speed(1500);
     TricklerMotor->set_home();
     TricklerMotor->wait_while_active();
     OLEDScreen.printf(" -- done\n");
@@ -421,6 +381,24 @@ int main(void) {
     ButtonPollThread.start(button_poll_handler);
     OLEDScreen.printf(" -- done\n");
     OLEDScreen.copy_to_lcd();
+
+    // Intialize thread connection
+    OLEDScreen.printf("Init Comm");
+    OLEDScreen.copy_to_lcd();
+    ScaleStreamThread.start(scale_stream_measurement_handler);
+    OLEDScreen.printf(" -- done\n");
+    OLEDScreen.copy_to_lcd();
+
+    ThisThread::sleep_for(1s);
+
+    // Display title
+    OLEDScreen.cls();
+    OLEDScreen.locate(0, 0);
+    OLEDScreen.set_font((unsigned char *) Arial28x28);
+    OLEDScreen.printf("Open\nTrickler\n");
+    OLEDScreen.copy_to_lcd();
+
+    ThisThread::sleep_for(1s);
 
     // Initialize the trickler state    
     TricklerState_t TricklerState = MAIN_MENU;
@@ -448,6 +426,18 @@ int main(void) {
         }
         else if (TricklerState == CHARGE_MODE_POWDER_THROW) {
             TricklerState = charge_mode_powder_throw();
+        }
+        else if (TricklerState == CHARGE_MODE_POWDER_THROW_WAIT_FOR_COMPLETE){
+            TricklerState = charge_mode_powder_throw_wait_for_complete();
+        }
+        else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_COMPLETE){
+            TricklerState = charge_mode_powder_trickle_wait_for_complete();
+        }
+        else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_REMOVAL){
+            TricklerState = charge_mode_powder_trickle_wait_for_cup_removal();
+        }
+        else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_RETURNED){
+            TricklerState = charge_mode_powder_trickle_wait_for_cup_returned();
         }
         else{
             OLEDScreen.cls();
