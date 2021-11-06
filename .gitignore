@@ -6,3 +6,8 @@ mbed-os
 BUILD
 
 *.hg/
+
+
+# ignore SolidWorks temporary files
+~$*.SLDPRT
+~$*.SLDASM
