@@ -20,8 +20,10 @@ extern Queue<char, 1> ButtonQueue;
 extern MemoryPool<char, 2> ButtonQueueMemoryPool;
 extern L6470 *ThrowerMotor;
 extern L6470 *TricklerMotor;
+extern L6470 *CoarseTricklerMotor;
 extern void thrower_discharge(void (*cb)(int)=NULL, bool wait=true);
 extern void thrower_charge(void (*cb)(int)=NULL, bool wait=true);
+extern const int cfg_thrower_microstepping;
 
 
 // Local static variables
@@ -31,6 +33,16 @@ static float _charge_weight_set_point = 0;
 const float cfg_cup_removal_sd_threshold = 5;
 const float cfg_cup_returned_sd_threshold = 0.02;
 const float cfg_cup_returned_zero_threshold = 0.04;
+const CoarseMode_e cfg_coarse_mode = COARSE_MODE_USE_COARSE_TRICKLER;
+
+const float cfg_fine_trickler_kp = 100.0f;
+const float cfg_fine_trickler_ki = 0.0f;
+const float cfg_fine_trickler_kd = 30.0f;
+
+const float cfg_coarse_trickler_kp = 100.0f;
+const float cfg_coarse_trickler_ki = 0.0f;
+const float cfg_coarse_trickler_kd = 70.0f;
+
 Thread ScaleWeightDisplayThread;
 Semaphore ScaleWeightDisplayEnable(0, 1);
 
@@ -106,7 +118,17 @@ TricklerState_t charge_mode_select_weight(void){
         }
         else if (button == 'C') {
             _charge_weight_set_point = float(atof(_charge_weight_string));
-            next_state = CHARGE_MODE_POWDER_THROW;
+
+            if (cfg_coarse_mode == COARSE_MODE_USE_COARSE_TRICKLER){
+                next_state = CHARGE_MODE_COARSE_TRICKLE;
+            }
+            else if (cfg_coarse_mode == COARSE_MODE_USE_POWDER_MEASURE){
+                next_state = CHARGE_MODE_POWDER_THROW;
+            }
+            else {
+                printf("Undefined cfg_coarse_mode %d\r\n", cfg_coarse_mode);
+            }
+            
         }
         else{
             if (button >= '0' && button <= '9'){
@@ -215,22 +237,116 @@ TricklerState_t charge_mode_powder_throw_wait_for_complete(void){
 }
 
 
-TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
-    TricklerMotor->set_max_speed(500);
-    TricklerMotor->set_min_speed(1);
-    // PID related
-    float kp = 100.0f;
-    float ki = 0.0f;
-    float kd = 30.0f;
+TricklerState_t charge_mode_coarse_trickle(void){
+    OLEDScreen.cls();
+    _render_charge_mode_title();
 
+    OLEDScreen.locate(0, 10);
+    OLEDScreen.printf("Setpoint: %.2f\n", _charge_weight_set_point);
+
+    OLEDScreen.locate(0, 30);
+    OLEDScreen.printf("Present CUP");
+    OLEDScreen.locate(0, 55);
+    OLEDScreen.printf("Press C to continue\n");
+
+    OLEDScreen.copy_to_lcd();
+
+    OpenTricklerStateFlag_e next_state = UNDEFINED_STATE;
+
+    while (next_state == UNDEFINED_STATE){
+        char *button_press = NULL;
+        
+        // Block reading ButtonEvent
+        ButtonQueue.try_get_for(20ms, &button_press);
+
+        if (button_press == NULL){
+            continue;
+        }
+
+        char button = *button_press;
+        ButtonQueueMemoryPool.free(button_press);
+
+        if (button == 'D') {
+            next_state = CHARGE_MODE_SELECT_WEIGHT;
+        }
+        else if (button == 'C') {
+            next_state = CHARGE_MODE_COARSE_TRICKLE_WAIT_FOR_COMPLETE;
+        }
+    }
+    return next_state;
+}
+
+TricklerState_t charge_mode_coarse_trickle_wait_for_complete(void){
+    // Start display thread
+    if (ScaleWeightDisplayThread.get_state() != Thread::Running){
+        ScaleWeightDisplayThread.start(scale_weight_display_handler);
+    }
+
+    CoarseTricklerMotor->set_max_speed(500);
+    CoarseTricklerMotor->set_min_speed(50);
+
+    // PID related
     float integral = 0.0f;
     float last_error = 0.0f;
 
     Timer timer;
     timer.start();
 
-    // Control variables
-    bool trickle_complete = false;
+    while (true){
+        _refresh_scale_weight_display();
+
+        ScaleMeasurement_t *measurement_ptr = NULL;
+        ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
+
+        if (measurement_ptr == NULL){
+            continue;
+        }
+
+        ScaleMeasurement_t measurement;
+        memcpy(&measurement, measurement_ptr, sizeof(ScaleMeasurement_t));
+        ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
+
+        float error = _charge_weight_set_point - measurement.measurement;
+
+        // Stop condition
+        // Either exceeding the set point or reached 80% of the set point
+        if (error < 0 || error < 12.5f) {
+            CoarseTricklerMotor->soft_hiz();
+            break;
+        }
+
+        // Update PID variables
+        timer.stop();
+        float elapse_time = timer.read();
+        timer.start();
+
+        integral += error;
+        float derivative = (error - last_error) / elapse_time;
+        last_error = error;
+
+        float p_term = cfg_coarse_trickler_kp * error;
+        float i_term = cfg_coarse_trickler_ki * integral;
+        float d_term = cfg_coarse_trickler_kd * derivative;
+
+        // Feed to motor
+        unsigned int new_motor_speed = int(round(p_term + i_term + d_term));
+
+        CoarseTricklerMotor->run(StepperMotor::FWD, new_motor_speed);
+    }
+
+    return CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_COMPLETE;
+}
+
+
+TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
+    TricklerMotor->set_max_speed(500);
+    TricklerMotor->set_min_speed(1);
+    // PID related
+    float integral = 0.0f;
+    float last_error = 0.0f;
+
+    Timer timer;
+    timer.start();
 
     while (true){
         _refresh_scale_weight_display();
@@ -250,7 +366,7 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
 
         // Stop condition
         if (error < 0 || abs(error) < 0.03) {
-            TricklerMotor->soft_stop();
+            TricklerMotor->soft_hiz();
             break;
         }
 
@@ -263,9 +379,9 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
         float derivative = (error - last_error) / elapse_time;
         last_error = error;
 
-        float p_term = kp * error;
-        float i_term = ki * integral;
-        float d_term = kd * derivative;
+        float p_term = cfg_fine_trickler_kp * error;
+        float i_term = cfg_fine_trickler_ki * integral;
+        float d_term = cfg_fine_trickler_kd * derivative;
 
         // Feed to motor
         unsigned int new_motor_speed = int(round(p_term + i_term + d_term));
@@ -349,7 +465,18 @@ TricklerState_t charge_mode_powder_trickle_wait_for_cup_returned(void){
         }
     }
 
-    return CHARGE_MODE_POWDER_THROW;
+    // TODO: goes to a state which will determine the coarse trickle state
+    TricklerState_t next_state = UNDEFINED_STATE;
+    if (cfg_coarse_mode == COARSE_MODE_USE_COARSE_TRICKLER){
+        next_state = CHARGE_MODE_COARSE_TRICKLE;
+    }
+    else if (cfg_coarse_mode == COARSE_MODE_USE_POWDER_MEASURE){
+        next_state = CHARGE_MODE_POWDER_THROW;
+    }
+    else {
+        printf("Undefined cfg_coarse_mode %d\r\n", cfg_coarse_mode);
+    }
+    return next_state;
 }
 
 
