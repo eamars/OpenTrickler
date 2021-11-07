@@ -30,18 +30,29 @@ extern const int cfg_thrower_microstepping;
 static char _charge_weight_string[6];
 static int _cursor_loc = 0;
 static float _charge_weight_set_point = 0;
-const float cfg_cup_removal_sd_threshold = 5;
-const float cfg_cup_returned_sd_threshold = 0.02;
-const float cfg_cup_returned_zero_threshold = 0.04;
-const CoarseMode_e cfg_coarse_mode = COARSE_MODE_USE_COARSE_TRICKLER;
+float cfg_cup_removal_sd_threshold = 5;
+float cfg_cup_returned_sd_threshold = 0.02;
+float cfg_cup_returned_zero_threshold = 0.04;
+CoarseMode_e cfg_coarse_mode = COARSE_MODE_USE_COARSE_TRICKLER;
 
-const float cfg_fine_trickler_kp = 100.0f;
-const float cfg_fine_trickler_ki = 0.0f;
-const float cfg_fine_trickler_kd = 30.0f;
+int cfg_scale_sampling_period_ms = 150;
 
-const float cfg_coarse_trickler_kp = 100.0f;
-const float cfg_coarse_trickler_ki = 0.0f;
-const float cfg_coarse_trickler_kd = 70.0f;
+float cfg_fine_trickler_kp = 110.0f;
+float cfg_fine_trickler_ki = 0.0f;
+float cfg_fine_trickler_kd = 150.0f;
+
+float cfg_coarse_trickler_kp = 13.0f;
+float cfg_coarse_trickler_ki = 0.0f;
+float cfg_coarse_trickler_kd = 80.0f;
+
+int cfg_thrower_motor_max_speed = 1500;
+
+int cfg_fine_trickler_max_speed = 400;
+int cfg_fine_trickler_min_speed = 5;
+
+int cfg_coarse_trickler_max_speed = 500;
+int cfg_coarse_trickler_min_speed = 50;
+
 
 Thread ScaleWeightDisplayThread;
 Semaphore ScaleWeightDisplayEnable(0, 1);
@@ -219,6 +230,33 @@ void _refresh_scale_weight_display(int arg=0){
 
 
 TricklerState_t charge_mode_powder_throw_wait_for_complete(void){
+    /* 
+    * Wait for ZERO 
+    */
+    ScaleSerial.write("Z\r\n", 3);
+
+    while (true) {
+        ScaleMeasurement_t *measurement_ptr = NULL;
+        ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
+
+        if (measurement_ptr == NULL){
+            continue;
+        }
+
+        ScaleMeasurement_t measurement;
+        memcpy(&measurement, measurement_ptr, sizeof(ScaleMeasurement_t));
+        ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
+
+        if (measurement.measurement == 0.0f){
+            break;
+        }
+    }
+
+    /*
+     * Start working on throwing from now on
+     */
+    ThrowerMotor->set_max_speed(cfg_thrower_motor_max_speed);
+
     // Start display thread
     if (ScaleWeightDisplayThread.get_state() != Thread::Running){
         ScaleWeightDisplayThread.start(scale_weight_display_handler);
@@ -282,10 +320,38 @@ TricklerState_t charge_mode_coarse_trickle_wait_for_complete(void){
         ScaleWeightDisplayThread.start(scale_weight_display_handler);
     }
 
-    CoarseTricklerMotor->set_max_speed(500);
-    CoarseTricklerMotor->set_min_speed(50);
+    /* 
+    * Wait for ZERO 
+    */
+    if (latched_scale_measurement.measurement != 0.0f) {
+        ScaleSerial.write("Z\r\n", 3);
+
+        while (true) {
+            ScaleMeasurement_t *measurement_ptr = NULL;
+            ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
+
+            if (measurement_ptr == NULL){
+                continue;
+            }
+
+            ScaleMeasurement_t measurement;
+            memcpy(&measurement, measurement_ptr, sizeof(ScaleMeasurement_t));
+            ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
+
+            if (measurement.measurement == 0.0f){
+                break;
+            }
+        }
+    }
+    
+    /*
+     * Start working on coarse trickling from now on
+     */
+    CoarseTricklerMotor->set_max_speed(cfg_coarse_trickler_max_speed);
+    CoarseTricklerMotor->set_min_speed(cfg_coarse_trickler_min_speed);
 
     // PID related
+    int next_sampling_time = 0;
     float integral = 0.0f;
     float last_error = 0.0f;
 
@@ -293,45 +359,40 @@ TricklerState_t charge_mode_coarse_trickle_wait_for_complete(void){
     timer.start();
 
     while (true){
-        _refresh_scale_weight_display();
+        int time_ms = timer.read_ms();
 
-        ScaleMeasurement_t *measurement_ptr = NULL;
-        ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
+        float error = _charge_weight_set_point - latched_scale_measurement.measurement;
 
-        if (measurement_ptr == NULL){
-            continue;
-        }
-
-        ScaleMeasurement_t measurement;
-        memcpy(&measurement, measurement_ptr, sizeof(ScaleMeasurement_t));
-        ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
-
-        float error = _charge_weight_set_point - measurement.measurement;
-
-        // Stop condition
-        // Either exceeding the set point or reached 80% of the set point
-        if (error < 0 || error < 12.5f) {
+        // Stop conditions
+        if (error < 0 || error < 4.0f || time_ms > 10000) {
             CoarseTricklerMotor->soft_hiz();
             break;
         }
 
-        // Update PID variables
-        timer.stop();
-        float elapse_time = timer.read();
-        timer.start();
+        if (time_ms > next_sampling_time){
+            next_sampling_time += cfg_scale_sampling_period_ms;
 
-        integral += error;
-        float derivative = (error - last_error) / elapse_time;
-        last_error = error;
+            // Update PID variables
+            float elapse_time = cfg_scale_sampling_period_ms;
 
-        float p_term = cfg_coarse_trickler_kp * error;
-        float i_term = cfg_coarse_trickler_ki * integral;
-        float d_term = cfg_coarse_trickler_kd * derivative;
+            integral += error;
+            float derivative = (error - last_error) / elapse_time;
+            last_error = error;
 
-        // Feed to motor
-        unsigned int new_motor_speed = int(round(p_term + i_term + d_term));
+            float p_term = cfg_coarse_trickler_kp * error;
+            float i_term = cfg_coarse_trickler_ki * integral;
+            float d_term = cfg_coarse_trickler_kd * derivative;
 
-        CoarseTricklerMotor->run(StepperMotor::FWD, new_motor_speed);
+            // Feed to motor
+            unsigned int new_motor_speed = int(round(p_term + i_term + d_term));
+
+            CoarseTricklerMotor->run(StepperMotor::FWD, new_motor_speed);
+            _refresh_scale_weight_display();
+        }
+        else {
+            _refresh_scale_weight_display();
+            thread_sleep_for(1);
+        }
     }
 
     return CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_COMPLETE;
@@ -339,9 +400,10 @@ TricklerState_t charge_mode_coarse_trickle_wait_for_complete(void){
 
 
 TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
-    TricklerMotor->set_max_speed(500);
-    TricklerMotor->set_min_speed(1);
+    TricklerMotor->set_max_speed(cfg_fine_trickler_max_speed);
+    TricklerMotor->set_min_speed(cfg_fine_trickler_min_speed);
     // PID related
+    int next_sampling_time = 0;
     float integral = 0.0f;
     float last_error = 0.0f;
 
@@ -349,20 +411,9 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
     timer.start();
 
     while (true){
-        _refresh_scale_weight_display();
-
-        ScaleMeasurement_t *measurement_ptr = NULL;
-        ScaleMeasurementQueue.try_get_for(20ms, &measurement_ptr);
-
-        if (measurement_ptr == NULL){
-            continue;
-        }
-
-        ScaleMeasurement_t measurement;
-        memcpy(&measurement, measurement_ptr, sizeof(ScaleMeasurement_t));
-        ScaleMeasurementQueueMemoryPool.free(measurement_ptr);
-
-        float error = _charge_weight_set_point - measurement.measurement;
+        int time_ms = timer.read_ms();
+        float current_weight = latched_scale_measurement.measurement;
+        float error = _charge_weight_set_point - current_weight;
 
         // Stop condition
         if (error < 0 || abs(error) < 0.03) {
@@ -370,22 +421,30 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
             break;
         }
 
-        // Update PID variables
-        timer.stop();
-        float elapse_time = timer.read();
-        timer.start();
+        if (time_ms > next_sampling_time){
+            next_sampling_time += cfg_scale_sampling_period_ms;
+            
+            // Update PID variables
+            float elapse_time = cfg_scale_sampling_period_ms;
 
-        integral += error;
-        float derivative = (error - last_error) / elapse_time;
-        last_error = error;
+            integral += error;
+            float derivative = (error - last_error) / elapse_time;
+            last_error = error;
 
-        float p_term = cfg_fine_trickler_kp * error;
-        float i_term = cfg_fine_trickler_ki * integral;
-        float d_term = cfg_fine_trickler_kd * derivative;
+            float p_term = cfg_fine_trickler_kp * error;
+            float i_term = cfg_fine_trickler_ki * integral;
+            float d_term = cfg_fine_trickler_kd * derivative;
 
-        // Feed to motor
-        unsigned int new_motor_speed = int(round(p_term + i_term + d_term));
-        TricklerMotor->run(StepperMotor::FWD, new_motor_speed);
+            // Calculate new speed
+            unsigned int new_motor_speed = int(round(p_term + i_term + d_term));
+            TricklerMotor->run(StepperMotor::BWD, new_motor_speed);
+
+            _refresh_scale_weight_display();
+        }
+        else {
+            _refresh_scale_weight_display();
+            thread_sleep_for(1);
+        }
     }
 
     TricklerMotor->soft_hiz();

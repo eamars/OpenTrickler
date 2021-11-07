@@ -16,8 +16,7 @@
 #include "cleanup_mode.h"
 #include "main_menu.h"
 #include "charge_mode.h"
-
-
+#include "calibration_mode.h"
 
 
 
@@ -446,6 +445,15 @@ int main(void) {
         }
         else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_CUP_RETURNED){
             TricklerState = charge_mode_powder_trickle_wait_for_cup_returned();
+        }
+        else if (TricklerState == CALIBRATION_MODE_MENU){
+            TricklerState = calibration_mode_menu();
+        }
+        else if (TricklerState == CALIBRATION_MODE_TUNE_FINE_TRICKLER){
+            TricklerState = calibration_mode_tune_fine_trickler();
+        }
+        else if (TricklerState == CALIBRATION_MODE_TUNE_COARSE_TRICKLER){
+            TricklerState = calibration_mode_tune_coarse_trickler();
         }
         else{
             OLEDScreen.cls();
