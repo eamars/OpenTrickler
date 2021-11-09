@@ -434,8 +434,8 @@ int main(void) {
         else if (TricklerState == CHARGE_MODE_COARSE_TRICKLE){
             TricklerState = charge_mode_coarse_trickle();
         }
-        else if (TricklerState == CHARGE_MODE_COARSE_TRICKLE_WAIT_FOR_COMPLETE){
-            TricklerState = charge_mode_coarse_trickle_wait_for_complete();
+        else if (TricklerState == CHARGE_MODE_ZERO_SCALE){
+            TricklerState = charge_mode_zero_scale();
         }
         else if (TricklerState == CHARGE_MODE_POWDER_TRICKLE_WAIT_FOR_COMPLETE){
             TricklerState = charge_mode_powder_trickle_wait_for_complete();

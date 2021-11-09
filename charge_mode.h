@@ -10,7 +10,7 @@ TricklerState_t charge_mode_powder_throw(void);
 TricklerState_t charge_mode_powder_throw_wait_for_complete(void);
 
 TricklerState_t charge_mode_coarse_trickle(void);
-TricklerState_t charge_mode_coarse_trickle_wait_for_complete(void);
+TricklerState_t charge_mode_zero_scale(void);
 TricklerState_t charge_mode_powder_trickle_wait_for_complete(void);
 TricklerState_t charge_mode_powder_trickle_wait_for_cup_removal(void);
 TricklerState_t charge_mode_powder_trickle_wait_for_cup_returned(void);
