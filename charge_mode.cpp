@@ -37,7 +37,7 @@ CoarseMode_e cfg_coarse_mode = COARSE_MODE_USE_COARSE_TRICKLER;
 
 int cfg_scale_sampling_period_ms = 100;
 
-float cfg_fine_trickler_kp = 130.0f;
+float cfg_fine_trickler_kp = 200.0f;
 float cfg_fine_trickler_ki = 0.0f;
 float cfg_fine_trickler_kd = 150.0f;
 
@@ -48,7 +48,7 @@ float cfg_coarse_trickler_kd = 180.0f;
 int cfg_thrower_motor_max_speed = 1500;
 
 int cfg_fine_trickler_max_speed = 400;
-int cfg_fine_trickler_min_speed = 5;
+int cfg_fine_trickler_min_speed = 10;
 
 int cfg_coarse_trickler_max_speed = 500;
 int cfg_coarse_trickler_min_speed = 5;
@@ -393,7 +393,7 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
 
 
             // Determine if we should run coarse trickler
-            if (abs(error) < 10.0f) {
+            if (abs(error) < 8.0f) {
                 run_coarse_trickler = false;
                 CoarseTricklerMotor->soft_hiz();
             }
