@@ -1,24 +1,19 @@
 3D Printable OpenTrickler for A&D FX/FZ series scale
 ====================================================
-![assembly](resources/assembly.jpg)
+![assembly](resources/assembly_v3.jpg)
 
 Aftermarket component list
 --------------------------
-- Lee Perfect Poweder Measure
-- NEMA17 stepper motor
-- L298N stepper motor driver
-- Hornady Vibotary Trickler
-- 24 Teeth GT2 pulley
-- Pulley belt (196mm)
-- NUCLEO Dev board
-- MAX3232 RS232 to TTL converter (brand TBD)
-- VN10KM N-channel Fet
-- Meanwell 12V power supply
-- 4x M3x12 for stepper motor mount
-- 2x M4x20 for powder measure mount
-- 2x M4 nut for powder measure mount
-- 2x M6 nut for fixing the powder measure mount and drop tube to the lid
+- Lee Perfect Powder Measure (Powder Hop)
+- 2x NEMA17 Stepper Motor (Pancake model was used)
+- [ST X-NUCLEO-IHM02A1](https://www.st.com/en/ecosystems/x-nucleo-ihm02a1.html) Stepper Motor Driver
+- [ST Nucleo F446RE](https://os.mbed.com/platforms/ST-Nucleo-F446RE/) Dev Board
+- 8x M3x8 screw
+- MAX3232 RS232 to TTL converter
+- 12V switch mode power supply
+- [Duinotech 1.3 inch OLED display](https://www.jaycar.co.nz/duinotech-1-3-inch-monochrome-oled-display/p/XC3728)
+- 4x4 Keypad
 
 Mounting Hardware Overview
 ---------------
-![overview](resources/3d_model.PNG)
+![overview](resources/3d_model_v3.PNG)
