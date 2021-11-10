@@ -1,6 +1,6 @@
 3D Printable OpenTrickler for A&D FX/FZ series scale
 ====================================================
-![assembly](resources/assembly_v3.jpg)
+![assembly](resources/assembly_v3.PNG)
 
 Aftermarket component list
 --------------------------
