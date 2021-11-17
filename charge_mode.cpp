@@ -30,6 +30,10 @@ extern const int cfg_thrower_microstepping;
 static char _charge_weight_string[6];
 static int _cursor_loc = 0;
 static float _charge_weight_set_point = 0;
+static unsigned int latched_fine_trickler_speed = 0;
+static unsigned int latched_coarse_trickler_speed = 0;
+static float latched_flow_rate = 0.0f;
+
 float cfg_cup_removal_sd_threshold = 5;
 float cfg_cup_returned_sd_threshold = 0.02;
 float cfg_cup_returned_zero_threshold = 0.04;
@@ -41,7 +45,7 @@ float cfg_fine_trickler_kp = 200.0f;
 float cfg_fine_trickler_ki = 0.0f;
 float cfg_fine_trickler_kd = 150.0f;
 
-float cfg_coarse_trickler_kp = 12.0f;
+float cfg_coarse_trickler_kp = 6.5f;
 float cfg_coarse_trickler_ki = 0.0f;
 float cfg_coarse_trickler_kd = 180.0f;
 
@@ -100,6 +104,14 @@ void _render_charge_weight_progress(float current_weight, float set_weight){
     float ratio = min(1.0f, max(0.0f, current_weight / set_weight));
     int x1 = int(round(127.0f * ratio));
     OLEDScreen.fillrect(0, 55, x1, 63, White);
+
+    // Display the current motor speed
+    OLEDScreen.locate(0, 10);
+    OLEDScreen.printf("M1:%d M2:%d", latched_fine_trickler_speed, latched_coarse_trickler_speed);
+
+    // Display flow rate
+    OLEDScreen.locate(0, 20);
+    OLEDScreen.printf("Flow Rate: %0.2f gn/s", latched_flow_rate);
 }
 
 
@@ -371,7 +383,16 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
         // Stop condition
         if (error < 0 || abs(error) < 0.03) {
             TricklerMotor->soft_hiz();
+            latched_fine_trickler_speed = 0;
+            latched_coarse_trickler_speed = 0;
             break;
+        }
+
+        // Determine if we should run coarse trickler
+        if (abs(error) < 5.0f) {
+            run_coarse_trickler = false;
+            CoarseTricklerMotor->soft_hiz();
+            latched_coarse_trickler_speed = 0;
         }
 
         if (time_ms > next_sampling_time){
@@ -382,30 +403,30 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
 
             integral += error;
             float derivative = (error - last_error) / elapse_time;
-            last_error = error;
-
+            
             float fine_trickler_p_term = cfg_fine_trickler_kp * error;
             float fine_trickler_i_term = cfg_fine_trickler_ki * integral;
             float fine_trickler_d_term = cfg_fine_trickler_kd * derivative;
 
-            unsigned int new_fine_motor_speed = int(round(fine_trickler_p_term + fine_trickler_i_term + fine_trickler_d_term));
+            unsigned int new_fine_motor_speed = min(int(round(fine_trickler_p_term + fine_trickler_i_term + fine_trickler_d_term)), 
+                                                    cfg_fine_trickler_max_speed);
             TricklerMotor->run(StepperMotor::FWD, new_fine_motor_speed);
-
-
-            // Determine if we should run coarse trickler
-            if (abs(error) < 8.0f) {
-                run_coarse_trickler = false;
-                CoarseTricklerMotor->soft_hiz();
-            }
+            latched_fine_trickler_speed = new_fine_motor_speed;
+            
 
             if (run_coarse_trickler) {
                 float coarse_trickler_p_term = cfg_coarse_trickler_kp * error;
                 float coarse_trickler_i_term = cfg_coarse_trickler_ki * integral;
                 float coarse_trickler_d_term = cfg_coarse_trickler_kd * derivative;
 
-                unsigned int new_coarse_motor_speed = int(round(coarse_trickler_p_term + coarse_trickler_i_term + coarse_trickler_d_term));
+                unsigned int new_coarse_motor_speed = min(int(round(coarse_trickler_p_term + coarse_trickler_i_term + coarse_trickler_d_term)),
+                                                          cfg_coarse_trickler_max_speed);
                 CoarseTricklerMotor->run(StepperMotor::FWD, new_coarse_motor_speed);
+                latched_coarse_trickler_speed = new_coarse_motor_speed;
             }
+
+            latched_flow_rate = (last_error - error) / float(cfg_scale_sampling_period_ms) * 1000.0;
+            last_error = error;
 
             _refresh_scale_weight_display();
         }
