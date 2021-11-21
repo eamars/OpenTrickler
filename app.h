@@ -87,8 +87,5 @@ typedef union {
     char packet[17];
 } ScaleStandardOutputDataFormat_t;
 
-// Configs
-extern const int cfg_thrower_microstepping;
-
 
 #endif  // APP_H_

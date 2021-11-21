@@ -155,8 +155,9 @@ Queue<ScaleMeasurement_t, 1> ScaleMeasurementQueue;
 ScaleMeasurement_t latched_scale_measurement;
 
 // Configurations
-const int cfg_thrower_microstepping = 128;
-const int cfg_thrower_throw_full_step_position = 175;
+int cfg_thrower_microstepping = 128;
+int cfg_thrower_throw_full_step_position = 175;
+int cfg_coarse_trickler_microstepping = 128;
 
 
 FileHandle *mbed::mbed_override_console(int fd)

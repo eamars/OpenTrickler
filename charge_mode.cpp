@@ -23,8 +23,8 @@ extern L6470 *TricklerMotor;
 extern L6470 *CoarseTricklerMotor;
 extern void thrower_discharge(void (*cb)(int)=NULL, bool wait=true);
 extern void thrower_charge(void (*cb)(int)=NULL, bool wait=true);
-extern const int cfg_thrower_microstepping;
-
+extern int cfg_thrower_microstepping;
+extern int cfg_coarse_trickler_microstepping;
 
 // Local static variables
 static char _charge_weight_string[6];
@@ -45,9 +45,9 @@ float cfg_fine_trickler_kp = 200.0f;
 float cfg_fine_trickler_ki = 0.0f;
 float cfg_fine_trickler_kd = 150.0f;
 
-float cfg_coarse_trickler_kp = 6.5f;
+float cfg_coarse_trickler_kp = 4.5f;
 float cfg_coarse_trickler_ki = 0.0f;
-float cfg_coarse_trickler_kd = 180.0f;
+float cfg_coarse_trickler_kd = 250.0f;
 
 int cfg_thrower_motor_max_speed = 1500;
 
@@ -360,6 +360,12 @@ TricklerState_t charge_mode_zero_scale(void){
 }
 
 
+typedef enum{
+    COARSE_TRICKLER_MOVE,
+    COARSE_TRICKLER_STANDBY,
+} CoarseTricklerMode_e;
+
+
 TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
     TricklerMotor->set_max_speed(cfg_fine_trickler_max_speed);
     TricklerMotor->set_min_speed(cfg_fine_trickler_min_speed);
@@ -370,7 +376,7 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
     int next_sampling_time = 0;
     float integral = 0.0f;
     float last_error = 0.0f;
-    bool run_coarse_trickler = true;
+    CoarseTricklerMode_e coarse_trickler_mode = COARSE_TRICKLER_MOVE;
 
     Timer timer;
     timer.start();
@@ -383,15 +389,18 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
         // Stop condition
         if (error < 0 || abs(error) < 0.03) {
             TricklerMotor->soft_hiz();
+            CoarseTricklerMotor->soft_hiz();
             latched_fine_trickler_speed = 0;
             latched_coarse_trickler_speed = 0;
             break;
         }
 
-        // Determine if we should run coarse trickler
-        if (abs(error) < 5.0f) {
-            run_coarse_trickler = false;
-            CoarseTricklerMotor->soft_hiz();
+        if (abs(error) < 5.0f && coarse_trickler_mode == COARSE_TRICKLER_MOVE){
+            CoarseTricklerMotor->hard_stop();
+            CoarseTricklerMotor->wait_while_active();
+            CoarseTricklerMotor->set_max_speed(200);
+            CoarseTricklerMotor->move(StepperMotor::BWD, 60 * cfg_coarse_trickler_microstepping);
+            coarse_trickler_mode = COARSE_TRICKLER_STANDBY;
             latched_coarse_trickler_speed = 0;
         }
 
@@ -414,7 +423,7 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
             latched_fine_trickler_speed = new_fine_motor_speed;
             
 
-            if (run_coarse_trickler) {
+            if (coarse_trickler_mode == COARSE_TRICKLER_MOVE) {
                 float coarse_trickler_p_term = cfg_coarse_trickler_kp * error;
                 float coarse_trickler_i_term = cfg_coarse_trickler_ki * integral;
                 float coarse_trickler_d_term = cfg_coarse_trickler_kd * derivative;
@@ -424,6 +433,7 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
                 CoarseTricklerMotor->run(StepperMotor::FWD, new_coarse_motor_speed);
                 latched_coarse_trickler_speed = new_coarse_motor_speed;
             }
+
 
             latched_flow_rate = (last_error - error) / float(cfg_scale_sampling_period_ms) * 1000.0;
             last_error = error;
@@ -437,6 +447,7 @@ TricklerState_t charge_mode_powder_trickle_wait_for_complete(void){
     }
 
     TricklerMotor->soft_hiz();
+    CoarseTricklerMotor->soft_hiz();
 
     // Make sure the display thread will pause
     while (ScaleWeightDisplayEnable.try_acquire()){}

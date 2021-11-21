@@ -134,7 +134,7 @@ TricklerState_t calibration_mode_tune_fine_trickler(void)
         timer.start();
 
         // Drive the fine trickler motor to max speed, then wait for measured weight to exceed the set point
-        TricklerMotor->run(StepperMotor::FWD, cfg_coarse_trickler_max_speed);
+        TricklerMotor->run(StepperMotor::FWD, 100);
 
         while (true){
             int time_ms = timer.read_ms();
@@ -160,9 +160,9 @@ TricklerState_t calibration_mode_tune_fine_trickler(void)
         float ku = (4.0 * ((cfg_fine_trickler_max_speed - cfg_fine_trickler_min_speed) / 2.0f)) / (M_PI * latched_scale_measurement.measurement / 2.0f);
         float tu = raise_time;
         
-        float kp = 0.2f * ku;
-        float ki = (kp / (0.5f * tu)) * cfg_scale_sampling_period_ms;
-        float kd = (0.33 * kp * tu) / cfg_scale_sampling_period_ms;
+        float kp = 0.8f * ku;
+        float ki = 0;
+        float kd = (0.1 * kp * tu) / cfg_scale_sampling_period_ms;
         
         printf("Kp=%f, Ki=%f, Kd=%f\r\n", kp, ki, kd);
         kp_sum += kp;
@@ -184,7 +184,7 @@ TricklerState_t calibration_mode_tune_fine_trickler(void)
 TricklerState_t calibration_mode_tune_coarse_trickler(void)
 {
     // Control variables
-    float charge_weight_set_point = 20.00f;
+    float charge_weight_set_point = 15.00f;
 
     float kp_sum = 0;
     float ki_sum = 0;
@@ -225,7 +225,7 @@ TricklerState_t calibration_mode_tune_coarse_trickler(void)
         timer.start();
 
         // Drive the fine trickler motor to max speed, then wait for measured weight to exceed the set point
-        CoarseTricklerMotor->run(StepperMotor::FWD, cfg_coarse_trickler_max_speed);
+        CoarseTricklerMotor->run(StepperMotor::FWD, 100);
 
         while (true){
             int time_ms = timer.read_ms();
@@ -251,9 +251,9 @@ TricklerState_t calibration_mode_tune_coarse_trickler(void)
         float ku = (4.0 * ((cfg_fine_trickler_max_speed - cfg_fine_trickler_min_speed) / 2.0f)) / (M_PI * latched_scale_measurement.measurement / 2.0f);
         float tu = raise_time;
         
-        float kp = 0.2f * ku;
-        float ki = (kp / (0.5f * tu)) * cfg_scale_sampling_period_ms;
-        float kd = (0.33 * kp * tu) / cfg_scale_sampling_period_ms;
+        float kp = 0.8f * ku;
+        float ki = 0;
+        float kd = (0.1 * kp * tu) / cfg_scale_sampling_period_ms;
         
         printf("Kp=%f, Ki=%f, Kd=%f\r\n", kp, ki, kd);
         kp_sum += kp;

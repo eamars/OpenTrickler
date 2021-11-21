@@ -19,7 +19,7 @@ extern void thrower_discharge(void (*cb)(int)=NULL, bool wait=true);
 extern void thrower_charge(void (*cb)(int)=NULL, bool wait=true);
 
 // Configs and control variables
-const extern int cfg_thrower_microstepping;
+extern int cfg_thrower_microstepping;
 const int cfg_discharge_cycles = 5;
 static int _current_discharge_cycle_count = 1;
 
