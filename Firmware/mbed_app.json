@@ -1,5 +1,0 @@
-{
-    "target_overrides": {
-        "*": {"target.printf_lib": "std"}
-    }
-}

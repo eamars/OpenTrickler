@@ -39,3 +39,8 @@ Assembly
 ---------
 
 ![assembly](Resources/assembly.PNG)
+
+
+Firmware
+--------
+The firmware and corresponding controller design is now moved to [OpenTrickler-RP2040-Controller](https://github.com/eamars/OpenTrickler-RP2040-Controller) project.
