@@ -3,10 +3,11 @@
 ## BOM
 |        **Name**        | **Quantity** | **Remarks** |
 |:----------------------:|:------------:|:-----------:|
-| Heatset Inserts M3x5x4 |       9      |             |
-|        M3x6 BHCS       |       1      |             |
+| Heatset Inserts M3x5x4 |      14      |             |
+|        M3x6 BHCS       |       5      |             |
 |       M3x12 SHCS       |       4      |             |
-|       M3x10 SHCS       |              |             |
+|       M3x10 SHCS       |       8      |             |
+|        M3x8 SHCS       |       7      |             |
 
 ## Tools
 Subject to the self supplied components, following tools may be required. 
