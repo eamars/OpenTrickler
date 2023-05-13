@@ -13,15 +13,71 @@
 Subject to the self supplied components, following tools may be required. 
 * 2.0mm, 2.5mm ball-end hex drivers are recommended.
 
+## Assemble Open Trickler Rear Body
+### Overview
+![open_trickler_rear_body_overview.png](Resources/open_trickler_rear_body_overview.png)
+
+### Component Prep
+This design relies heavily on heatset inserts. Make sure you have the proper inserts (check the hardware
+reference for a close up picture and the BOM for dimensions).
+
+Melt 4x heatset inserts to the bottom part of the rear body with your soldering iron. Make sure 
+heatset inserts are flush with the bottom surface. 
+![open_trickler_rear_body_install_heatset_inserts.png](Resources/open_trickler_rear_body_install_heatset_inserts.png)
+
+### Assembly
+Press 6840-2RS bearing top the top cut out and 608-2RS to the bottom cut out. You may experience some 
+resistance but that is normal. 
+![open_trickler_rear_body_install_bearings.png](Resources/open_trickler_rear_body_install_bearings.png)
+
+Use 8x M3x8 BHCS screws to fix two stepper motors onto the frame, but don't tighten them yet.
+Make sure the motor can slide left to right. 
+![open_trickler_rear_body_install_motors.png](Resources/open_trickler_rear_body_install_motors.png)
+
+Install 2x 40T pulley to the motor shaft. The pulley height will be adjusted in later steps. 
+![open_trickler_rear_body_install_pulley.png](Resources/open_trickler_rear_body_install_pulley.png)
+
+## Assemble Open Trickler Front Body
+### Overview
+![open_trickler_front_body_overview.png](Resources/open_trickler_front_body_overview.png)
+
+### Component Prep
+Flop the printed part over and melt 4x heatset inserts to the bottom part of the front body with your soldering iron. 
+Make sure heatset inserts are flush with the bottom surface
+
+![open_trickler_front_body_install_heatset_inserts.png](Resources/open_trickler_front_body_install_heatset_inserts.png)
+
+### Assembly
+Press 6840-2RS bearing top the top cut out and 608-2RS to the bottom cut out. You may experience some 
+resistance but that is normal. 
+
+![open_trickler_front_body_install_bearings.png](Resources/open_trickler_front_body_install_bearings.png)
+
 ## Assemble Open Trickler Body
+### Overview
+![open_trickler_body_overview.png](Resources/open_trickler_body_overview.png)
+
+### Assembly
+Insert both large and small rotary tube through the rear bearing. You may experience some resistance subject to the 
+tolerance of the printed part. 
+
+Adjust the motor position towards rotary tubes. Once done, slide the belt onto rotary tubes and pulleys. Make
+sure the longer belt is connected to the motor on the right side. 
+![open_trickler_body_install_belt.png](Resources/open_trickler_body_install_belt.png)
+
+Side rotary tubes to the front body though bearings. 
+![open_trickler_connect_front_body.png](Resources/open_trickler_connect_front_body.png)
+
+The last step is to slide the front, rear doors to the groove, then side front and rear cover to the top of front and 
+rear groove. 
+![open_trickler_install_covers.png](Resources/open_trickler_install_covers.png)
+
 
 ## Assemble A&D FX-120i/300i Weight Pan Adapter
 ### Overview
 ![weight_pan_adapter_overview.png](Resources/weight_pan_adapter_overview.png)
 
 ### Component Prep
-This design relies heavily on heatset inserts. Make sure you have the proper inserts (check the hardware
-reference for a close up picture and the BOM for dimensions).
 ![weight_pan_adapter_top_install_heatset_insert.png](Resources/weight_pan_adapter_top_install_heatset_insert.png)
 
 ### Assembly
@@ -86,6 +142,9 @@ Melt 2x heatset inserts into the ring.
 Use 2x M3x6 BHCS to join the ring to the discharge cup. 
 ![rear_discharge_cup_assembly.png](Resources/rear_discharge_cup_assembly.png)
 
+## Post Installation Adjustments
+You need to adjust the tension of the belt. First loosen 8x M3x8 BHCS used to secure stepper motors. 
+Then pull motors slightly to tension the belts. Once done, tighten all 8 screws. 
 
 # Congratulations
 Your Open Trickler is assembled!
