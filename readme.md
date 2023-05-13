@@ -8,7 +8,7 @@ Inspired by the [AutoTrickler v4](https://autotrickler.com/pages/autotrickler-v4
 
 BOM
 ---------
-To be updated
+BOM is now a part of the assembly [Manual](Manual/assembly.md#bom)
 
 Print Guide
 ---------
@@ -22,19 +22,17 @@ The printer need to be tuned at least for extruder e-stepts and flow as it has p
 
 Print Orientation 
 ---------
-
 You should print provided STL with default orientation
 
 
 Assembly 
 ---------
-To be updated
-![assembly](Resources/assembly.PNG)
+[Assembly Manual](Manual/assembly.md) 
 
 
 Controller
 --------
-The Open Trickler Controller is splitted into following projects: 
+The Open Trickler Controller is split into following projects: 
 
  * Custom PCB with Raspberry Pi Pico [Raspberry Pi Pico Motor Expansion Board](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board)
  * Firmware that utilises the Raspberry Pi RP2040 micro controller [OpenTrickler RP2040 Controller](https://github.com/eamars/OpenTrickler-RP2040-Controller)

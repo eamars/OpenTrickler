@@ -1,13 +1,17 @@
 # Open Trickler Assembly Manual
 
 ## BOM
-|        **Name**        | **Quantity** | **Remarks** |
-|:----------------------:|:------------:|:-----------:|
-| Heatset Inserts M3x5x4 |      14      |             |
-|        M3x6 BHCS       |       5      |             |
-|       M3x12 SHCS       |       4      |             |
-|       M3x10 SHCS       |       8      |             |
-|        M3x8 SHCS       |       7      |             |
+|          **Name**          | **Quantity** | **Remarks** |
+|:--------------------------:|:------------:|:-----------:|
+|   Heatset Inserts M3x5x4   |      22      |             |
+|          M3x6 BHCS         |       5      |             |
+|          M3x8 BHCS         |       8      |             |
+|         M3x12 SHCS         |       4      |             |
+|         M3x10 SHCS         |       8      |             |
+|          M3x8 SHCS         |       7      |             |
+|      6804-2RS  Bearing     |       2      |             |
+|       608-2RS Bearing      |       2      |             |
+| Nema 17 20mm Stepper Motor |       2      |             |
 
 ## Tools
 Subject to the self supplied components, following tools may be required. 
