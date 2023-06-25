@@ -30,7 +30,7 @@ heatset inserts are flush with the bottom surface.
 ![open_trickler_rear_body_install_heatset_inserts.png](Resources/open_trickler_rear_body_install_heatset_inserts.png)
 
 ### Assembly
-Press 6840-2RS bearing top the top cut out and 608-2RS to the bottom cut out. You may experience some 
+Press 6804-2RS bearing top the top cut out and 608-2RS to the bottom cut out. You may experience some 
 resistance but that is normal. 
 ![open_trickler_rear_body_install_bearings.png](Resources/open_trickler_rear_body_install_bearings.png)
 
@@ -52,7 +52,7 @@ Make sure heatset inserts are flush with the bottom surface
 ![open_trickler_front_body_install_heatset_inserts.png](Resources/open_trickler_front_body_install_heatset_inserts.png)
 
 ### Assembly
-Press 6840-2RS bearing top the top cut out and 608-2RS to the bottom cut out. You may experience some 
+Press 6804-2RS bearing top the top cut out and 608-2RS to the bottom cut out. You may experience some 
 resistance but that is normal. 
 
 ![open_trickler_front_body_install_bearings.png](Resources/open_trickler_front_body_install_bearings.png)
