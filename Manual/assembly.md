@@ -11,7 +11,7 @@
 |          M3x8 SHCS         |       7      |             |
 |      6804-2RS  Bearing     |       2      |             |
 |       608-2RS Bearing      |       2      |             |
-| Nema 17 20mm Stepper Motor |       2      |             |
+| Nema 17 34mm Stepper Motor |       2      |             |
 
 ## Tools
 Subject to the self supplied components, following tools may be required. 
