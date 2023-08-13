@@ -5,6 +5,8 @@ Open Trickler Mechanical Design
 
 Inspired by the [AutoTrickler v4](https://autotrickler.com/pages/autotrickler-v4) and [Super Trickler](https://supertrickler.com.au/), the OpenTrickler is designed be printed and assembled using common tools to build Voron printers.
 
+Join our discord server for help and development information. 
+![Discord Banner 2](https://discordapp.com/api/guilds/1140240291123703909/widget.png?style=banner2)
 
 BOM
 ---------
