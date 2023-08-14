@@ -5,6 +5,7 @@ This document provides information regarding the self sourcing guide for afterma
 
 ## Stepper Motor Driver
 ![tmc2209](Resources/fly_tmc2209.jpg)
+
 Subject to the implementation of [Motor Expansion Board](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board), TMC2209 from certain manufacturers are recommended. 
 
 *Please note there is no standard pin out for TMC2209 StepStick modules therefore please stick to the recommended parts.*
@@ -14,6 +15,7 @@ Subject to the implementation of [Motor Expansion Board](https://github.com/eama
 
 ## Mini 12864 Display with Controller
 ![fly_mini12864](Resources/fly_mini12864_display.jpg)
+
 Subject to the implementation of [Motor Expansion Board](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board), The mini 1286 display from certain manufactorers are recommended.
 
 *Please note there is no standard pin out for mini 12864 displays therefore please stick to the recommended parts.*
@@ -41,6 +43,7 @@ You can find the bearing from [https://www.aliexpress.com/item/4000120762936.htm
 
 ## Motors
 ![nema17_motor](Resources/nema17_motor.jpg)
+
 Any bipolar NEMA17 (48mm) stepper motor will work. The only thing you need to worry about is the output shaft. The output shaft need to be 5mm in diameter and longer than 20mm measured from the surface. 
 
 * Hanpose 42x48mm [https://www.aliexpress.com/item/1005005195056354.html](https://www.aliexpress.com/item/1005005195056354.html)
@@ -62,6 +65,7 @@ Both belts can be 3d printed. However if you're not feeling good to print those 
 
 ## 40 Teeth GT2 Timing Pulley
 ![gt2_40t_pulley](Resources/gt2_40t_pulley.jpg)
+
 Both pulleys can be 3d printed. However if you're not feeling good to print those yourself, you can find the aftermarket parts. Below are example parts. 
 
 * 5mm bore, for belt width 6mm [https://www.aliexpress.com/item/1005002843440540.html](https://www.aliexpress.com/item/1005002843440540.html)
