@@ -44,9 +44,9 @@ You can find the bearing from [https://www.aliexpress.com/item/4000120762936.htm
 ## Motors
 ![nema17_motor](Resources/nema17_motor.jpg)
 
-Any bipolar NEMA17 (48mm) stepper motor will work. The only thing you need to worry about is the output shaft. The output shaft need to be 5mm in diameter and longer than 20mm measured from the surface. 
+Any bipolar NEMA17 (42mm) stepper motor will work. The only thing you need to worry about is the output shaft. The output shaft need to be 5mm in diameter and longer than 20mm measured from the surface. 
 
-* Hanpose 42x48mm [https://www.aliexpress.com/item/1005005195056354.html](https://www.aliexpress.com/item/1005005195056354.html)
+* Hanpose 42x24mm [https://www.aliexpress.com/item/1005005195056354.html](https://www.aliexpress.com/item/1005005195056354.html)
 
 ## GT2 Belts
 Both belts can be 3d printed. However if you're not feeling good to print those in TPU, you can also buy the aftermarket part. 
