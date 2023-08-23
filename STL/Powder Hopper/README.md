@@ -9,7 +9,7 @@ Basic Settings
 * 0.2mm layer height
 * No support needed
 
-All parts are pre-oriented so you don't need to worry about that part. 
+All parts are pre-oriented.
 
 
 
