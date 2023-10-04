@@ -232,7 +232,7 @@ Stack 2x M3 washer to the rear body adapter pocket, then thread the M3x8 BHCS di
 
 ![powder_hopper_install_screw.png](Resources/powder_hopper_install_screw.png)
 
-Lastly, slide the powder hopper to the top of the rear body. Make sure to push the powder hopper all the way in. The rear body adapter should sit flush with th rear body assembly.
+Lastly, slide the powder hopper to the top of the rear body. Make sure to push the powder hopper all the way in. The rear body adapter should sit flush with the rear body assembly.
 
 ![powder_hopper_install_to_rear_body.png](Resources/powder_hopper_install_to_rear_body.png)
 
