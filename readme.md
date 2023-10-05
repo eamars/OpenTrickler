@@ -1,4 +1,4 @@
-# Open Trickler
+# Open Trickler - The Open Source Powder Trickler System
 
 ![render](Resources/render.PNG)
 
