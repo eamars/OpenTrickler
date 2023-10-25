@@ -9,4 +9,4 @@ You need a handful of M3x 10 / 12 / 16 / 20 hex screws and M3 nuts to screw thin
 ![render](./Overview.png)
 
 Print with support on build plate only, with following orientations:
-![render][./print_orientation.png]
+![render](./print_orientation.png)
