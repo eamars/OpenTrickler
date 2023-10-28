@@ -4,8 +4,8 @@
 
 | **Name**                                  | **Quantity** | **Remarks** |
 |:-----------------------------------------:|:------------:|:-----------:|
-| Heatset Inserts M3x5x4                    | 22           |             |
-| M3x6 BHCS                                 | 5            |             |
+| Heatset Inserts M3x5x4                    | 24           |             |
+| M3x6 BHCS                                 | 7            |             |
 | M3x8 BHCS                                 | 9            |             |
 | M3x12 SHCS                                | 4            |             |
 | M3x10 SHCS                                | 8            |             |
@@ -118,24 +118,56 @@ Side rotary tubes to the front body though bearings.
 
 The OpenTrickler is now partially assembled. In the later steps the OpenTrickler will be mounted to one of the scale adapter for final assembly.
 
-## Assemble A&D FX-120i/300i Weight Pan Adapter
+## Assemble A&D FX-120i/300i Weight Pan
+
+Skip this step if you're using scales other than A&D FX-120i/300i. 
 
 ### Overview
 
-![weight_pan_adapter_overview.png](Resources/weight_pan_adapter_overview.png)
+![weight_pan_overview](Resources/weight_pan_overview.png)
+
+### Inspection
+
+Insert the scale to weight pan adapter to the square groove of the A&D FX-120i/300i scale bottom down, make sure the adapter can be inserted to be groove and seat firmly. If not, you may need to check the printing parameters to achieve the firm fit. 
+
+![scale_to_weight_pan_adapter_inspection](Resources/scale_to_weight_pan_adapter_inspection.jpg)
 
 ### Component Prep
 
-![weight_pan_adapter_top_install_heatset_insert.png](Resources/weight_pan_adapter_top_install_heatset_insert.png)
+Melt 1x heatset insert into the bottom side of the cup base. Make sure the heatset insert seats flush with the bottom surface.
+
+![cup_base_install_heatset_insert](Resources/cup_base_install_heatset_insert.png)
+
+Melt 1x heatset insert into to the scale to weight pan adapter. Make sure the heatset insert seats flush with the top surface.
+
+![scale_to_weight_pan_adapter_install_heatset_insert](Resources/scale_to_weight_pan_adapter_install_heatset_insert.png)
 
 ### Assembly
 
-Use 1x M3x6 BHCS to install the top part to the weight pan adapter. The screw should sit flush or 
-below, more importantly, not extruding beyond the surface.
+Use 1x M3x6 BHCS to join the weight pan with the scale to weight pan adapter. 
 
-![wieght_pan_adapter_assembly.png](Resources/wieght_pan_adapter_assembly.png)
+![mate_scale_adapter_with_weight_pan](Resources/mate_scale_adapter_with_weight_pan.png)
+
+Then use 1x M3x6 BHCS to join the cup base to the weight pan. 
+
+![mate_cup_base_with_weight_pan](Resources/mate_cup_base_with_weight_pan.png)
+
+### Put some money in the pocket
+
+You need to provide some coins in all 3 pockets to increase the overall weight of the weight pan to reach the minimum weight of A&D FX-120i/300i. The stock weight pan is measured at 100 gram. Coins are needed to add up to this weight. 
+
+What coin to use? Below is the reference table. 
+
+| Coin            | Diameter | Weight | Minimum Quantity              |
+| --------------- | -------- | ------ | ----------------------------- |
+| New Zealand \$2 | 26.5 mm  | 10 g   | 6                             |
+| Australia $1    | 25 mm    | 9 g    | 7 |
+| Euro €2         | 25.75 mm | 8.5 g  | 7                             |
+| US $1           | 26.49 mm | 8.1 g  | 8                             |
 
 ## Assemble A&D FX Shield
+
+Skip this step if you're using scales other than A&D FX-120i/300i.
 
 ### Overview
 
@@ -173,6 +205,8 @@ Use 4x M3x8 SHCS to join the upper and lower together. (The Open Trickler body i
 
 The pan cover is used to protect the pan from dust or accidental drops. The pan cover can be seamly
 put onto the shield body when not used. 
+
+Skip this step if you're using scales other than A&D FX-120i/300i.
 
 ### Overview
 
