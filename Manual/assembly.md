@@ -158,12 +158,12 @@ You need to provide some coins in all 3 pockets to increase the overall weight o
 
 What coin to use? Below is the reference table. 
 
-| Coin            | Diameter | Weight | Minimum Quantity              |
-| --------------- | -------- | ------ | ----------------------------- |
-| New Zealand \$2 | 26.5 mm  | 10 g   | 6                             |
-| Australia $1    | 25 mm    | 9 g    | 7 |
-| Euro €2         | 25.75 mm | 8.5 g  | 7                             |
-| US $1           | 26.49 mm | 8.1 g  | 8                             |
+| Coin            | Diameter | Weight | Minimum Quantity |
+| --------------- | -------- | ------ | ---------------- |
+| New Zealand \$2 | 26.5 mm  | 10 g   | 6                |
+| Australia $1    | 25 mm    | 9 g    | 7                |
+| Euro €2         | 25.75 mm | 8.5 g  | 7                |
+| US $1           | 26.49 mm | 8.1 g  | 8                |
 
 ## Assemble A&D FX Shield
 
@@ -287,5 +287,5 @@ Then pull motors slightly to tension the belts. Once done, tighten all 8 screws.
 
 # Congratulations
 
-Your Open Trickler v1.1 is now assembled!
+Your Open Trickler v1.2 is now assembled!
 ![fx_shield_final_view.png](Resources/fx_shield_final_view.png)
