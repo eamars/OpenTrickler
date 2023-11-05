@@ -6,7 +6,7 @@ This document provides information regarding the self sourcing guide for afterma
 
 ## Things for OpenTrickler Controller
 
-You could find details for Pico Motor Expansion Board from the [repository}(https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board).
+You could find details for Pico Motor Expansion Board from the [repository](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board).
 
 ### 12/24V Power Supply
 
