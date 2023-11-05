@@ -8,6 +8,12 @@ This document provides information regarding the self sourcing guide for afterma
 
 You could find details for Pico Motor Expansion Board from the [repository}(https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board).
 
+### 12/24V Power Supply
+
+You can use either 12V or 24V power supply. It is recommended to have minimum 2A output capacity to avoid any potential brown out when the motors draw too much current. Belows are recommended power supplys. 
+
+* [Meanwell LRS-50-24 from Digikey](https://www.digikey.co.nz/en/products/detail/mean-well-usa-inc/LRS-50-24/7705048)
+
 ### 2mm Pitch Female Jumper
 
 You will need 3x 2mm pitch female jumper per board. 
@@ -57,8 +63,7 @@ Subject to the specific assumption of the StepStick wiring, the TMC2209 module f
 
 * ✅ Fly TMC2209 [https://www.aliexpress.com/item/1005001877899893.html](https://www.aliexpress.com/item/1005001877899893.html)
 * ✅ BigTreeTech TMC2209 [https://www.aliexpress.com/item/33029587820.html](https://www.aliexpress.com/item/33029587820.html)
-  
-  
+
 ### Mini 12864 Display with Controller
 
 ![fly_mini12864](Resources/fly_mini12864_display.jpg)
