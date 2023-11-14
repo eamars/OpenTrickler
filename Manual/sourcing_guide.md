@@ -62,7 +62,9 @@ Subject to the specific assumption of the StepStick wiring, the TMC2209 module f
 *Please note there is no standard pin out for TMC2209 StepStick modules therefore please stick to the recommended parts.*
 
 * ✅ Fly TMC2209 [https://www.aliexpress.com/item/1005001877899893.html](https://www.aliexpress.com/item/1005001877899893.html)
-* ✅ BigTreeTech TMC2209 [https://www.aliexpress.com/item/33029587820.html](https://www.aliexpress.com/item/33029587820.html)
+* ✅ BigTreeTech TMC2209 [https://www.aliexpress.com/item/33029587820.html](https://www.aliexpress.com/item/33029587820.html) 
+**The listing includes both TMC2208 and TMC2209. Make sure to select TMC2209**.
+* BigTreeTech TMC2209 via [Official Site](https://biqu.equipment/collections/driver-board/products/bigtreetech-tmc2209-stepper-motor-driver-for-3d-printer-board-vs-tmc2208).
 
 ### Mini 12864 Display with Controller
 
