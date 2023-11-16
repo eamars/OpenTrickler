@@ -137,7 +137,7 @@ Again, the "Cleanup Mode" can be used to validate the scale communication.
 
 **Steps:**
 
-1. Follow steps from [Inspect Motors](# Inspect Motors) to enter the "Cleanup Mode".
+1. Follow steps from **Inspect Motors** to enter the "Cleanup Mode".
 2. Inspect the value after "Weight". 
 
 **Validations"**
