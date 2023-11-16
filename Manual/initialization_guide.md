@@ -87,7 +87,7 @@ Troubleshooting
 * If the screen shows blank but there is backlight, you may need to press the RESET button on the board and check again. 
 * If the screen shows blank and no backlight, you may need to check the EXP1 and EXP2 wiring. 
 * If you have any doubt, join our discord and ask for help. 
-  
+
 ### Connect to WiFi
 
 You will need to follow [Connect to Wireless](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/connect_to_wireless.md) procedure to connect the Pico W to your home wireless and gain the access to the advanced configuration manual from the web interface. 
@@ -100,6 +100,49 @@ If the cursor moves in the opposite direction, you can correct it by login to th
 
 ![invert_rotary_button_direction](Resources/invert_rotary_button_direction.png)
 
+You will need to save the settings to the EEPROM and reboot. 
+
 ### Inspect Motors
 
-A quick way to test the motion of motors 
+A quick way to validate the function of motors is to use Cleanup mode. 
+
+*The cleanup mode is designed to clear the remaining powder left in the tube.*
+
+**Steps:**
+
+1. From the main menu, rotate the button until the cursor points to the "Cleanup", press the button downwards to continue.
+   ![mini_12864_menu_cleanup](Resources/mini_12864_menu_cleanup.png)
+
+2. You will then see the warning page. Make sure there is no powder in the reservoir, then rotate the button to "Next", press the button downwards to continue.  
+   ![mini_12864_cleanup_warning](Resources/mini_12864_cleanup_warning.png)
+
+3. You will then see the "Adjust Speed" menu. 
+   ![mini_12864_cleanup_view](Resources/mini_12864_cleanup_view.png)
+   At "Adjust Speed" menu, rotate the button clockwise or counter clockwise to adjust the speed of both motors. Use RESET button to exit. Pressing the button downwards will change the control of motors. 
+
+**Validations:**
+
+* If any of, or both motor vibrates, instead of moving clockwise or counter clockwise, you need to swap the middle two pins of the motor cable. 
+  ![swap_motor_cable_pin](Resources/swap_motor_cable_pin.png)
+* For positive speed, the both motors should rotate clockwise. If not, then you need to invert the motor step direction via the web interface, under "Coarse Motor", or/and "Fine Motor". You will need to save the settings to the EEPROM and reboot. 
+  ![invert_motor_step_direction](Resources/invert_motor_step_direction.png)
+
+### Configure and Inspect Scale Communication
+
+* If you're using A&D fx120i/300i series scale, follow the [guide by OE5AMP](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/OpenTrickler%20manual%20for%20ADFX%20scale.pdf) to configure the scale to report automatically. 
+  - If your scale was previously configured for AutoTrickler v3/v4, you will only need to follow Step 2 to update the data output mode. 
+* If you're using other scales, sorry, at the time this manual is written, the setup procedure for generic scale support is absent. 
+
+Again, the "Cleanup Mode" can be used to validate the scale communication. 
+
+**Steps:**
+
+1. Follow steps from [Inspect Motors](#Inspect Motors) to enter the "Cleanup Mode".
+2. Inspect value after "Weight". 
+
+**Validations"**
+
+* If you read "inf" after the Weight, it indicates the communication to the scale is not established. Please review the connection to the scale, as well as scale settings. 
+* If you can read "0" after the Weight, but the value doesn't change despite the value from the scale's screen updated. Please review the scale settings. 
+
+
