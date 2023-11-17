@@ -111,13 +111,17 @@ A quick way to validate the function of motors is to use Cleanup mode.
 **Steps:**
 
 1. From the main menu, rotate the button until the cursor points to the "Cleanup", press the button downwards to continue.
+
    ![mini_12864_menu_cleanup](Resources/mini_12864_menu_cleanup.png)
 
 2. You will then see the warning page. Make sure there is no powder in the reservoir, then rotate the button to "Next", press the button downwards to continue.  
+
    ![mini_12864_cleanup_warning](Resources/mini_12864_cleanup_warning.png)
 
 3. You will then see the "Adjust Speed" menu. 
+
    ![mini_12864_cleanup_view](Resources/mini_12864_cleanup_view.png)
+   
    At "Adjust Speed" menu, rotate the button clockwise or counter clockwise to adjust the speed of both motors. Use RESET button to exit. Pressing the button downwards will change the control of motors. 
 
 **Validations:**
