@@ -111,24 +111,20 @@ A quick way to validate the function of motors is to use Cleanup mode.
 **Steps:**
 
 1. From the main menu, rotate the button until the cursor points to the "Cleanup", press the button downwards to continue.
-
    ![mini_12864_menu_cleanup](Resources/mini_12864_menu_cleanup.png)
 
 2. You will then see the warning page. Make sure there is no powder in the reservoir, then rotate the button to "Next", press the button downwards to continue.  
-
    ![mini_12864_cleanup_warning](Resources/mini_12864_cleanup_warning.png)
 
 3. You will then see the "Adjust Speed" menu. 
-
    ![mini_12864_cleanup_view](Resources/mini_12864_cleanup_view.png)
-   
    At "Adjust Speed" menu, rotate the button clockwise or counter clockwise to adjust the speed of both motors. Use RESET button to exit. Pressing the button downwards will change the control of motors. 
 
 **Validations:**
 
 * If any of, or both motor vibrates, instead of moving clockwise or counter clockwise, you need to swap the middle two pins of the motor cable. 
   ![swap_motor_cable_pin](Resources/swap_motor_cable_pin.png)
-* For positive speed, the both motors should rotate clockwise. If not, then you need to invert the motor step direction via the web interface, under "Coarse Motor", or/and "Fine Motor". You will need to save the settings to the EEPROM and reboot. 
+* For positive speed, the both motors should rotate clockwise. If not, then you need to invert the motor step direction via the web interface, by toggling "Inverted Step Direction Pin, under "Coarse Motor", or/and "Fine Motor". You will need to save the settings to the EEPROM and reboot. 
   ![invert_motor_step_direction](Resources/invert_motor_step_direction.png)
 
 ### Configure and Inspect Scale Communication
@@ -148,5 +144,3 @@ Again, the "Cleanup Mode" can be used to validate the scale communication.
 
 * If you read "inf" after the Weight, it indicates the communication to the scale is not established. Please review the connection to the scale, as well as scale settings. 
 * If you can read "0" after the Weight, but the value doesn't change despite the value from the scale's screen updated. Please review the scale settings. 
-
-
