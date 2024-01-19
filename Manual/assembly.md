@@ -167,7 +167,7 @@ What coin to use? Below is the reference table.
 
 ## Assemble Powder Cup
 
-Powder cup assembly is straight forward. Two M3x6 BHCS are designed to be tapped into the cup body directly in order to join with the cup handle
+Powder cup assembly is straight forward. Two M3x6 BHCS are designed to be tapped into the cup body directly in order to join with the cup handle.
 
 ![powder_cup_assembly](Resources/powder_cup_assembly.png)
 
