@@ -4,8 +4,8 @@
 
 | **Name**                                  | **Quantity** | **Remarks** |
 |:-----------------------------------------:|:------------:|:-----------:|
-| Heatset Inserts M3x5x4                    | 24           |             |
-| M3x6 BHCS                                 | 7            |             |
+| Heatset Inserts M3x5x4                    | 26           |             |
+| M3x6 BHCS                                 | 9            |             |
 | M3x8 BHCS                                 | 9            |             |
 | M3x12 SHCS                                | 4            |             |
 | M3x10 SHCS                                | 8            |             |
@@ -165,6 +165,12 @@ What coin to use? Below is the reference table.
 | Euro €2         | 25.75 mm | 8.5 g  | 7                |
 | US $1           | 26.49 mm | 8.1 g  | 8                |
 
+## Assemble Powder Cup
+
+Powder cup assembly is straight forward. Two M3x6 BHCS are designed to be tapped into the cup body directly in order to join with the cup handle.
+
+![powder_cup_assembly](Resources/powder_cup_assembly.png)
+
 ## Assemble A&D FX Shield
 
 Skip this step if you're using scales other than A&D FX-120i/300i.
@@ -287,5 +293,5 @@ Then pull motors slightly to tension the belts. Once done, tighten all 8 screws.
 
 # Congratulations
 
-Your Open Trickler v1.2 is now assembled!
+Your Open Trickler is now assembled!
 ![fx_shield_final_view.png](Resources/fx_shield_final_view.png)
