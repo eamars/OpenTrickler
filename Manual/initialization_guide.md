@@ -140,7 +140,8 @@ A quick way to validate the function of motors is to use Cleanup mode.
    - C3:6 (this sets baudrate to 9600, make sure to configyre the same in OpenTrickler Scale menu for JJ100B profile)
    - C4:33 [when at C4 setting press button above CAL once to increase value by 10]
    - C5:0
-   - C6:0   
+   - C6:0
+   - Press CAL to finish  
 * If you're using other scales, sorry, at the time this manual is written, the setup procedure for generic scale support is absent. 
 
 Again, the "Cleanup Mode" can be used to validate the scale communication. 
