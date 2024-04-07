@@ -130,7 +130,18 @@ A quick way to validate the function of motors is to use Cleanup mode.
 ### Configure and Inspect Scale Communication
 
 * If you're using A&D fx120i/300i series scale, follow the [guide by OE5AMP](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/OpenTrickler%20manual%20for%20ADFX%20scale.pdf) to configure the scale to report automatically. 
-  - If your scale was previously configured for AutoTrickler v3/v4, you will only need to follow Step 2 to update the data output mode. 
+  - If your scale was previously configured for AutoTrickler v3/v4, you will only need to follow Step 2 to update the data output mode.
+* If you're using G&G J100B scales follow below steps:
+1. Enter scales settings by holding CAL button and powering on the scales.
+2. Use CAL to cycle through settings and TARE to change values.
+3. Set below values:
+   - C1:1 (try 0 if you like, but "zero" will take longer to settle)\
+   - C2:1 (try 0 if you like)
+   - C3:6 (this sets baudrate to 9600, make sure to configyre the same in OpenTrickler Scale menu for JJ100B profile)
+   - C4:33 [when at C4 setting press button above CAL once to increase value by 10]
+   - C5:0
+   - C6:0
+   - Press CAL to finish  
 * If you're using other scales, sorry, at the time this manual is written, the setup procedure for generic scale support is absent. 
 
 Again, the "Cleanup Mode" can be used to validate the scale communication. 

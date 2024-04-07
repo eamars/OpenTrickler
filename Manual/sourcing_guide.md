@@ -46,7 +46,9 @@ Any MicroUSB data cable can be used to program the Pico W firmware. Those cable 
 
 ![db9 cable](Resources/Leader-CBAT-DB9NULL-FF-3.jpg)
 
-You will need a **female to female** DB9 cable to interface with A&D FX-120i/300i series of scale. You can use either straight-through or NULL-modem cable. Subject to the type of the cable you will need to insert the [2mm pitch jumper](#2mm Pitch Female Jumper) accordingly. Below are example parts. 
+**A&D FX-120i/300i** You will need a **female to female** DB9 cable. 
+**G&G JJ100B** You will need a **male to female** DB9 cable.
+You can use either straight-through or NULL-modem cable. Subject to the type of the cable you will need to insert the [2mm pitch jumper](#2mm Pitch Female Jumper) accordingly. Below are example parts. 
 
 * [Aliexpress](https://www.aliexpress.com/item/3256805572553474.html)
 * [Aliexpress](https://www.aliexpress.com/item/3256805240818006.html)
