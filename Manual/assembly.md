@@ -63,13 +63,15 @@ Slide the rear door to the cut out and the rear body assembly is complete.
 
 ## Assemble Open Trickler Front Body
 
+(Alternative) If you are going to use servo gate, you need to skip the following section and follow the instruction from [servo gate build guide](../STL/OpenTrickler/Optional/ServoGate/README.md) instead. 
+
 ### Overview
 
 ![open_trickler_front_body_overview.png](Resources/open_trickler_front_body_overview.png)
 
 ### Component Prep
 
-Flop the printed part over and melt 4x heatset inserts to the bottom part of the front body with your soldering iron. 
+Flip the printed part over and melt 4x heatset inserts to the bottom part of the front body with your soldering iron. 
 Make sure heatset inserts are flush with the bottom surface
 
 ![open_trickler_front_body_install_heatset_inserts.png](Resources/open_trickler_front_body_install_heatset_inserts.png)
