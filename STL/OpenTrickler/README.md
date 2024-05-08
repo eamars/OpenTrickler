@@ -24,13 +24,9 @@
 | Heatset Inserts M3x5x4 | 12           |                               |
 | M3x8 BHCS              | 8            |                               |
 | Shim Washer            | 8            | (OD=6mm, ID=3mm, Thick=0.5mm) |
-|                        |              |                               |
-|                        |              |                               |
-|                        |              |                               |
-|                        |              |                               |
-|                        |              |                               |
-|                        |              |                               |
-|                        |              |                               |
+| 6804 Bearing           | 2            |                               |
+| 608 Bearing            | 2            |                               |
+| Nema 17 Stepper Motor  | 2            |   |
 
 ## Tools
 
@@ -65,7 +61,6 @@ For the next step, you have three options
 2. [bearing_cover_tighter_tolerance_x2.stl](Optional/bearing_cover_tighter_tolerance_x2.stl): The procedure is identical to option 1 but with the bearing cover with slightly tigher tolerance. 
 
 3. [VolumnReducer](Optional/VolumnReducer): Slide the rear volumn reducer assembly to the rear cut out. The cover should sit flush with the top of the rear body, while two bearings are still free to rotate without resistance.
-
    ![open_trickler_rear_body_install_volumn_reducer](resources/open_trickler_rear_body_install_volumn_reducer.png)
 
 Use 8x M3x8 BHCS screws with the optional M3 shim washers to mount two stepper motors onto the rear body, but don't tighten them yet. Make sure the motor can slide left to right.
@@ -74,8 +69,78 @@ Use 8x M3x8 BHCS screws with the optional M3 shim washers to mount two stepper m
 
 Slide 2x 40T pulley to the motor shaft but don't tighten the set screws yet. The pulley height will be adjusted in the later step.
 
+* [40_teeth_gt2_pulley_x2.stl](40_teeth_gt2_pulley_x2.stl)
+
 ![open_trickler_rear_body_install_pulley.png](resources/open_trickler_rear_body_install_pulley.png)
 
 Slide the rear door to the cut out and the rear body assembly is complete. 
 
+* [front_rear_door_x2.stl](front_rear_door_x2.stl)
+
 ![open_trickler_rear_body_install_rear_door](resources/open_trickler_rear_body_install_rear_door.png)
+
+## Assembly of Front Body
+
+*Note: If you're looking to build the Servo Gate, you need to follow the [servo gate build guide](Optional/ServoGate/README.md) first before continue.*
+
+
+
+### Component Prep
+
+Melt 4x heatset inserts to the bottom of the front body. Make sure the heatset inserts are sitting flush with the surface.
+
+![open_trickler_front_body_install_heatset_inserts.png](resources/open_trickler_front_body_install_heatset_inserts.png)
+
+### Assembly
+
+Press 6804-2RS bearing to the top cut out and 608-2RS to the bottom cut out. [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands.
+
+![open_trickler_front_body_install_bearings.png](resources/open_trickler_front_body_install_bearings.png)
+
+For the next step, you have three options
+
+1. [bearing_cover_x2.stl](bearing_cover_x2.stl): Slide the bearing cover to the rear cut out. The cover should sit flush with the top of the rear body, while two bearings are still free to rotate without resistance.If you can feel the abnormal resistance after installing the bearing cover, press the bearings inwards for additional 0.1mm to clear the interference.
+    ![open_trickler_front_body_install_bearing_cover](resources/open_trickler_front_body_install_bearing_cover.png)
+
+2. [bearing_cover_tighter_tolerance_x2.stl](Optional/bearing_cover_tighter_tolerance_x2.stl): The procedure is identical to option 1 but with the bearing cover with slightly tigher tolerance.
+
+3. [VolumnReducer](Optional/VolumnReducer): Slide the front volumn reducer assembly to the rear cut out. The cover should sit flush with the top of the front body, while two bearings are still free to rotate without resistance.
+    ![open_trickler_front_body_install_volumn_reducer](resources/open_trickler_front_body_install_volumn_reducer.png)
+
+Slide the front door to the cut out, the front door should sit flush with the top of the front body
+
+* [front_rear_door_x2.stl](front_rear_door_x2.stl)
+
+![open_trickler_front_body_install_front_door](resources/open_trickler_front_body_install_front_door.png)
+
+Slide the front body cover to the groove top of the front body then the front body assembly is complete.
+
+![open_trickler_front_body_install_front_body_cover](resources/open_trickler_front_body_install_front_body_cover.png)
+
+## Assembly of Open Trickler Front and Rear Body
+
+![open_trickler_body_overview.png](resources/open_trickler_body_overview.png)
+
+### Assembly
+
+Insert both large and small rotary tube through the rear bearing. You may experience some resistance subject to the 
+tolerance of the printed part. 
+
+* [large_rotary_tube.stl](large_rotary_tube.stl)
+* [small_rotary_tube.stl](small_rotary_tube.stl)
+
+Insert both large and small rotary tube through the rear bearing. You may experience some resistance subject to the 
+tolerance of the printed part. 
+
+![open_trickler_body_install_rotary_tubes.png](resources/open_trickler_body_install_rotary_tubes.png)
+
+Slide the motor towards rotary tubes to the nearest position. Once done, slide the belt onto rotary tubes and pulleys. Make
+sure the longer belt is connected to the motor on the right side. **Do not tension the belt, nor adjust the depth of the pulley for now.**
+
+![open_trickler_body_install_belt.png](resources/open_trickler_body_install_belt.png)
+
+Slide the front body over the rotary tubes through bearings. You need to push the front body all the way in. 
+
+![open_trickler_connect_front_body.png](resources/open_trickler_connect_front_body.png)
+
+The OpenTrickler is now assembled. In the later steps the OpenTrickler will be mounted to one of the scale adapter for final assembly.
