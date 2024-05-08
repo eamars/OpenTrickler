@@ -39,3 +39,11 @@ The Open Trickler Controller is split into following projects:
 
 * Custom PCB with Raspberry Pi Pico [Raspberry Pi Pico Motor Expansion Board](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board)
 * Firmware that utilises the Raspberry Pi RP2040 micro controller [OpenTrickler RP2040 Controller](https://github.com/eamars/OpenTrickler-RP2040-Controller)
+
+# Interface Pattern
+
+If you're a developer and would like to port the OpenTrickler to other platform/scale, you could use the mounting pattern as specified below. The interface is guaranteed to be consistent between minor revisions. 
+
+![interface_pattern](Resources/interface_pattern.png)
+
+
