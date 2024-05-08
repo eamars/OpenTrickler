@@ -1,4 +1,17 @@
-# OpenTrickler Front Body with Servo Gate Assembly Manual
+# OpenTrickler Front Body with Servo Gate Assembly Guide
+
+![assembly_overview](resources/assembly_overview.png)
+
+## Print Guide
+
+| Filename                                                   | Quantity | Remarks |
+| ---------------------------------------------------------- | -------- | ------- |
+| [front_body_with_shutter.stl](front_body_with_shutter.stl) | 1        |         |
+| [left_servo_hanger.stl](left_servo_hanger.stl)             | 1        |         |
+| [left_shutter.stl](left_shutter.stl)                       | 1        |         |
+| [right_servo_hanger.stl](right_servo_hanger.stl)           | 1        |         |
+| [right_shutter.stl](right_shutter.stl)                     | 1        |         |
+| [spur_gear_x2.stl](spur_gear_x2.stl)                       | 2        |         |
 
 ## BOM
 
@@ -21,10 +34,6 @@
 The [Pico Motor Expansion Board v2](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board) assumes the servo motor comes with the JST PH2.54 connector. You may need to re-crimp the connector to 3pin JST PH 2.54 connectors in order to connect the servo motor to the motor expansion board. The colour code for MG90s servo motor is provided below. 
 
 ![wiring_colour_code](resources/wiring_colour_code.png)
-
-## Assembly Overview
-
-![assembly_overview](resources/assembly_overview.png)
 
 ## Component Prep
 
@@ -110,3 +119,5 @@ The left shutter is assigned to Shutter 0. By default the shutter is operating a
 8. **(Important)** make sure the settings are saved in the end, by "Save to EEPROM". 
 
 Once the shutter open and close angles are tuned, you can continue with the full body assembly. 
+
+

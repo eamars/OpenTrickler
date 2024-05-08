@@ -1,8 +1,8 @@
-# OpenTrickler Print and Assembly Manual
+# OpenTrickler Print and Assembly Guide
 
 ![opentrickler_preview](resources/open_trickler_preview.png)
 
-## Printed Guide
+## Print Guide
 
 | Filename                                                 | Quantity | Alternative                                                                                                                                              | Remarks                                                                                                                                                                   |
 | -------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -19,14 +19,14 @@
 
 ## BOM
 
-| **Name**               | **Quantity** | **Remarks**                   |
-| ---------------------- |:------------ |:----------------------------- |
-| Heatset Inserts M3x5x4 | 12           |                               |
-| M3x8 BHCS              | 8            |                               |
-| Shim Washer            | 8            | (OD=6mm, ID=3mm, Thick=0.5mm) |
-| 6804 Bearing           | 2            |                               |
-| 608 Bearing            | 2            |                               |
-| Nema 17 Stepper Motor  | 2            |   |
+| **Name**               | **Quantity** | **Remarks**                 |
+| ---------------------- |:------------ |:--------------------------- |
+| Heatset Inserts M3x5x4 | 12           |                             |
+| M3x8 BHCS              | 8            |                             |
+| Shim Washer            | 8            | OD=6mm, ID=3mm, Thick=0.5mm |
+| 6804 Bearing           | 2            |                             |
+| 608 Bearing            | 2            |                             |
+| Nema 17 Stepper Motor  | 2            |                             |
 
 ## Tools
 

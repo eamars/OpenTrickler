@@ -1,29 +1,47 @@
-# How to Print?
+# Powder Hopper Print and Assembly Guide
 
-Basic Settings
+![powder_hopper_overview.png](resources/powder_hopper_overview.png)
 
-* 40% infill
-* 5x top/bottom layers
-* 4x walls
-* 0.4~0.45mm wall width
-* 0.2mm layer height
-* No support needed
+## Print Guide
 
-All parts are pre-oriented.
+| Filename                                           | Quantity     | Remarks                                                                                                                                                                                               |
+| -------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [hopper_base.stl](hopper_base.stl)                 | 1            | The design includes large overhang (45 deg). You may need to reduce the print speed to archieve better surface finish.                                                                                |
+| [hopper_body_100mm.stl](hopper_body_100mm.stl)     | 1 (optional) | Print in vase mode (no Z seam) with 0.8mm single wall thickness. You can select the part between 100, 150 and 200mm height body. <br>The height can be customized by scaling the part in Z direction. |
+| [hopper_body_150mm.stl](hopper_body_150mm.stl)     | 1 (optional) | Print in vase mode (no Z seam) with 0.8mm single wall thickness. You can select the part between 100, 150 and 200mm height body.                                                                      |
+| [hopper_body_200mm.stl](hopper_body_200mm.stl)     | 1 (optional) | Print in vase mode (no Z seam) with 0.8mm single wall thickness. You can select the part between 100, 150 and 200mm height body.                                                                      |
+| [hopper_cap.stl](hopper_cap.stl)                   | 1            |                                                                                                                                                                                                       |
+| [rear_body_interface.stl](rear_body_interface.stl) | 1            |                                                                                                                                                                                                       |
 
+## BOM
 
+| Name        | Quantity | Remarks                     |
+| ----------- | -------- | --------------------------- |
+| M3x8 BHCS   | 1        |                             |
+| Shim Washer | 2        | OD=6mm, ID=3mm, Thick=0.5mm |
 
-Material
+## Tools
 
-* hopper_base: Any material you like except for soft stuff. 
-* hopper_body: Translucent material like natural PETG or translucent PLA. 
-* hopper_cap: TPU95a is recommended. But you can print it in any material you like. 
-* rear_body_interface: Any hard material you like. 
-  
-  
+* 2.0 mm hex driver
 
-## How to Print opper_body
+### Assembly
 
-The hopper_body is parameterized. You can scale the length of the body along Z axis to make it bigger. 
+Stack the hopper base to the rear body interface. Note the travel limiter should sit in the groove and the valve is in the "open" position. 
 
-The hopper_body is recommended to print in **VASE mode with 0.8mm single wall thickness** to give you best translucent look and no Z seam. 
+* [hopper_base.stl](hopper_base.stl)
+
+* [rear_body_interface.stl](rear_body_interface.stl)
+
+![powder_hopper_travel_limiter.png](resources/powder_hopper_travel_limiter.png)
+
+Stack 2x M3 washer to the rear body adapter pocket, then thread the M3x8 BHCS directly to the hopper base. Don't over tighten the screw and make sure the hopper base can rotate (with some resistance) between ON and OFF position. 
+
+![powder_hopper_install_screw.png](resources/powder_hopper_install_screw.png)
+
+Lastly, slide the powder hopper to the top of the rear body. Make sure to push the powder hopper all the way in. The rear body adapter should sit flush with the rear body assembly.
+
+* [hopper_body_100mm.stl](hopper_body_100mm.stl)
+
+* [hopper_cap.stl](hopper_cap.stl)
+
+![powder_hopper_install_to_rear_body.png](resources/powder_hopper_install_to_rear_body.png)
