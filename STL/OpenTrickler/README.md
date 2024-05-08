@@ -53,15 +53,15 @@ Melt 4x heatset inserts to the bottom of the rear body. Make sure the heatset in
 ### Assembly
 
 Press 6804-2RS bearing to the top cut out and 608-2RS to the bottom cut out. [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands. 
-![open_trickler_rear_body_install_bearings.png](Resources/open_trickler_rear_body_install_bearings.png)
+![open_trickler_rear_body_install_bearings.png](resources/open_trickler_rear_body_install_bearings.png)
 
 For the next step, you have three options
 
 1. [bearing_cover_x2.stl](bearing_cover_x2.stl): Slide the bearing cover to the rear cut out. The cover should sit flush with the top of the rear body, while two bearings are still free to rotate without resistance.
    If you can feel the abnormal resistance after installing the bearing cover, press the bearings inwards for additional 0.1mm to clear the interference.
-   ![open_trickler_rear_body_install_bearing_cover](Resources/open_trickler_rear_body_install_bearing_cover.png)
+   ![open_trickler_rear_body_install_bearing_cover](resources/open_trickler_rear_body_install_bearing_cover.png)
 
 2. [bearing_cover_tighter_tolerance_x2.stl](Optional/bearing_cover_tighter_tolerance_x2.stl): The procedure is identical to option 1 but with the bearing cover with slightly tigher tolerance. 
 
 3. [VolumnReducer](Optional/VolumnReducer): Slide the bearing cover to the rear cut out. The cover should sit flush with the top of the rear body, while two bearings are still free to rotate without resistance.
-   ![open_trickler_rear_body_install_volume_reducer](Resources/open_trickler_rear_body_install_volume_reducer.png)
+   ![open_trickler_rear_body_install_volume_reducer](resources/open_trickler_rear_body_install_volume_reducer.png)
