@@ -4,7 +4,7 @@
 
 | Name                     | Quantity | Remarks                                                                                                                                      |
 | ------------------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Heatset Inserts (M3x5x4) | 6        | The heatset inserts can be slightly longer. The longest recommended one is M3x5x5.5                                                          |
+| Heatset Inserts (M3x5x4) | 6        |                                                                                                                                              |
 | M3x12 SHCS               | 2        |                                                                                                                                              |
 | M2x8 self-tapping        | 4        | Each servo motor should come with 2x screw in the package                                                                                    |
 | M2.5x3.5 BHCS            | 2        | Each servo motor should come with 1x screw in the package                                                                                    |
@@ -28,7 +28,7 @@ The [Pico Motor Expansion Board v2](https://github.com/eamars/RaspberryPi-Pico-M
 
 ## Component Prep
 
-* front_body_with_shutter.stl
+* [front_body_with_shutter.stl](front_body_with_shutter.stl)
 
 Melt 4x heatset inserts to the bottom of the front body then melt 2x heatset inserts to both side of the front body. Make sure the heatset inserts are sitting flush with the surface. 
 
@@ -38,15 +38,15 @@ Melt 4x heatset inserts to the bottom of the front body then melt 2x heatset ins
 
 Use 2x M3x12 SHCS to fix the left and right servo hangers to both sides. Servo hangers are polarised. A dot on the body is used to indicate the face pointing towards the servo motor. 
 
-* left_servo_hanger.stl
+* [left_servo_hanger.stl](left_servo_hanger.stl)
 
-* right_servo_hanger.stl
+* [right_servo_hanger.stl](right_servo_hanger.stl)
 
 ![install_servo_hangers](resources/install_servo_hangers.png)
 
 Slide the spur gears to the output gear of both servo motors. Make sure the side with the teeth is pushed against the gear. Use the M2.5x3.5 BHCS (came with the servo motor) to fix the spur gear in place. 
 
-* spur_gear_x2.stl
+* [spur_gear_x2.stl](spur_gear_x2.stl)
 
 ![install_spur_gear](resources/install_spur_gear.png)
 
