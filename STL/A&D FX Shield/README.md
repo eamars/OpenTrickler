@@ -2,7 +2,7 @@
 
 The OpenTrickler is designed to be mounted to the A&D FX Shield if you're using the A&D fx-120/300i series of precision scales. 
 
-![fx_shield_overview.png](resources/fx_shield_overview.png)
+![fx_shield_assembly_overview.png](resources/fx_shield_assembly_overview.png)
 
 ## Print Guide
 
@@ -35,11 +35,13 @@ Using the [tutorial](https://help.prusa3d.com/article/poor-bridging_1802) to tun
 
 ## BOM
 
-| Name      | Quantity | Remarks |
-| --------- | -------- | ------- |
-| M3x6 BHCS | 2        |         |
-|           |          |         |
-|           |          |         |
+| Name                   | Quantity | Remarks |
+| ---------------------- | -------- | ------- |
+| Heatset Inserts M3x5x4 | 10       |         |
+| M3x6 BHCS              | 4        |         |
+| M3x12 SHCS             | 4        |         |
+| M3x10 SHCS             | 8        |         |
+| M3x8 SHCS              | 4        |         |
 
 ## Tools
 
@@ -65,9 +67,9 @@ Melt 1x heatset insert into the bottom side of the [cup_base_7mm.stl](cup_base_7
 
 Melt 1x heatset insert into to the [scale_weighing_pan_adapter.stl](scale_weighing_pan_adapter.stl). Make sure the heatset insert seats flush with the top surface.
 
-![scale_to_weighing_pan_adapter_install_heatset_insert](Resources/scale_to_weighing_pan_adapter_install_heatset_insert.png)
+![scale_to_weighing_pan_adapter_install_heatset_insert](resources/scale_to_weighing_pan_adapter_install_heatset_insert.png)
 
-## Assembly
+### Assembly
 
 Use 1x M3x6 BHCS to join the [weighing_pan_27mm.stl](weighing_pan_27mm.stl) with the [scale_weighing_pan_adapter.stl](scale_weighing_pan_adapter.stl).
 
@@ -77,4 +79,44 @@ Then use 1x M3x6 BHCS to join the [cup_base_7mm.stl](cup_base_7mm.stl) to the [w
 
 ![mate_cup_base_with_weighing_pan](resources/mate_cup_base_with_weighing_pan.png)
 
+### Put some money in the pocket
 
+You need to provide some coins in all 3 pockets to increase the overall weight of the [weighing_pan_27mm.stl](weighing_pan_27mm.stl) to reach the minimum weight of A&D FX-120i/300i. The stock weighing pan is measured about 100 grams. Coins are needed to add up to this weight. 
+
+What coin to use? Below is the reference table. 
+
+| Coin            | Diameter | Weight | Minimum Quantity |
+| --------------- | -------- | ------ | ---------------- |
+| New Zealand \$2 | 26.5 mm  | 10 g   | 6                |
+| Australia $1    | 25 mm    | 9 g    | 7                |
+| Euro €2         | 25.75 mm | 8.5 g  | 7                |
+| US $1           | 26.49 mm | 8.1 g  | 8                |
+
+## Assembly of Poweder Cup
+
+Powder cup assembly is straight forward. Two M3x6 BHCS are designed to be tapped into the [powder_cup_body.stl](powder_cup_body.stl) directly in order to join with the [powder_cup_handle.stl](powder_cup_handle.stl).
+
+![powder_cup_assembly](resources/powder_cup_assembly.png)
+
+## Assembly of A&D FX Shield
+
+![fx_shield_overview.png](resources/fx_shield_overview.png)
+
+### Component Prep
+
+8x heatset inserts are to be melted into the plastic on both sides of the [scale_shield.stl](scale_shield.stl). 
+
+![fx_shield_install_heatset_inserts.png](resources/fx_shield_install_heatset_inserts.png)
+
+Use 4x M3x12 SHCS to join [scale_base_adapter_ring.stl](scale_base_adapter_ring.stl), [scale_pan_cover.stl](scale_pan_cover.stl) and [scale_shield.stl](scale_shield.stl) together. 
+
+![fx_shield_lower_assembly.png](resources/fx_shield_lower_assembly.png)
+
+Use 8x M3x10 SHCS to join the [trickler_adapter_plate.stl](trickler_adapter_plate.stl), with [front_discharger_mount.stl](front_discharger_mount.stl) and [rear_discharge_mount.stl](rear_discharge_mount.stl). Screws are to be
+threaded to the bottom the OpenTrickler front and rear body. 
+
+![fx_shield_upper_assembly.png](resources/fx_shield_upper_assembly.png)
+
+Use 4x M3x8 SHCS to join the trickler adapter assembly and scale shield assembly together. (The OpenTrickler body is hidden to for demonstration purpose).
+
+![fx_shield_general_assembly.png](Resources/fx_shield_general_assembly.png)
