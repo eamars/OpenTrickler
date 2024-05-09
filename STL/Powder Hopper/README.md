@@ -15,9 +15,9 @@
 
 ## BOM
 
-| Name        | Quantity | Remarks                     |
-| ----------- | -------- | --------------------------- |
-| M3x8 BHCS   | 1        |                             |
+| Name        | Quantity | Remarks                                                 |
+| ----------- | -------- | ------------------------------------------------------- |
+| M3x8 BHCS   | 1        |                                                         |
 | Shim Washer | 2        | OD=6mm, ID=3mm, Thick=0.5mm |
 
 ## Tools

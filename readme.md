@@ -45,5 +45,3 @@ The Open Trickler Controller is split into following projects:
 If you're a developer and would like to port the OpenTrickler to other platform/scale, you could use the mounting pattern as specified below. The interface is guaranteed to be consistent between minor revisions. 
 
 ![interface_pattern](Resources/interface_pattern.png)
-
-
