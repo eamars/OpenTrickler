@@ -26,22 +26,14 @@
 
 ### Assembly
 
-Stack the hopper base to the rear body interface. Note the travel limiter should sit in the groove and the valve is in the "open" position. 
-
-* [hopper_base.stl](hopper_base.stl)
-
-* [rear_body_interface.stl](rear_body_interface.stl)
+Stack the [hopper_base.stl](hopper_base.stl) to the [rear_body_interface.stl](rear_body_interface.stl). Note the travel limiter should sit in the groove and the valve is in the "open" position. 
 
 ![powder_hopper_travel_limiter.png](resources/powder_hopper_travel_limiter.png)
 
-Stack 2x M3 washer to the rear body adapter pocket, then thread the M3x8 BHCS directly to the hopper base. Don't over tighten the screw and make sure the hopper base can rotate (with some resistance) between ON and OFF position. 
+Stack 2x M3 washer to the [rear_body_interface.stl](rear_body_interface.stl) pocket, then thread the M3x8 BHCS directly to the [hopper_base.stl](hopper_base.stl). Don't over tighten the screw and make sure the hopper base can rotate (with some resistance) between ON and OFF position. 
 
 ![powder_hopper_install_screw.png](resources/powder_hopper_install_screw.png)
 
-Lastly, slide the powder hopper to the top of the rear body. Make sure to push the powder hopper all the way in. The rear body adapter should sit flush with the rear body assembly.
-
-* [hopper_body_100mm.stl](hopper_body_100mm.stl)
-
-* [hopper_cap.stl](hopper_cap.stl)
+Lastly, slide the powder hopper to the top of the rear body. Make sure to push the powder hopper all the way in. The [rear_body_interface.stl](rear_body_interface.stl) should sit flush with the rear body assembly.
 
 ![powder_hopper_install_to_rear_body.png](resources/powder_hopper_install_to_rear_body.png)
