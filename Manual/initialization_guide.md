@@ -42,6 +42,14 @@ To match the type of RS232 cable (with DB9 header), you need to select between t
 
 ## Install Plug-in Components
 
+### (Optional) Install PWM Expansion Board
+
+Insert the PWM expansion assembly to the Motor Expansion Board first, then connect the left servo motor to the J1 and right servo motor to the J2. 
+
+![pwn_expansion_board_assembly](Resources/install_pwm_expansion_board.png)
+
+*Note: The J3 output is reserved for future uses.*
+
 ### Install Raspberry Pico W
 
 If your Raspberry Pico W doesn't come with headers pre-soldered, you will need to solder 2x 20 pin headers (2.54mm pitch) to the Pico W, then insert to the socket. Make sure the mini USB port is pointing towards the edge of the board. 
@@ -49,6 +57,10 @@ If your Raspberry Pico W doesn't come with headers pre-soldered, you will need t
 *Tips: Insert the 2x 20 pin header to the socket first, then solder pins to the Pico W will save your effort to line everything up.*
 
 ![picow_with_header](Resources/picow_with_header.jpg)
+
+If you're using the optional PWM Expansion Board, the stack up should look like this.
+
+![picow_with_header](Resources/pwm_expansion_board_stack_up.jpg)
 
 ### Install Stepper Motor Driver
 
