@@ -156,7 +156,7 @@ The discharge cup is used to help cleaning powder from the reservoir by catching
 
 Melt 2x heatset inserts into the [rear_discharge_cup_ring.stl](rear_discharge_cup_ring.stl). 
 
-![rear_discharge_cup_install_heatset_inserts.png](Resources/rear_discharge_cup_install_heatset_inserts.png)
+![rear_discharge_cup_install_heatset_inserts.png](resources/rear_discharge_cup_install_heatset_inserts.png)
 
 ### Assembly
 
