@@ -37,11 +37,11 @@ Using the [tutorial](https://help.prusa3d.com/article/poor-bridging_1802) to tun
 
 | Name                   | Quantity | Remarks |
 | ---------------------- | -------- | ------- |
-| Heatset Inserts M3x5x4 | 10       |         |
-| M3x6 BHCS              | 4        |         |
+| Heatset Inserts M3x5x4 | 15       |         |
+| M3x6 BHCS              | 8        |         |
 | M3x12 SHCS             | 4        |         |
 | M3x10 SHCS             | 8        |         |
-| M3x8 SHCS              | 4        |         |
+| M3x8 SHCS              | 7        |         |
 
 ## Tools
 
@@ -108,6 +108,8 @@ Powder cup assembly is straight forward. Two M3x6 BHCS are designed to be tapped
 
 ![fx_shield_install_heatset_inserts.png](resources/fx_shield_install_heatset_inserts.png)
 
+### Assembly
+
 Use 4x M3x12 SHCS to join [scale_base_adapter_ring.stl](scale_base_adapter_ring.stl), [scale_pan_cover.stl](scale_pan_cover.stl) and [scale_shield.stl](scale_shield.stl) together. 
 
 ![fx_shield_lower_assembly.png](resources/fx_shield_lower_assembly.png)
@@ -119,4 +121,47 @@ threaded to the bottom the OpenTrickler front and rear body.
 
 Use 4x M3x8 SHCS to join the trickler adapter assembly and scale shield assembly together. (The OpenTrickler body is hidden to for demonstration purpose).
 
-![fx_shield_general_assembly.png](Resources/fx_shield_general_assembly.png)
+![fx_shield_general_assembly.png](resources/fx_shield_general_assembly.png)
+
+## Assembly of Pan Cover
+
+The pan cover is used to protect the pan from dust or accidental drops. The pan cover can be seamly
+put onto the shield body when not used. 
+
+![pan_cover_overview.png](resources/pan_cover_overview.png)
+
+### Component Prep
+
+Melt 3x heatset inserts into the [pan_cover.stl](pan_cover.stl) from the top.
+
+![pan_cover_install_heatset_inserts.png](resources/pan_cover_install_heatset_inserts.png)
+
+### Assembly
+
+Install 2x M3x6 BHCS to the bottom of the [pan_cover.stl](pan_cover.stl). Do not over tighten those screws as they are designed to directly screw into the plastic. 
+
+![pan_cover_install_locator.png](resources/pan_cover_install_locator.png)
+
+Use 3x M3x8 SHCS to join the [pan_cover_lid.stl](pan_cover_lid.stl) to the [pan_cover.stl](pan_cover.stl). 
+
+![pan_cover_assembly.png](resources/pan_cover_assembly.png)
+
+## Assembly of Rear Discharge Cup
+
+The discharge cup is used to help cleaning powder from the reservoir by catching remaining powder from the drainage hole. 
+
+![rear_discharge_cup_overview.png](resources/rear_discharge_cup_overview.png)
+
+### Component Prep
+
+Melt 2x heatset inserts into the [rear_discharge_cup_ring.stl](rear_discharge_cup_ring.stl). 
+
+![rear_discharge_cup_install_heatset_inserts.png](Resources/rear_discharge_cup_install_heatset_inserts.png)
+
+### Assembly
+
+Use 2x M3x6 BHCS to join the [rear_discharge_cup_ring.stl](rear_discharge_cup_ring.stl) to the [rear_discharger_cup.stl](rear_discharger_cup.stl). 
+
+![rear_discharge_cup_assembly.png](resources/rear_discharge_cup_assembly.png)
+
+Now you can slide the Rear Discharger Cup to the A&D FX Shield and finish the assembly. 

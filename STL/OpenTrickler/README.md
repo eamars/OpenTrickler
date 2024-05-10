@@ -15,7 +15,7 @@
 | [GT2_86T_Belt.stl](GT2_86T_Belt.stl)                     | 1        |                                                                                                                                                          | Can be substituted with aftermarket 87T (174 mm) GT2 belt. This part has to be printed in TPU or any flexible material.                                                   |
 | [large_rotary_tube.stl](large_rotary_tube.stl)           | 1        |                                                                                                                                                          | Recommended to print with random Z seam position.                                                                                                                         |
 | [rear_body.stl](rear_body.stl)                           | 1        |                                                                                                                                                          |                                                                                                                                                                           |
-| [small_rotary_tube.stl](small_rotary_tube.stl)           | 1        |                                                                                                                              | Recommended to print with random Z seam position.                                                                                                                         |
+| [small_rotary_tube.stl](small_rotary_tube.stl)           | 1        |                                                                                                                                                          | Recommended to print with random Z seam position.                                                                                                                         |
 
 ## BOM
 
@@ -40,15 +40,13 @@
 
 ### Component Prep
 
-* [rear_body.stl](rear_body.stl)
-
-Melt 4x heatset inserts to the bottom of the rear body. Make sure the heatset inserts are sitting flush with the surface.
+Melt 4x heatset inserts to the bottom of the [rear_body.stl](rear_body.stl). Make sure the heatset inserts are sitting flush with the surface.
 
 ![open_trickler_rear_body_install_heatset_inserts.png](resources/open_trickler_rear_body_install_heatset_inserts.png)
 
 ### Assembly
 
-Press 6804-2RS bearing to the top cut out and 608-2RS to the bottom cut out. [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands. 
+Press 6804 bearing to the top bearing pocket and 608 to the bottom bearing pocket of [rear_body.stl](rear_body.stl). [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands. 
 
 ![open_trickler_rear_body_install_bearings.png](resources/open_trickler_rear_body_install_bearings.png)
 
@@ -63,19 +61,15 @@ For the next step, you have three options
 3. [VolumnReducer](Optional/VolumnReducer): Slide the rear volumn reducer assembly to the rear cut out. The cover should sit flush with the top of the rear body, while two bearings are still free to rotate without resistance.
    ![open_trickler_rear_body_install_volumn_reducer](resources/open_trickler_rear_body_install_volumn_reducer.png)
 
-Use 8x M3x8 BHCS screws with the optional M3 shim washers to mount two stepper motors onto the rear body, but don't tighten them yet. Make sure the motor can slide left to right.
+Use 8x M3x8 BHCS screws with the optional M3 shim washers to mount two stepper motors onto the [rear_body.stl](rear_body.stl), but don't tighten them yet. Make sure the motor can slide left to right.
 
 ![open_trickler_rear_body_install_motors.png](resources/open_trickler_rear_body_install_motors.png)
 
-Slide 2x 40T pulley to the motor shaft but don't tighten the set screws yet. The pulley height will be adjusted in the later step.
-
-* [40_teeth_gt2_pulley_x2.stl](40_teeth_gt2_pulley_x2.stl)
+Slide 2x [40_teeth_gt2_pulley_x2.stl](40_teeth_gt2_pulley_x2.stl) to the motor shaft but don't tighten the set screws yet. The pulley height will be adjusted in the later step.
 
 ![open_trickler_rear_body_install_pulley.png](resources/open_trickler_rear_body_install_pulley.png)
 
-Slide the rear door to the cut out and the rear body assembly is complete. 
-
-* [front_rear_door_x2.stl](front_rear_door_x2.stl)
+Slide the [front_rear_door_x2.stl](front_rear_door_x2.stl) to the cut out and the [rear_body.stl](rear_body.stl) to finish the assembly. 
 
 ![open_trickler_rear_body_install_rear_door](resources/open_trickler_rear_body_install_rear_door.png)
 
@@ -83,17 +77,15 @@ Slide the rear door to the cut out and the rear body assembly is complete.
 
 *Note: If you're looking to build the Servo Gate, you need to follow the [servo gate build guide](Optional/ServoGate/README.md) first before continue.*
 
-
-
 ### Component Prep
 
-Melt 4x heatset inserts to the bottom of the front body. Make sure the heatset inserts are sitting flush with the surface.
+Melt 4x heatset inserts to the bottom of the [front_body.stl](front_body.stl). Make sure the heatset inserts are sitting flush with the surface.
 
 ![open_trickler_front_body_install_heatset_inserts.png](resources/open_trickler_front_body_install_heatset_inserts.png)
 
 ### Assembly
 
-Press 6804-2RS bearing to the top cut out and 608-2RS to the bottom cut out. [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands.
+Press 6804 bearing to the top bearing pocket and 608 to the bottom bearing pocket. [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands.
 
 ![open_trickler_front_body_install_bearings.png](resources/open_trickler_front_body_install_bearings.png)
 
@@ -107,13 +99,11 @@ For the next step, you have three options
 3. [VolumnReducer](Optional/VolumnReducer): Slide the front volumn reducer assembly to the rear cut out. The cover should sit flush with the top of the front body, while two bearings are still free to rotate without resistance.
     ![open_trickler_front_body_install_volumn_reducer](resources/open_trickler_front_body_install_volumn_reducer.png)
 
-Slide the front door to the cut out, the front door should sit flush with the top of the front body
-
-* [front_rear_door_x2.stl](front_rear_door_x2.stl)
+Slide the [front_rear_door_x2.stl](front_rear_door_x2.stl) to the cut out, the front door should sit flush with the top of the [front_body.stl](front_body.stl).
 
 ![open_trickler_front_body_install_front_door](resources/open_trickler_front_body_install_front_door.png)
 
-Slide the front body cover to the groove top of the front body then the front body assembly is complete.
+Slide the [front_body_cover.stl](front_body_cover.stl) to the groove top of the [front_body.stl](front_body.stl) then the front body assembly is complete.
 
 ![open_trickler_front_body_install_front_body_cover](resources/open_trickler_front_body_install_front_body_cover.png)
 
@@ -123,14 +113,10 @@ Slide the front body cover to the groove top of the front body then the front bo
 
 ### Assembly
 
-Insert both large and small rotary tube through the rear bearing. You may experience some resistance subject to the 
+Insert both [large_rotary_tube.stl](large_rotary_tube.stl) and [small_rotary_tube.stl](small_rotary_tube.stl) through the rear bearing. You may experience some resistance subject to the 
 tolerance of the printed part. 
 
-* [large_rotary_tube.stl](large_rotary_tube.stl)
-* [small_rotary_tube.stl](small_rotary_tube.stl)
 
-Insert both large and small rotary tube through the rear bearing. You may experience some resistance subject to the 
-tolerance of the printed part. 
 
 ![open_trickler_body_install_rotary_tubes.png](resources/open_trickler_body_install_rotary_tubes.png)
 
@@ -144,3 +130,26 @@ Slide the front body over the rotary tubes through bearings. You need to push th
 ![open_trickler_connect_front_body.png](resources/open_trickler_connect_front_body.png)
 
 The OpenTrickler is now assembled. In the later steps the OpenTrickler will be mounted to one of the scale adapter for final assembly.
+
+
+
+## Post Installation Adjustments
+
+Assuming you have already built the suitable scale shield and attached the OpenTrickler to it, you can finalize the installation by tensioning the belt. 
+
+### Adjust Pulley Depth
+
+Look through the unit from the left and right side, push or pull the pulley on the shaft to align the flange with the rotary tubes.
+
+![pulley_alignment.png](resources/pulley_alignment.png)
+
+### Tension The Belt
+
+You need to adjust the tension of the belt. First loosen 8x M3x8 BHCS used to secure stepper motors. 
+Then pull motors slightly to tension the belts. Once done, tighten all 8 screws. 
+
+![belt_tensioning.png](resources/belt_tensioning.png)
+
+# Congratulations
+
+Your Open Trickler is now assembled!
