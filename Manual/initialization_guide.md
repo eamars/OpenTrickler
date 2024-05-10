@@ -108,7 +108,7 @@ You will need to follow [Connect to Wireless](https://github.com/eamars/OpenTric
 
 Subject to the vender of mini 12864 display, the rotary button direction can be interpreted in opposite direction. The designed direction is, when you rotate the nub clockwise, the menu cursor is suppose to move downwards. 
 
-If the cursor moves in the opposite direction, you can correct it by login to the web interface, select "Buttons" and set "Yes" of the "Inverted Rotary Button Direction" option. 
+If the cursor moves in the opposite direction, you can correct it by login to the web interface, select "Settings" -> Buttons" and set "Yes" of the "Inverted Rotary Button Direction" option. 
 
 ![invert_rotary_button_direction](Resources/invert_rotary_button_direction.png)
 
@@ -136,7 +136,8 @@ A quick way to validate the function of motors is to use Cleanup mode.
 
 * If any of, or both motor vibrates, instead of moving clockwise or counter clockwise, you need to swap the middle two pins of the motor cable. 
   ![swap_motor_cable_pin](Resources/swap_motor_cable_pin.png)
-* For positive speed, the both motors should rotate clockwise. If not, then you need to invert the motor step direction via the web interface, by toggling "Inverted Step Direction Pin, under "Coarse Motor", or/and "Fine Motor". You will need to save the settings to the EEPROM and reboot. 
+
+* For positive speed, the both motors should rotate clockwise. If not, then you need to invert the motor step direction via the web interface, by toggling "Inverted Step Direction Pin, under "Settings" -> "Coarse Motor", or/and "Fine Motor". You will need to save the settings to the EEPROM and reboot. 
   ![invert_motor_step_direction](Resources/invert_motor_step_direction.png)
 
 ### Configure and Inspect Scale Communication
