@@ -42,6 +42,14 @@ To match the type of RS232 cable (with DB9 header), you need to select between t
 
 ## Install Plug-in Components
 
+### (Optional) Install PWM Expansion Board
+
+Insert the PWM expansion assembly to the Motor Expansion Board first, then connect the left servo motor to the J1 and right servo motor to the J2. 
+
+![pwn_expansion_board_assembly](Resources/install_pwm_expansion_board.png)
+
+*Note: The J3 output is reserved for future uses.*
+
 ### Install Raspberry Pico W
 
 If your Raspberry Pico W doesn't come with headers pre-soldered, you will need to solder 2x 20 pin headers (2.54mm pitch) to the Pico W, then insert to the socket. Make sure the mini USB port is pointing towards the edge of the board. 
@@ -49,6 +57,10 @@ If your Raspberry Pico W doesn't come with headers pre-soldered, you will need t
 *Tips: Insert the 2x 20 pin header to the socket first, then solder pins to the Pico W will save your effort to line everything up.*
 
 ![picow_with_header](Resources/picow_with_header.jpg)
+
+If you're using the optional PWM Expansion Board, the stack up should look like this.
+
+![picow_with_header](Resources/pwm_expansion_board_stack_up.jpg)
 
 ### Install Stepper Motor Driver
 
@@ -96,7 +108,7 @@ You will need to follow [Connect to Wireless](https://github.com/eamars/OpenTric
 
 Subject to the vender of mini 12864 display, the rotary button direction can be interpreted in opposite direction. The designed direction is, when you rotate the nub clockwise, the menu cursor is suppose to move downwards. 
 
-If the cursor moves in the opposite direction, you can correct it by login to the web interface, select "Buttons" and set "Yes" of the "Inverted Rotary Button Direction" option. 
+If the cursor moves in the opposite direction, you can correct it by login to the web interface, select "Settings" -> Buttons" and set "Yes" of the "Inverted Rotary Button Direction" option. 
 
 ![invert_rotary_button_direction](Resources/invert_rotary_button_direction.png)
 
@@ -111,21 +123,28 @@ A quick way to validate the function of motors is to use Cleanup mode.
 **Steps:**
 
 1. From the main menu, rotate the button until the cursor points to the "Cleanup", press the button downwards to continue.
-   ![mini_12864_menu_cleanup](Resources/mini_12864_menu_cleanup.png)
+
+![mini_12864_menu_cleanup](Resources/mini_12864_menu_cleanup.png)
 
 2. You will then see the warning page. Make sure there is no powder in the reservoir, then rotate the button to "Next", press the button downwards to continue.  
-   ![mini_12864_cleanup_warning](Resources/mini_12864_cleanup_warning.png)
+
+![mini_12864_cleanup_warning](Resources/mini_12864_cleanup_warning.png)
 
 3. You will then see the "Adjust Speed" menu. 
-   ![mini_12864_cleanup_view](Resources/mini_12864_cleanup_view.png)
+
+![mini_12864_cleanup_view](Resources/mini_12864_cleanup_view.png)
+   
    At "Adjust Speed" menu, rotate the button clockwise or counter clockwise to adjust the speed of both motors. Use RESET button to exit. Pressing the button downwards will change the control of motors. 
 
 **Validations:**
 
 * If any of, or both motor vibrates, instead of moving clockwise or counter clockwise, you need to swap the middle two pins of the motor cable. 
-  ![swap_motor_cable_pin](Resources/swap_motor_cable_pin.png)
-* For positive speed, the both motors should rotate clockwise. If not, then you need to invert the motor step direction via the web interface, by toggling "Inverted Step Direction Pin, under "Coarse Motor", or/and "Fine Motor". You will need to save the settings to the EEPROM and reboot. 
-  ![invert_motor_step_direction](Resources/invert_motor_step_direction.png)
+
+![swap_motor_cable_pin](Resources/swap_motor_cable_pin.png)
+
+* For positive speed, the both motors should rotate clockwise. If not, then you need to invert the motor step direction via the web interface, by toggling "Inverted Step Direction Pin, under "Settings" -> "Coarse Motor", or/and "Fine Motor". You will need to save the settings to the EEPROM and reboot. 
+
+![invert_motor_step_direction](Resources/invert_motor_step_direction.png)
 
 ### Configure and Inspect Scale Communication
 
