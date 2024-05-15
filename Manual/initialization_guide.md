@@ -133,7 +133,7 @@ A quick way to validate the function of motors is to use Cleanup mode.
 3. You will then see the "Adjust Speed" menu. 
 
 ![mini_12864_cleanup_view](Resources/mini_12864_cleanup_view.png)
-   
+
    At "Adjust Speed" menu, rotate the button clockwise or counter clockwise to adjust the speed of both motors. Use RESET button to exit. Pressing the button downwards will change the control of motors. 
 
 **Validations:**
@@ -149,18 +149,28 @@ A quick way to validate the function of motors is to use Cleanup mode.
 ### Configure and Inspect Scale Communication
 
 * If you're using A&D fx120i/300i series scale, follow the [guide by OE5AMP](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/OpenTrickler%20manual%20for%20ADFX%20scale.pdf) to configure the scale to report automatically. 
+  
   - If your scale was previously configured for AutoTrickler v3/v4, you will only need to follow Step 2 to update the data output mode.
+
 * If you're using G&G J100B scales follow below steps:
-1. Enter scales settings by holding CAL button and powering on the scales.
-2. Use CAL to cycle through settings and TARE to change values.
-3. Set below values:
-   - C1:1 (try 0 if you like, but "zero" will take longer to settle)\
-   - C2:1 (try 0 if you like)
-   - C3:6 (this sets baudrate to 9600, make sure to configyre the same in OpenTrickler Scale menu for JJ100B profile)
-   - C4:33 [when at C4 setting press button above CAL once to increase value by 10]
-   - C5:0
-   - C6:0
-   - Press CAL to finish  
+  
+  1. Enter scales settings by holding CAL button and powering on the scales.
+  
+  2. Use CAL to cycle through settings and TARE to change values.
+  
+  3. Configure the scale according to the below table:
+     
+     | Variable | Name                       | Recommended Value                        | All Options                                                                                                                                                    |
+     | -------- | -------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+     | C1       | Sensitivity                | 1                                        | 0 (highest)<br>1<br>2<br>3<br>4<br>5 (lowest, default)                                                                                                         |
+     | C2       | Averaging Window (filter)  | 1                                        | 0 (shortest)<br>1<br>2<br>3<br>4 (longest, default)                                                                                                            |
+     | C3       | Serial Settings            | 6                                        | 0 (9600 baud, stream mode)<br>1 (9600 baud, auto print on stable)<br>2 (600 baud, default)<br>3 (1200 baud)<br>4 (2400 baud)<br>5 (4800 baud)<br>6 (9600 baud) |
+     | C4       | Serial Comm Identification | 33 (press COUNT to loop through options) | 27 (default)                                                                                                                                                   |
+     | C5       | Backlight                  | 0                                        | 0 (always on, default)<br>1 (auto)<br>2 (off)                                                                                                                  |
+     | C6       | Calibration                | 0                                        | 0 (enable internal calibration)<br>1 (disable internal calibration)<br>2 (disable default internal calibration)                                                |
+  
+  4. Press CAL finish. 
+
 * If you're using other scales, sorry, at the time this manual is written, the setup procedure for generic scale support is absent. 
 
 Again, the "Cleanup Mode" can be used to validate the scale communication. 
