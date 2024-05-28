@@ -165,3 +165,11 @@ Use 2x M3x6 BHCS to join the [rear_discharge_cup_ring.stl](rear_discharge_cup_ri
 ![rear_discharge_cup_assembly.png](resources/rear_discharge_cup_assembly.png)
 
 Now you can slide the Rear Discharger Cup to the A&D FX Shield and finish the assembly. 
+
+
+
+## Appendix A - Interface Drawing
+
+If you're the designer and looking to port the A&D FX Shield to other precision scale, you could use the below interface drawing to design the adapter. 
+
+![interface_drawing](resources/interface_drawing.png)
