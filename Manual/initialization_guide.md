@@ -152,24 +152,9 @@ A quick way to validate the function of motors is to use Cleanup mode.
   
   - If your scale was previously configured for AutoTrickler v3/v4, you will only need to follow Step 2 to update the data output mode.
 
-* If you're using G&G J100B scales follow below steps:
+* If you're using G&G J100B scales follow steps from the [guide](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/configure_g%26g_scales.md).
   
-  1. Enter scales settings by holding CAL button and powering on the scales.
-  
-  2. Use CAL to cycle through settings and TARE to change values.
-  
-  3. Configure the scale according to the below table:
-     
-     | Variable | Name                       | Recommended Value                        | All Options                                                                                                                                                    |
-     | -------- | -------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-     | C1       | Sensitivity                | 1                                        | 0 (highest)<br>1<br>2<br>3<br>4<br>5 (lowest, default)                                                                                                         |
-     | C2       | Averaging Window (filter)  | 1                                        | 0 (shortest)<br>1<br>2<br>3<br>4 (longest, default)                                                                                                            |
-     | C3       | Serial Settings            | 6                                        | 0 (9600 baud, stream mode)<br>1 (9600 baud, auto print on stable)<br>2 (600 baud, default)<br>3 (1200 baud)<br>4 (2400 baud)<br>5 (4800 baud)<br>6 (9600 baud) |
-     | C4       | Serial Comm Identification | 33 (press COUNT to loop through options) | 27 (default)                                                                                                                                                   |
-     | C5       | Backlight                  | 0                                        | 0 (always on, default)<br>1 (auto)<br>2 (off)                                                                                                                  |
-     | C6       | Calibration                | 0                                        | 0 (enable internal calibration)<br>1 (disable internal calibration)<br>2 (disable default internal calibration)                                                |
-  
-  4. Press CAL finish. 
+  1. 
 
 * If you're using other scales, sorry, at the time this manual is written, the setup procedure for generic scale support is absent. 
 
