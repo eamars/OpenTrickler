@@ -9,8 +9,8 @@ FILE_DESCRIPTION(
 /* implementation_level */ '2;1');
 
 FILE_NAME(
-/* name */ 'gng_jjbf_base_assembly.step',
-/* time_stamp */ '2024-05-20T23:39:03+12:00',
+/* name */ 'gng_jj223bf_base_assembly.step',
+/* time_stamp */ '2024-05-28T21:15:59+12:00',
 /* author */ (''),
 /* organization */ (''),
 /* preprocessor_version */ 'ST-DEVELOPER v20',
