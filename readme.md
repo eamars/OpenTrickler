@@ -12,6 +12,7 @@ Join our [discord server](https://discord.gg/ZhdThA2vrW) for help and developmen
 * Sourcing Guide: [LINK](Manual/sourcing_guide.md)
 * Assembly Manual: [LINK](Manual/assembly.md)
 * Initialization Guide: [LINK](Manual/initialization_guide.md)
+* Powder Profile Tuning Guide: [LINK](Manual/tuning_guide.md)
 
 Other supporting documents:
 
