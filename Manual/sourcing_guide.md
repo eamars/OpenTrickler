@@ -6,13 +6,21 @@ This document provides information regarding the self sourcing guide for afterma
 
 ## Things for OpenTrickler Controller
 
+> [!Note]
+> You can purchase the board directly from Mellow 3D and ship worldwide now. 
+> LINK: https://www.aliexpress.com/item/1005008080766173.html
+
 You could find details for Pico Motor Expansion Board from the [repository](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board).
 
-### 12/24V Power Supply
+### (For OpenTrickler Controller v1) 12/24V Power Supply
 
 You can use either 12V or 24V power supply. It is recommended to have minimum 2A output capacity to avoid any potential brown out when the motors draw too much current. Belows are recommended power supplys. 
 
 * [Meanwell LRS-50-24 from Digikey](https://www.digikey.co.nz/en/products/detail/mean-well-usa-inc/LRS-50-24/7705048)
+
+### (For OpenTrickler Controller v2) USB-C PD Power Supply
+
+* [VOLTME 30W Type C Charger](https://www.aliexpress.com/item/1005004696508238.html)
 
 ### 2mm Pitch Jumper Cap
 
