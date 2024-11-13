@@ -153,8 +153,6 @@ A quick way to validate the function of motors is to use Cleanup mode.
   - If your scale was previously configured for AutoTrickler v3/v4, you will only need to follow Step 2 to update the data output mode.
 
 * If you're using G&G J100B scales follow steps from the [guide](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/configure_g%26g_scales.md).
-  
-  1. 
 
 * If you're using other scales, sorry, at the time this manual is written, the setup procedure for generic scale support is absent. 
 
