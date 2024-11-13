@@ -1,5 +1,7 @@
 # OpenTrickler Initialization Guide
 
+![final_product](Resources/opentrickler_v2_rendered_raw.png)
+
 ## Pre-requisite
 
 Below are pre-requisite steps you need to follow before continue.
@@ -10,45 +12,21 @@ Below are pre-requisite steps you need to follow before continue.
 
 3. Make sure you have everything prepared from [Sourcing Guide](sourcing_guide.md)
 
-## Jumpers
-
-At this step you will need 3x 2mm pitch Jumper Cap. 
-
-### 3.3v Power Select
-
-You can select the 3.3v source from either the Pico W or the on-board regulator.  In most cases it is recommended to use the *on-board voltage regulator* to supply the 3.3v rail. 
-
-**(Recommended) Use Jumper Cap to connect the bottom 2 pins of JP7 to use on-board 3.3V regulator**
-
-![on-board-3v3-reg](Resources/jumper_cap_3.3v_reg.drawio.png)
-
-**Use Jumper Cap to connect the top 2 pins of JP7 to use Pico W 3.3V regulator**
-
-![picow-3v3-reg](Resources/jumper_cap_picow.drawio.png)
+> [!IMPORTANT]  
+> Below instructions are for OpenTrickler Controller v2.x. You can tell the board revision by inspecting the silkscreen. 
 
 ### RS232 Cable Type Select
 
-To match the type of RS232 cable (with DB9 header), you need to select between the straight through wiring and null modem wiring. 
+To match the type of RS232 cable (with DB9 header), you need to select between the straight through wiring and null modem wiring with J9. 
 
 [*What is NULL modem and straight through?*](https://www.decisivetactics.com/support/view?article=crossover-or-null-modem-vs-straight-through-serial-cable)
 
-**Use Jumper Cap to connect top 2 pins of JP5 and JP6 to match with straight through cable**
+- NULL Modem: Connect two jumpers horizontally using 2x jumpers. 
+- Straight Through: Connect two jumpers vertically using 2x jumpers. 
 
-![select-straight-through](Resources/select_straight_through.drawio.png)
-
-**Use Jumper Cap to connect bottom 2 pins of JP5 and JP6 to match with NULL modem cable**
-
-![select-straight-through](Resources/select_null_modem.drawio.png)
+![select_straight_through](Resources/select_straight_through.png "Straight Through Configuration")
 
 ## Install Plug-in Components
-
-### (Optional) Install PWM Expansion Board
-
-Insert the PWM expansion assembly to the Motor Expansion Board first, then connect the left servo motor to the J1 and right servo motor to the J2. 
-
-![pwn_expansion_board_assembly](Resources/install_pwm_expansion_board.png)
-
-*Note: The J3 output is reserved for future uses.*
 
 ### Install Raspberry Pico W
 
@@ -57,10 +35,6 @@ If your Raspberry Pico W doesn't come with headers pre-soldered, you will need t
 *Tips: Insert the 2x 20 pin header to the socket first, then solder pins to the Pico W will save your effort to line everything up.*
 
 ![picow_with_header](Resources/picow_with_header.jpg)
-
-If you're using the optional PWM Expansion Board, the stack up should look like this.
-
-![picow_with_header](Resources/pwm_expansion_board_stack_up.jpg)
 
 ### Install Stepper Motor Driver
 
@@ -86,7 +60,9 @@ It is time to power the board up! You may proceed if there is no visible [magic 
 
 ### Inspect LED
 
-There are 3x LEDs on the board and one on the Pico W. See the definition from the diagram below. You're supposed to see all power related LEDs (5V, 3.3V, DCIN) turned on. The green LED (WiFi indication) on the Pico W is suppose to blink at 1Hz/s (If you already have the firmware loaded. Otherwise see the pre-requisite section above). 
+There are 3x LEDs on the board and one on the Pico W. See the definition from the diagram below. You're supposed to see all power related LEDs (3.3V, 5V and 12V) turned on. The green LED (WiFi indication) on the Pico W is suppose to blink at 1Hz/s (If you already have the firmware loaded. Otherwise see the pre-requisite section above). 
+
+![led_status](Resources/led_interface.png)
 
 ### Inspect Screen
 
