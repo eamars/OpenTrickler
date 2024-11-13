@@ -50,6 +50,12 @@ Any MicroUSB data cable can be used to program the Pico W firmware. Those cable 
 
 * [Aliexpress](https://www.aliexpress.com/item/3256805656009583.html)
 
+### Servo Motors
+
+Full metal and 180 deg rotation angle ones are recommended. 
+
+* [MG90s](https://www.aliexpress.com/item/1005004550692203.html)
+
 ### RS232 Cable (with DB9 header)
 
 ![db9 cable](Resources/Leader-CBAT-DB9NULL-FF-3.jpg)
