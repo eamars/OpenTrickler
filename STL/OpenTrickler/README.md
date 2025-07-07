@@ -4,35 +4,61 @@
 
 ## Print Guide
 
-| Filename                                                 | Quantity | Alternative                                                                                                                                              | Remarks                                                                                                                                                                   |
-| -------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [40_teeth_gt2_pulley_x2.stl](40_teeth_gt2_pulley_x2.stl) | 2        |                                                                                                                                                          | Can be substituted with aftermarket metal 40T pulley.                                                                                                                     |
-| [bearing_cover_x2.stl](bearing_cover_x2.stl)             | 2        | Option 1: [bearing_cover_tighter_tolerance_x2.stl](Optional/bearing_cover_tighter_tolerance_x2.stl)<br>Option 2: [VolumnReducer](Optional/VolumnReducer) | Option 1: 0.5mm tolerance for both trickler tube instead of 1mm. <br>Option 2: See description from the VolumReducer. Both will lock the bearings in the bearing pockets. |
-| [front_body.stl](front_body.stl)                         | 1        | [ServoGate](Optional/ServoGate)                                                                                                                          | The optional servo gate allows the charge port to be shutted when the cup is removed. This enables powder to be pre-charged before the trickling process.                 |
-| [front_body_cover.stl](front_body_cover.stl)             | 1        |                                                                                                                                                          |                                                                                                                                                                           |
-| [front_rear_door_x2.stl](front_rear_door_x2.stl)         | 2        |                                                                                                                                                          | Recommended to print in translucent material.                                                                                                                             |
-| [GT2_82T_Belt.stl](GT2_82T_Belt.stl)                     | 1        |                                                                                                                                                          | Can be substituted with aftermarket 83T (166 mm) GT2 belt. This part has to be printed in TPU or any flexible material.                                                   |
-| [GT2_86T_Belt.stl](GT2_86T_Belt.stl)                     | 1        |                                                                                                                                                          | Can be substituted with aftermarket 87T (174 mm) GT2 belt. This part has to be printed in TPU or any flexible material.                                                   |
-| [large_rotary_tube.stl](large_rotary_tube.stl)           | 1        |                                                                                                                                                          | Recommended to print with random Z seam position.                                                                                                                         |
-| [rear_body.stl](rear_body.stl)                           | 1        |                                                                                                                                                          |                                                                                                                                                                           |
-| [small_rotary_tube.stl](small_rotary_tube.stl)           | 1        |                                                                                                                                                          | Recommended to print with random Z seam position.                                                                                                                         |
+### Main Body
+
+| Filename                                                 | Quantity | Alternative                                                              | Remarks                                                                                                                                                                                                                                                         |
+| -------------------------------------------------------- | -------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [40_teeth_gt2_pulley_x2.stl](40_teeth_gt2_pulley_x2.stl) | 2        |                                                                          | Can be substituted with aftermarket metal 40T pulley.                                                                                                                                                                                                           |
+| [front_body.stl](front_body.stl)                         | 1        |                                                                          | The front body of the OpenTrickler.                                                                                                                                                                                                                             |
+| [front_body_cover.stl](front_body_cover.stl)             | 1        |                                                                          | The top cover that sits on top of the front body.                                                                                                                                                                                                               |
+| [front_rear_door_x2.stl](front_rear_door_x2.stl)         | 2        |                                                                          | Recommended to print in translucent material.                                                                                                                                                                                                                   |
+| [GT2_82T_Belt.stl](GT2_82T_Belt.stl)                     | 1        |                                                                          | (Optional Printable Part) Can be substituted with aftermarket 83T (166 mm) GT2 belt. This part has to be printed in TPU or any flexible material.                                                                                                               |
+| [GT2_86T_Belt.stl](GT2_86T_Belt.stl)                     | 1        |                                                                          | (Optional Printable Part) Can be substituted with aftermarket 87T (174 mm) GT2 belt. This part has to be printed in TPU or any flexible material.                                                                                                               |
+| [large_rotary_tube.stl](large_rotary_tube.stl)           | 1        |                                                                          | Recommended to print with random Z seam position.                                                                                                                                                                                                               |
+| [rear_body.stl](rear_body.stl)                           | 1        |                                                                          | The rear body of the OpenTrickler                                                                                                                                                                                                                               |
+| [small_rotary_tube.stl](small_rotary_tube.stl)           | 1        | [small_rotary_tube_flow_through.stl](small_rotary_tube_flow_through.stl) | Recommended to print with random Z seam position.<br/> - The default design has blocked rear end, good for normal and generic flow application. <br/> - The alternative design has flow through rear end, good for high flow application, e.g,. magnum charges. |
+
+### Servo Gate
+
+| Filename                                                             | Quantity | Alternative | Remarks                                                                                    |
+| -------------------------------------------------------------------- | -------- | ----------- | ------------------------------------------------------------------------------------------ |
+| [ServoGate/left_servo_hanger.stl](ServoGate/left_servo_hanger.stl)   | 1        |             | Left servo hanger (from the front perspective)                                             |
+| [ServoGate/left_shutter.stl](ServoGate/left_shutter.stl)             | 1        |             | Left shutter underneath the front body (from the front perspective)                        |
+| [ServoGate/right_servo_hanger.stl](ServoGate/right_servo_hanger.stl) | 1        |             | Right servo hanger (from the front perspective)                                            |
+| [ServoGate/right_shutter.stl](ServoGate/right_shutter.stl)           | 1        |             | Right shutter underneath the front body (from the front perspective)                       |
+| [ServoGate/spur_gear_x2.stl](ServoGate/spur_gear_x2.stl)             | 2        |             | Spur gear for both servo motors. Can be opted out if you're not planning to use servo gate |
+
+### Volume Reducer
+
+| Filename                                                                                                   | Quantity | Alternative | Remarks                        |
+| ---------------------------------------------------------------------------------------------------------- | -------- | ----------- | ------------------------------ |
+| [VolumeReducer/FrontVolumeReductionInsert_Bottom.stl](VolumeReducer/FrontVolumeReductionInsert_Bottom.stl) | 1        |             | Front volume reducer body      |
+| [VolumeReducer/FrontVolumeReductionInsert_Top.stl](VolumeReducer/FrontVolumeReductionInsert_Top.stl)       | 1        |             | Serving as front bearing plate |
+| [VolumeReducer/RearVolumeReductionInsert_Bottom.stl](VolumeReducer/RearVolumeReductionInsert_Bottom.stl)   | 1        |             | Rear volume reducer body       |
+| [VolumeReducer/RearVolumeReductionInsert_Top.stl](VolumeReducer/RearVolumeReductionInsert_Top.stl)         | 1        |             | Serving as rear bearing plate  |
 
 ## BOM
 
-| **Name**               | **Quantity** | **Remarks**                 |
-| ---------------------- |:------------ |:--------------------------- |
-| Heatset Inserts M3x5x4 | 12           |                             |
-| M3x8 BHCS              | 8            |                             |
-| Shim Washer            | 8            | OD=6mm, ID=3mm, Thick=0.5mm |
-| 6804 Bearing           | 2            |                             |
-| 608 Bearing            | 2            |                             |
-| Nema 17 Stepper Motor  | 2            |                             |
+| **Name**               | **Quantity** | **Remarks**                                                                                                                                  |
+| ---------------------- |:------------ |:-------------------------------------------------------------------------------------------------------------------------------------------- |
+| M2x8 self-tapping      | 4            | Each servo motor should come with 2x screw in the package                                                                                    |
+| Heatset Inserts M3x5x4 | 18           |                                                                                                                                              |
+| M2.5x3.5 BHCS          | 2            | Each servo motor should come with 1x screw in the package                                                                                    |
+| M3x8 BHCS              | 8            |                                                                                                                                              |
+| M3x12 SHCS             | 2            |                                                                                                                                              |
+| Shim Washer            | 8            | OD=6mm, ID=3mm, Thick=0.5mm                                                                                                                  |
+| 6804 Bearing           | 2            |                                                                                                                                              |
+| 6801 Bearing           | 2            |                                                                                                                                              |
+| Nema 17 Stepper Motor  | 2            | See the sourcing guide for recommendations                                                                                                   |
+| TowerPro MG90s         | 2            | 180 deg servo motor is recommended. Other servo motors that have identical footprint than MG90s, for example, SG90, S0009M can also be used. |
 
 ## Tools
 
 * 2.5 mm hex driver
 
 * 2.0 mm hex driver
+
+* Small phillips screwdriver
 
 ## Assembly of Rear Body
 
@@ -153,3 +179,5 @@ Then pull motors slightly to tension the belts. Once done, tighten all 8 screws.
 # Congratulations
 
 Your Open Trickler is now assembled!
+
+
