@@ -76,44 +76,63 @@ Optionally, the additional 4x heatset inserts can be melt to either sides of the
 
 ### Assembly
 
-Press 6804 bearing to the top bearing pocket and 6801 to the bottom bearing pocket of [rear_body.stl](rear_body.stl). [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands. 
+Press 6804 bearing to the top pocket and 6801 bearing to the bottom pocket of [rear_body.stl](rear_body.stl). [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands. 
 
 ![open_trickler_rear_body_install_bearings.png](resources/open_trickler_rear_body_install_bearings.png)
 
-For the next step, you have three options
+Slide the [RearVolumeReductionInsert_Top.stl](VolumeReducer/RearVolumeReductionInsert_Top.stl) to the first cut out next to the bearings from the top, serving as the bearing cover. Ensure the part is sitting flush with the top surface. 
 
-1. [bearing_cover_x2.stl](bearing_cover_x2.stl): Slide the bearing cover to the rear cut out. The cover should sit flush with the top of the rear body, while two bearings are still free to rotate without resistance.
-   If you can feel the abnormal resistance after installing the bearing cover, press the bearings inwards for additional 0.1mm to clear the interference.
-   ![open_trickler_rear_body_install_bearing_cover](resources/open_trickler_rear_body_install_bearing_cover.png)
+![open_trickler_rear_body_install_rear_volume_reduction_insert_top.png](resources/open_trickler_rear_body_install_rear_volume_reduction_insert_top.png)
 
-2. [bearing_cover_tighter_tolerance_x2.stl](Optional/bearing_cover_tighter_tolerance_x2.stl): The procedure is identical to option 1 but with the bearing cover with slightly tigher tolerance. 
+Push the [RearVolumeReductionInsert_Bottom.stl](VolumeReducer/RearVolumeReductionInsert_Bottom.stl) from the rear opening against the bearing cover. 
 
-3. [VolumnReducer](Optional/VolumnReducer): Slide the rear volumn reducer assembly to the rear cut out. The cover should sit flush with the top of the rear body, while two bearings are still free to rotate without resistance.
-   ![open_trickler_rear_body_install_volumn_reducer](resources/open_trickler_rear_body_install_volumn_reducer.png)
+![open_trickler_rear_body_install_rear_volume_reduction_insert_bottom.png](resources/open_trickler_rear_body_install_rear_volume_reduction_insert_bottom.png)
 
-Use 8x M3x8 BHCS screws with the optional M3 shim washers to mount two stepper motors onto the [rear_body.stl](rear_body.stl), but don't tighten them yet. Make sure the motor can slide left to right.
+Then slide the [front_rear_door_x2.stl](front_rear_door_x2.stl) to the second cut out from the top, Ensure the part is sitting flush with the top surface.
+
+![open_trickler_rear_body_install_rear_door.png](resources/open_trickler_rear_body_install_rear_door.png)
+
+Use 8x M3x8 BHCS screws with the optional M3 shim washers to mount two stepper motors onto the [rear_body.stl](rear_body.stl), but don't tighten them yet. Make sure the motor can slide left to right with little to none resistance.
 
 ![open_trickler_rear_body_install_motors.png](resources/open_trickler_rear_body_install_motors.png)
 
-Slide 2x [40_teeth_gt2_pulley_x2.stl](40_teeth_gt2_pulley_x2.stl) to the motor shaft but don't tighten the set screws yet. The pulley height will be adjusted in the later step.
+Slide 2x [40_teeth_gt2_pulley_x2.stl](40_teeth_gt2_pulley_x2.stl) to the motor shaft but don't tighten the set screws yet. The pulley position will be adjusted in the later step.
 
 ![open_trickler_rear_body_install_pulley.png](resources/open_trickler_rear_body_install_pulley.png)
 
-Slide the [front_rear_door_x2.stl](front_rear_door_x2.stl) to the cut out and the [rear_body.stl](rear_body.stl) to finish the assembly. 
+The rear body assembly is now complete. 
 
-![open_trickler_rear_body_install_rear_door](resources/open_trickler_rear_body_install_rear_door.png)
+
 
 ## Assembly of Front Body
 
-*Note: If you're looking to build the Servo Gate, you need to follow the [servo gate build guide](Optional/ServoGate/README.md) first before continue.*
+![open_trickler_front_body_overview.png](resources/open_trickler_front_body_overview.png)
+
+### Crimping
+
+The [Pico Motor Expansion Board v2](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board) assumes the servo motor comes with the JST PH2.54 connector. You may need to re-crimp the connector to 3pin JST PH 2.54 connectors in order to connect the servo motor to the motor expansion board. The colour code for MG90s servo motor is provided below.
+
+![wiring_colour_code](resources/wiring_colour_code.png)
 
 ### Component Prep
 
-Melt 4x heatset inserts to the bottom of the [front_body.stl](front_body.stl). Make sure the heatset inserts are sitting flush with the surface.
+Melt 4x heatset inserts to the bottom of the [front_body.stl](front_body.stl) and 2x to either sides. Make sure the heatset inserts are sitting flush with the surface.
 
 ![open_trickler_front_body_install_heatset_inserts.png](resources/open_trickler_front_body_install_heatset_inserts.png)
 
 ### Assembly
+
+Use 2x M3x12 SHCS to fix the [left_servo_hanger.stl](ServoGate/left_servo_hanger.stl) and [right_servo_hanger.stl](ServoGate/right_servo_hanger.stl) to both sides. Servo hangers are polarised. A dot on the body is used to indicate the face pointing towards the servo motor.
+
+![install_servo_hangers](resources/install_servo_hangers.png)
+
+Slide the [spur_gear_x2.stl](ServoGate/spur_gear_x2.stl) to the output gear of both servo motors. Make sure the side with the teeth is pushed against the gear. Use the M2.5x3.5 BHCS (came with the servo motor) to fix the spur gear in place.
+
+![install_spur_gear](resources/install_spur_gear.png)
+
+Use 4x M2x8 self-tapping screw to fix the servo motors to the front body at both sides. Make sure the servo motors are installed so the spur gear is closer to the rear of the body.
+
+![install_servo_motors](resources/install_servo_motors.png)
 
 Press 6804 bearing to the top bearing pocket and 608 to the bottom bearing pocket. [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands.
 
