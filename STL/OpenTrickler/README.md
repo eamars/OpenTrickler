@@ -70,9 +70,13 @@ Melt 4x heatset inserts to the bottom of the [rear_body.stl](rear_body.stl). Mak
 
 ![open_trickler_rear_body_install_heatset_inserts.png](resources/open_trickler_rear_body_install_heatset_inserts.png)
 
+Optionally, the additional 4x heatset inserts can be melt to either sides of the body to support the installation of additional parts, for example, the [WeightHolder](Optional/WeightHolder). 
+
+![open_trickler_rear_body_install_heatset_inserts_sides.png](resources/open_trickler_rear_body_install_heatset_inserts_sides.png)
+
 ### Assembly
 
-Press 6804 bearing to the top bearing pocket and 608 to the bottom bearing pocket of [rear_body.stl](rear_body.stl). [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands. 
+Press 6804 bearing to the top bearing pocket and 6801 to the bottom bearing pocket of [rear_body.stl](rear_body.stl). [Printable bearing insert helpers](Tools) are supplied to use with benchtop vise if the bearings can't be pressed in by hands. 
 
 ![open_trickler_rear_body_install_bearings.png](resources/open_trickler_rear_body_install_bearings.png)
 
@@ -179,5 +183,3 @@ Then pull motors slightly to tension the belts. Once done, tighten all 8 screws.
 # Congratulations
 
 Your Open Trickler is now assembled!
-
-
