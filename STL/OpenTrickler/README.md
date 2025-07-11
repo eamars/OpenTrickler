@@ -138,15 +138,13 @@ Press 6804 bearing to the top bearing pocket and 608 to the bottom bearing pocke
 
 ![open_trickler_front_body_install_bearings.png](resources/open_trickler_front_body_install_bearings.png)
 
-For the next step, you have three options
+Slide the [FrontVolumeReductionInsert_Top.stl](VolumeReducer/FrontVolumeReductionInsert_Top.stl) to the first cut out next to the bearing from the top, serving as the bearing cover. Ensure the part is sitting flush with the top surface. 
 
-1. [bearing_cover_x2.stl](bearing_cover_x2.stl): Slide the bearing cover to the rear cut out. The cover should sit flush with the top of the rear body, while two bearings are still free to rotate without resistance.If you can feel the abnormal resistance after installing the bearing cover, press the bearings inwards for additional 0.1mm to clear the interference.
-    ![open_trickler_front_body_install_bearing_cover](resources/open_trickler_front_body_install_bearing_cover.png)
+![open_trickler_front_body_install_front_volume_reduction_insert_top.png](resources/open_trickler_front_body_install_front_volume_reduction_insert_top.png)
 
-2. [bearing_cover_tighter_tolerance_x2.stl](Optional/bearing_cover_tighter_tolerance_x2.stl): The procedure is identical to option 1 but with the bearing cover with slightly tigher tolerance.
+Push the [FrontVolumeReductionInsert_Bottom.stl](VolumeReducer/FrontVolumeReductionInsert_Bottom.stl) from the front opening against the bearing cover. 
 
-3. [VolumnReducer](Optional/VolumnReducer): Slide the front volumn reducer assembly to the rear cut out. The cover should sit flush with the top of the front body, while two bearings are still free to rotate without resistance.
-    ![open_trickler_front_body_install_volumn_reducer](resources/open_trickler_front_body_install_volumn_reducer.png)
+![open_trickler_front_body_install_front_volume_reduction_insert_bottom.png](resources/open_trickler_front_body_install_front_volume_reduction_insert_bottom.png)
 
 Slide the [front_rear_door_x2.stl](front_rear_door_x2.stl) to the cut out, the front door should sit flush with the top of the [front_body.stl](front_body.stl).
 
@@ -156,31 +154,88 @@ Slide the [front_body_cover.stl](front_body_cover.stl) to the groove top of the 
 
 ![open_trickler_front_body_install_front_body_cover](resources/open_trickler_front_body_install_front_body_cover.png)
 
+### Servo Gate Tuning Guide
+
+#### Connect Servo Motors to the Controller Board
+
+* For Pico Motor Expansion Board v1 + PWM Expansion Board, you need to connect the left servo motor (from the front perspective) to J1, and the right servo motor to J2.
+
+* For Pico Motor Expansion Board v2, you need to connect the left servo motor (from the front perspective) to J6, and the right servo motor to J7.
+
+#### Servo Motor Control Basics
+
+The TowerPro MG90s uses PWM duty cycle to accept external command for position control. The period of the "on" cycle determines the absolute position shown in the table below. Intermediate positions between -90 to 90 degrees are linearly interpolated with respect to the duration of the "on" period.
+
+![pwm_servo_control](resources/pwm_servo_control.png)
+
+The OpenTrickler uses the duty cycle (the ratio of the time between on and off per cycle) as the input to control the opening and closing of the servo gate.
+
+| Period | Absolute Position | Duty Cycle (period/20ms) |
+| ------ | ----------------- | ------------------------ |
+| 1 ms   | -90 degree        | 0.050                    |
+| 1.5 ms | 0 degree          | 0.075                    |
+| 2 ms   | 90 degree         | 0.100                    |
+
+The servo gate opening and closing duty cycle need to be tuned before the final assembly. Please follow the [initialization guide](https://github.com/eamars/OpenTrickler/blob/main/Manual/initialization_guide.md) to bring up the wireless controller. The following steps assumes the WebUI is functional. 
+
+#### Enable Servo Gate
+
+The servo gate is disabled by default. You need to navigate to the WebUI -> Settings -> Servo Gate, toggle the "Servo Gate Enable" option from No to Yes, then hit the Apply button with "Save to EEPROM" option. Then restart the OpenTrickler controller by pressing the reset button, or reset from the web interface. 
+
+![enable_servo_gate](resources/enable_servo_gate.png)
+
+#### Tune the Shutters
+
+The left shutter is assigned to Shutter 0. By default the shutter is operating at a very limited range. You need to follow the below steps. 
+
+1. Flip the front body up-side-down. 
+
+2. Set the shutter 0 close duty cycle to 0.1, then apply the settings. 
+
+3. Navigate to the Trickler page, click the Gate Close button. Wait for the servo motor to change position.
+
+4. Place the left shutter to the bottom cut out at the closed position (demonstrated below). Make sure the left shutter engages with the spur gear. If not, adjust the shutter 0 close duty cycle up a bit (around 0.005) from the settings and click the Gate Close button again. 
+   ![place_left_shutter](resources/place_left_shutter.png)
+
+5. Click Gate Open Button, wait for the servo motor to change position. 
+
+6. The shutter is now moved to the open position. If the shutter is not fully closed, you need to adjust the shutter 0 open duty cycle up, then click the Gate Open Button. This process may need to be repeated multiple times until the full open duty cycle is termined by experiment. 
+
+7. Repeat above procedures with the shutter 1. Note the shutter 1 is operating at the opposite position, where the open and close duty cycle is roughly opposite to the shutter 0. 
+
+8. **(Important)** make sure the settings are saved in the end, by "Save to EEPROM". 
+
+Once the shutter open and close angles are tuned, you can continue with the full body assembly. 
+
 ## Assembly of Open Trickler Front and Rear Body
 
-![open_trickler_body_overview.png](resources/open_trickler_body_overview.png)
+Note: this step requires the top assembly from one of the scale shield. The manual will use the top assembly from A&D FX Shield as an example. 
 
 ### Assembly
+
+Mount the rear body assembly to the scale shield with fasterners. 
 
 Insert both [large_rotary_tube.stl](large_rotary_tube.stl) and [small_rotary_tube.stl](small_rotary_tube.stl) through the rear bearing. You may experience some resistance subject to the 
 tolerance of the printed part. 
 
-
+*Note: the alternative part [small_rotary_tube_flow_through.stl](small_rotary_tube_flow_through.stl) can be used with the high flow application.*
 
 ![open_trickler_body_install_rotary_tubes.png](resources/open_trickler_body_install_rotary_tubes.png)
 
-Slide the motor towards rotary tubes to the nearest position. Once done, slide the belt onto rotary tubes and pulleys. Make
+Slide the pully assembly towards rotary tubes to the nearest position. Once done, slide the belt onto rotary tubes and pulleys. Make
 sure the longer belt is connected to the motor on the right side. **Do not tension the belt, nor adjust the depth of the pulley for now.**
 
 ![open_trickler_body_install_belt.png](resources/open_trickler_body_install_belt.png)
 
-Slide the front body over the rotary tubes through bearings. You need to push the front body all the way in. 
+Slide the front body assembly over the rotary tubes through bearings. The front body assembly need to be pushed all the way to align with four mounting holes, then fix the front body assembly with the scale lid using fasterners. 
+
+*Note: You may need to flip the full assembly up-side-down to ensure the servo gate doesn't accidently move or shift when sliding the front body over the bearings.*
 
 ![open_trickler_connect_front_body.png](resources/open_trickler_connect_front_body.png)
 
-The OpenTrickler is now assembled. In the later steps the OpenTrickler will be mounted to one of the scale adapter for final assembly.
+Slide the [Powder Hopper](../Powder Hopper/) to the rear body, then the OpenTrickler is fully assembled. 
 
-
+![open_trickler_install_powder_hopper.png](resources/open_trickler_install_powder_hopper.png)
 
 ## Post Installation Adjustments
 
@@ -194,8 +249,8 @@ Look through the unit from the left and right side, push or pull the pulley on t
 
 ### Tension The Belt
 
-You need to adjust the tension of the belt. First loosen 8x M3x8 BHCS used to secure stepper motors. 
-Then pull motors slightly to tension the belts. Once done, tighten all 8 screws. 
+You need to adjust the tension of the belt. First loosen 4x M3x8 BHCS used to secure stepper motors. 
+Then pull motors slightly to tension the belts. Once done, tighten all 4 screws. Repeat the process for both larger and small rotary tube motors.
 
 ![belt_tensioning.png](resources/belt_tensioning.png)
 
