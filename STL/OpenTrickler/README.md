@@ -233,7 +233,7 @@ Slide the front body assembly over the rotary tubes through bearings. The front 
 
 ![open_trickler_connect_front_body.png](resources/open_trickler_connect_front_body.png)
 
-Slide the [Powder Hopper](../Powder Hopper/) to the rear body, then the OpenTrickler is fully assembled. 
+Slide the [Powder Hopper](../Powder%20Hopper/) to the rear body, then the OpenTrickler is fully assembled. 
 
 ![open_trickler_install_powder_hopper.png](resources/open_trickler_install_powder_hopper.png)
 
