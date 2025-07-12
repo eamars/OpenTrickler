@@ -97,17 +97,17 @@ Subject to the implementation of [Motor Expansion Board](https://github.com/eama
 
 ### Bearings
 
-#### 608-2RS or 608ZZ
+#### 6801-2RS or 6801ZZ
 
-![608_bearing](Resources/608-2rs_bearing.jpg)
+![6801_bearing.png](Resources/6801_bearing.png)
 
-You can find the bearing from [https://www.aliexpress.com/item/4000120401871.html](https://www.aliexpress.com/item/4000120401871.html)
+You can find the bearing from [https://www.aliexpress.com/item/4000120762936.html](https://www.aliexpress.com/item/4000120762936.html)
 
-✅ Select 608ZZ 8x22x7mm OR 608-2RS 8x22x7mm. 
+✅ Select 6801-2RS 12X21X5mm
 
-*"In summary, the primary difference between "608ZZ" and "608-2RS" lies in the type of sealing or shielding they have. "608ZZ" has metal shields on both sides, while "608-2RS" has rubber seals on both sides."* - by ChatGPT
+*"In summary, the primary difference between "-ZZ" and "-2RS" lies in the type of sealing or shielding they have. "-ZZ" has metal shields on both sides, while "-2RS" has rubber seals on both sides."* - by ChatGPT
 
-You will need 2x 608 bearing per OpenTrickler Assembly.
+You will need 2x 6801 bearing per OpenTrickler Assembly.
 
 #### 6804-2RS or 6804ZZ
 
