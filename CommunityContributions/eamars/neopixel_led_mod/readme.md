@@ -1,4 +1,4 @@
-# OpenTrickler Neopixel LED Mod
+# Neopixel LED Mod
 
 [![youtube_video](https://img.youtube.com/vi/Y1qmCO0_NH8/0.jpg)](https://www.youtube.com/watch?v=Y1qmCO0_NH8)
 
@@ -11,6 +11,7 @@
 
 - 2x Neopixel RGBW Button PCB - [Link to Adafruit](https://www.adafruit.com/product/4776)
 - 420 mm AWG24-26 three lead cable
+- Raspberry Pi Pico Motor Expansion Board V2, or v1 + [pwm_expansion_board(https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board/tree/main/archive/pwm_expansion_board)
 
 ## Preparations
 
@@ -39,3 +40,14 @@ Install the Neopixel LED (with only one set of cable) to the pocket of [FrontVol
 Side the front body cover and the OpenTrickler assembly is complete. The last step is to ensure both cables are sitting nicely in the cut out on [scale_shield_with_led.stl](STL/scale_shield_with_led.stl). Pluging the cable to the PWNOUT port on the controller board and your assembly is now complete. 
 
 ![cable_layout_outside.png](resources/cable_layout_outside.png)
+
+## Configuration
+
+You will need [OpenTrickler Controller v1.12](https://github.com/eamars/OpenTrickler-RP2040-Controller/releases/tag/v1.12) or newer firmware. By default the firmware will mirror the LED1 colour (from mini12864 display) to PWM_OUT port. 
+
+In the new firmware, you need to check below settings: 
+
+- PWM3 Chain Count: The number of LEDs on the same chain. This mod uses 2 therefore you need to select 2 here. 
+- Is RGBW LED?: Depending on the type of LED you are using, this mod uses RGBW (ws2812b) therefore you need to select Yes here. 
+
+![software_config.png](resources/software_config.png)
