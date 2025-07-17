@@ -11,7 +11,7 @@
 
 - 2x Neopixel RGBW Button PCB - [Link to Adafruit](https://www.adafruit.com/product/4776)
 - 420 mm AWG24-26 three lead cable
-- Raspberry Pi Pico Motor Expansion Board V2, or v1 + [pwm_expansion_board(https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board/tree/main/archive/pwm_expansion_board)
+- Raspberry Pi Pico Motor Expansion Board V2, or v1 + [pwm_expansion_board](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board/tree/main/archive/pwm_expansion_board)
 
 ## Preparations
 
