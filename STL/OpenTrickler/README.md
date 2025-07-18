@@ -224,7 +224,7 @@ tolerance of the printed part. It is recommended to sand the mating surface of t
 
 - [small_rotary_tube_high_flow.stl](STL/small_rotary_tube_high_flow.stl): For large size kernels. 
 
-*Note: Only one of the small rotary tube is required.*
+*Note: Only one of the small rotary tube is required. If you are uncertain of which tube to use, you can always start with the low flow tube.*
 
 ![open_trickler_body_install_rotary_tubes.png](resources/open_trickler_body_install_rotary_tubes.png)
 
