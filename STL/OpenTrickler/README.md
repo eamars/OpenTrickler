@@ -215,10 +215,16 @@ Note: this step requires the top assembly from one of the scale shield. The manu
 
 Mount the rear body assembly to the scale shield with fasterners. 
 
-Insert both [large_rotary_tube.stl](large_rotary_tube.stl) and [small_rotary_tube.stl](small_rotary_tube.stl) through the rear bearing. You may experience some resistance subject to the 
-tolerance of the printed part. 
+Insert both [large_rotary_tube.stl](large_rotary_tube.stl) and one of the small rotary tubes through the rear bearing. You may experience some resistance subject to the 
+tolerance of the printed part. It is recommended to sand the mating surface of the tube if it cannot be inserted into the bearing by hand. 
 
-*Note: the alternative part [small_rotary_tube_flow_through.stl](small_rotary_tube_flow_through.stl) can be used with the high flow application.*
+- [small_rotary_tube_low_flow.stl](STL/small_rotary_tube_low_flow.stl): for small size kernels, or ball powder. 
+
+- [small_rotary_tube_mid_flow.stl](STL/small_rotary_tube_mid_flow.stl): For medium size kernels. 
+
+- [small_rotary_tube_high_flow.stl](STL/small_rotary_tube_high_flow.stl): For large size kernels. 
+
+*Note: Only one of the small rotary tube is required.*
 
 ![open_trickler_body_install_rotary_tubes.png](resources/open_trickler_body_install_rotary_tubes.png)
 
