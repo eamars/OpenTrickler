@@ -218,11 +218,11 @@ Mount the rear body assembly to the scale shield with fasterners.
 Insert both [large_rotary_tube.stl](large_rotary_tube.stl) and one of the small rotary tubes through the rear bearing. You may experience some resistance subject to the 
 tolerance of the printed part. It is recommended to sand the mating surface of the tube if it cannot be inserted into the bearing by hand. 
 
-- [small_rotary_tube_low_flow.stl](STL/small_rotary_tube_low_flow.stl): for small size kernels, or ball powder. 
+- [small_rotary_tube_low_flow.stl](small_rotary_tube_low_flow.stl): for small size kernels, or ball powder. 
 
-- [small_rotary_tube_mid_flow.stl](STL/small_rotary_tube_mid_flow.stl): For medium size kernels. 
+- [small_rotary_tube_mid_flow.stl](small_rotary_tube_mid_flow.stl): For medium size kernels. 
 
-- [small_rotary_tube_high_flow.stl](STL/small_rotary_tube_high_flow.stl): For large size kernels. 
+- [small_rotary_tube_high_flow.stl](small_rotary_tube_high_flow.stl): For large size kernels. 
 
 *Note: Only one of the small rotary tube is required. If you are uncertain of which tube to use, you can always start with the low flow tube.*
 
