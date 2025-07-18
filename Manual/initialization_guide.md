@@ -122,6 +122,17 @@ A quick way to validate the function of motors is to use Cleanup mode.
 
 ![invert_motor_step_direction](Resources/invert_motor_step_direction.png)
 
+### Configure Fine Trickler Motor Ratio
+
+The OpenTrickler V2 enlarges the outer diameter of the small trickler tube. The number of teeth of the trickler tube also increased. You need to ensure the gear ratio is properly configured. Please use the table below as reference. 
+
+| OpenTrickler Revision | Gear Ratio |
+| --------------------- | ---------- |
+| v1.x                  | 2.105      |
+| v2.x                  | 1.818      |
+
+![fine_trickler_motor_gear_ratio.png](Resources/fine_trickler_motor_gear_ratio.png)
+
 ### Configure and Inspect Scale Communication
 
 * If you're using A&D fx120i/300i series scale, follow the [guide by OE5AMP](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/OpenTrickler%20manual%20for%20ADFX%20scale.pdf) to configure the scale to report automatically. 
@@ -143,3 +154,5 @@ Again, the "Cleanup Mode" can be used to validate the scale communication.
 
 * If you read "inf" after the Weight, it indicates the communication to the scale is not established. Please review the connection to the scale, as well as scale settings. 
 * If you can read "0" after the Weight, but the value doesn't change despite the value from the scale's screen updated. Please review the scale settings. 
+  
+  
