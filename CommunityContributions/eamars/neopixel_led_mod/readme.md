@@ -29,7 +29,7 @@ Install the Neopixel LED (with both in and out cables) to the pocket of [front_d
 
 ![install_neopixel_at_discharge_port.png](resources/install_neopixel_at_discharge_port.png)
 
-Continue with front and rear body assembly. Once the OpenTrickler is mounted to the scale shield top assembly, you need to run the cable with the Neopixel LED, from the front discharger mount, through the cut out behind the [front_body_with_shutter_with_led.stl](STL/front_body_with_shutter_with_led.stl), following the red line as shown below: The other cable with JST connector (blue line) can be left floating at this stage. 
+Continue with front and rear body assembly. Once the OpenTrickler is mounted to the [trickler_adapter_plate.stl](STL/trickler_adapter_plate.stl), you need to run the cable with the Neopixel LED, from the front discharger mount, through the cut out behind the [front_body_with_shutter_with_led.stl](STL/front_body_with_shutter_with_led.stl), following the red line as shown below: The other cable with JST connector (blue line) can be left floating at this stage. 
 
 ![cable_layout_bottom.png](resources/cable_layout_bottom.png)
 
