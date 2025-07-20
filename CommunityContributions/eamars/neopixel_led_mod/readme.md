@@ -10,16 +10,16 @@
 ## BOM
 
 - 2x Neopixel RGBW Button PCB - [Link to Adafruit](https://www.adafruit.com/product/4776)
-- 420 mm AWG24-26 three lead cable
+- 470 mm AWG24-26 three lead cable
 - Raspberry Pi Pico Motor Expansion Board V2, or v1 + [pwm_expansion_board](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board/tree/main/archive/pwm_expansion_board)
 
 ## Preparations
 
-1. Cut the three lead cable in two lengths: 220mm and 200mm. 
+1. Cut the three lead cable in two lengths: 220mm and 250mm. 
 2. Solder one end of *220mm* cable to the **DIN** side of the Neopixel LED, pointing towards the **outside** edge of the PCB. 
 3. Solder the other end of *220mm* cable to the **DIN** side of another Neopixel LED, pointing towards the **outside** edge of the PCB.
-4. Crimp one end of *200mm* cable with 3pin JST (2.54pitch) connector. 
-5. Solder the other end of the *200mm* cable to the **DOUT** side of the Neopixel LED, pointing towards the **inside** of the PCB. 
+4. Crimp one end of *250mm* cable with 3pin JST (2.54pitch) connector. 
+5. Solder the other end of the *250mm* cable to the **DOUT** side of the Neopixel LED, pointing towards the **inside** of the PCB. 
 
 ![neopixel_cable_prep.png](resources/neopixel_cable_prep.png)
 
