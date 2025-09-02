@@ -9,19 +9,19 @@
 
 ## BOM
 
-- 2x Neopixel RGBW Button PCB - [Link to Adafruit](https://www.adafruit.com/product/4776)
-- 470 mm AWG24-26 three lead cable
-- Raspberry Pi Pico Motor Expansion Board V2, or v1 + [pwm_expansion_board](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board/tree/main/archive/pwm_expansion_board)
+- Heatset Inserts M3x5x4: 24
+- Nut M3: 4
+- M3x6 BHCS: 4
+- M3x10 BHCS: 16
+- M3x10 SHCS: 4 
+- M3x12 SHCS: 4
 
-## Preparations
+- A shot glass, height: 50mm, diameter at top: 41.6mm
+- An o-ring 35mm in diameter
 
-1. Cut the three lead cable in two lengths: 220mm and 250mm. 
-2. Solder one end of *220mm* cable to the **DIN** side of the Neopixel LED, pointing towards the **outside** edge of the PCB. 
-3. Solder the other end of *220mm* cable to the **DIN** side of another Neopixel LED, pointing towards the **outside** edge of the PCB.
-4. Crimp one end of *250mm* cable with 3pin JST (2.54pitch) connector. 
-5. Solder the other end of the *250mm* cable to the **DOUT** side of the Neopixel LED, pointing towards the **inside** of the PCB. 
+- A WS2812B led with cable and connector
 
-![neopixel_cable_prep.png](resources/neopixel_cable_prep.png)
+
 
 ## Print and Assembly Guide
 
@@ -41,13 +41,18 @@ Side the front body cover and the OpenTrickler assembly is complete. The last st
 
 ![cable_layout_outside.png](resources/cable_layout_outside.png)
 
-## Configuration
+## Powder cup
 
-You will need [OpenTrickler Controller v1.12](https://github.com/eamars/OpenTrickler-RP2040-Controller/releases/tag/v1.12) or newer firmware. By default the firmware will mirror the LED1 colour (from mini12864 display) to PWM_OUT port. 
 
-In the new firmware, you need to check below settings: 
+## Options:
+### Powder hopper:
 
-- PWM3 Chain Count: The number of LEDs on the same chain. This mod uses 2 therefore you need to select 2 here. 
-- Is RGBW LED?: Depending on the type of LED you are using, this mod uses RGBW (ws2812b) therefore you need to select Yes here. 
+### Main body:
+
+
+
+
+
+
 
 ![software_config.png](resources/software_config.png)
