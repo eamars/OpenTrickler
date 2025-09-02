@@ -34,8 +34,8 @@ You need a 13mm diameter lens.
 ## Assembly guide
 
 ### Rear discharge mount
-Use 4x M3x12 SHCS with [rear_discharge_mount.stl](STL/rear_discharge_mount.stl) to join the ([rear_body_without_holes.stl](STL/rear_body_without_holes.stl)) to the [scale_shield.stl](/STLscale_shield.stl).
-![rear_discharge_mount.jpg](resources/rear_discharge_mount.jpg)  
+Use 4x M3x12 SHCS with [rear_discharge_mount.stl](STL/rear_discharge_mount.stl) to join the [rear_body_without_holes.stl](STL/rear_body_without_holes.stl)) to the [scale_shield.stl](/STLscale_shield.stl).
+![Rear_discharge_mount.jpg](resources/Rear_discharge_mount.jpg)  
 
 
 ### Display
@@ -59,8 +59,10 @@ Melt 4x heatset into the [enclosure_bottom.stl](STL/enclosure_bottom.stl) to be 
 Use 4x M3x10 BHCS and 4x M3 nuts to join [enclosure_bottom.stl](STL/enclosure_bottom.stl) to [scale_shield.stl](/STLscale_shield.stl).  
 ![Enclosure_1.jpg](resources/Enclosure_1.jpg)  
 
-After passing all the cables, fix the PCB with 4 M3x6 BHCS screws.
+After passing all the cables, fix the PCB with 4x M3x6 BHCS screws.
 ![Enclosure_2.jpg](resources/Enclosure_2.jpg)  
+
+The case cover ([enclosure_top.stl](STL/enclosure_top) is simply snapped on.
 
 
 ## Scale base
