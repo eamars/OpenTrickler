@@ -22,20 +22,27 @@
 - WS2812B led with cable and connector
 - 13mm lens
 
-## LED preparation
+
+
+## Assembly guide
+
+### Rear discharge mount
+Use 4x M3x12 SHCS with [rear_discharge_mount.stl](STL/rear_discharge_mount.stl) to join the [rear_body_without_holes.stl](STL/rear_body_without_holes.stl) to the [scale_shield.stl](/STLscale_shield.stl).
+![Rear_discharge_mount.jpg](resources/Rear_discharge_mount.jpg)  
+
+
+### LED
 Use one of the connectors provided with the 3D mellow PCB.  
 Be sure to use the LED's DI pin.  
 You need a 13mm diameter lens.  
 ![Led_1.jpg](resources/Led_1.jpg)
 ![Led_2.jpg](resources/Led_2.jpg)  
 
+Place the lens in the hole after adjusting it if necessary with a file and sandpaper.
+![Led_3.jpg](resources/Led_3.jpg)
+![Led_4.jpg](resources/Led_4.jpg)  
 
 
-## Assembly guide
-
-### Rear discharge mount
-Use 4x M3x12 SHCS with [rear_discharge_mount.stl](STL/rear_discharge_mount.stl) to join the [rear_body_without_holes.stl](STL/rear_body_without_holes.stl)) to the [scale_shield.stl](/STLscale_shield.stl).
-![Rear_discharge_mount.jpg](resources/Rear_discharge_mount.jpg)  
 
 
 ### Display
@@ -62,7 +69,7 @@ Use 4x M3x10 BHCS and 4x M3 nuts to join [enclosure_bottom.stl](STL/enclosure_bo
 After passing all the cables, fix the PCB with 4x M3x6 BHCS screws.
 ![Enclosure_2.jpg](resources/Enclosure_2.jpg)  
 
-The case cover ([enclosure_top.stl](STL/enclosure_top) is simply snapped on.
+The case cover ([enclosure_top.stl](STL/enclosure_top)) is simply snapped on.
 
 
 ## Scale base
