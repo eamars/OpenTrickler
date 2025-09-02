@@ -87,8 +87,10 @@ Use the first weighing plate and add a piece of tape to fix the [cup_base.stl](S
 
 
 ## Rear discharger cup
-[rear_discharger_cup.stl](STL/rear_discharger_cup.stl)
-[rear_discharge_cup_ring.stl](STL/rear_discharge_cup_ring.stl)
+[rear_discharger_cup.stl](STL/rear_discharger_cup.stl)  
+[rear_discharge_cup_ring.stl](STL/rear_discharge_cup_ring.stl)  
+4x heatset  
+2x M3x10 SHCS
 ![Rear_discharger_cup.jpg](resources/Rear_discharger_cup.jpg)  
 
 
@@ -105,7 +107,7 @@ It is possible not to use the o-ring if your print is very tight.
 ## Options:
 ### Powder hopper:
 Clear acrylic tube, outer diameter: 60mm and inner diameter: 56mm
-[hopper_base_plexi.stl](STL/hopper_base_plexi.stl)
+[hopper_base_plexi.stl](STL/hopper_base_plexi.stl)  
 [hopper_cap.stl](STL/hopper_cap.stl)
 ![Hopper.jpg](resources/Hopper.jpg)  
 
