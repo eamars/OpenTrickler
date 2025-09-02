@@ -74,7 +74,7 @@ The case cover ([enclosure_top.stl](STL/enclosure_top.stl)) is simply snapped on
 
 ### Scale base
 Overview with all cables:
-![Cable.jpg](resources/Cable.jpg)  
+![Cable.jpg](resources/Cable.jpg)    
 Use 4x M3x10 SHCS and 2x M3x10 BHCS to join the [scale_base.stl](STL/scale_base.stl) to the [scale_shield.stl](STL/scale_shield.stl).
 ![Scale_base.jpg](resources/Scale_base.jpg)  
 
@@ -89,14 +89,14 @@ Use the first weighing plate and add a piece of tape to fix the [cup_base.stl](S
 ## Rear discharger cup
 [rear_discharger_cup.stl](STL/rear_discharger_cup.stl)  
 [rear_discharge_cup_ring.stl](STL/rear_discharge_cup_ring.stl)  
-4x heatset  
+2x heatset  
 2x M3x10 SHCS
 ![Rear_discharger_cup.jpg](resources/Rear_discharger_cup.jpg)  
 
 
 
 ## Powder cup
-It is possible not to use the o-ring if your print is very tight.
+It is possible not to use the o-ring if your print is very tight.  
 [powder_cup_handle.stl](STL/powder_cup_handle.stl)
 ![Powder_cup_1.jpg](resources/Powder_cup_1.jpg)
 ![Powder_cup_2.jpg](resources/Powder_cup_2.jpg)
@@ -106,7 +106,7 @@ It is possible not to use the o-ring if your print is very tight.
 
 ## Options:
 ### Powder hopper:
-Clear acrylic tube, outer diameter: 60mm and inner diameter: 56mm
+Clear acrylic tube, outer diameter: 60mm and inner diameter: 56mm  
 [hopper_base_plexi.stl](STL/hopper_base_plexi.stl)  
 [hopper_cap.stl](STL/hopper_cap.stl)
 ![Hopper.jpg](resources/Hopper.jpg)  
