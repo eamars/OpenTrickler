@@ -34,18 +34,18 @@ You need a 13mm diameter lens.
 ## Assembly guide
 
 ### Display
-Melt 8x heatset into the [display_assy_bracket.stl](STL/display_assy_bracket.stl).
-Use 4x M3x10 BHCS to join the [display_assy_body.stl](STL/display_assy_body.stl(STL/display_assy_bracket.stl) to the [display_assy_bracket.stl](STL/display_assy_bracket.stl).
+*Melt 8x heatset into the [display_assy_bracket.stl](STL/display_assy_bracket.stl).
+*Use 4x M3x10 BHCS to join the [display_assy_body.stl](STL/display_assy_body.stl) to the [display_assy_bracket.stl](STL/display_assy_bracket.stl).
 ![Display_1.jpg](resources/Display_1.jpg)
 
-Route the connection cables as shown in the photo.
+*Route the connection cables as shown in the photo.
 ![Display_2.jpg](resources/Display_2.jpg)
 
-Melt 4x heatset into [the display_assy_front.stl](STL/display_assy_front.stl).
-Use 4x M3x12 SHCS to join [display_assy_body.stl](STL/display_assy_body.stl) to the [the display_assy_front.stl](STL/display_assy_front.stl).
+*Melt 4x heatset into [the display_assy_front.stl](STL/display_assy_front.stl).
+*Use 4x M3x12 SHCS to join [display_assy_body.stl](STL/display_assy_body.stl) to the [the display_assy_front.stl](STL/display_assy_front.stl).
 ![Display_3.jpg](resources/Display_3.jpg)
 
-Use 4 x M3x10 BHCS to join the [display_assy_bracket.stl](STL/display_assy_bracket.stl) to the [scale_shield.stl](/STLscale_shield.stl).
+*Use 4 x M3x10 BHCS to join the [display_assy_bracket.stl](STL/display_assy_bracket.stl) to the [scale_shield.stl](/STLscale_shield.stl).
 ![Display_4.jpg](resources/Display_4.jpg)
 
 
