@@ -72,9 +72,17 @@ After passing all the cables, fix the PCB with 4x M3x6 BHCS screws.
 The case cover ([enclosure_top.stl](STL/enclosure_top)) is simply snapped on.
 
 
-## Scale base
-Use the first weighing plate and add a piece of tape.
+### Scale base
+Overview with all cables:
+![Cable.jpg](resources/Cable.jpg)  
+Use 4x M3x10 SHCS and 2x M3x10 BHCS to join the [scale_base.stl](STL/scale_base.stl) to the [scale_shield.stl](/STLscale_shield.stl).
 ![Scale_base.jpg](resources/Scale_base.jpg)  
+
+
+
+## Cup base 
+Use the first weighing plate and add a piece of tape to fix the [cup_base.stl](STL/cup_base.stl).
+![Cup_base.jpg](resources/Cup_base.jpg)  
 
 
 
