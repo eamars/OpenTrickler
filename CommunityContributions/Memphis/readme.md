@@ -69,7 +69,7 @@ Use 4x M3x10 BHCS and 4x M3 nuts to join [enclosure_bottom.stl](STL/enclosure_bo
 After passing all the cables, fix the PCB with 4x M3x6 BHCS screws.
 ![Enclosure_2.jpg](resources/Enclosure_2.jpg)  
 
-The case cover ([enclosure_top.stl](STL/enclosure_top)) is simply snapped on.
+The case cover ([enclosure_top.stl](STL/enclosure_top.stl)) is simply snapped on.
 
 
 ### Scale base
@@ -87,12 +87,15 @@ Use the first weighing plate and add a piece of tape to fix the [cup_base.stl](S
 
 
 ## Rear discharger cup
+[rear_discharger_cup.stl](STL/rear_discharger_cup.stl)
+[rear_discharge_cup_ring.stl](STL/rear_discharge_cup_ring.stl)
 ![Rear_discharger_cup.jpg](resources/Rear_discharger_cup.jpg)  
 
 
 
 ## Powder cup
 It is possible not to use the o-ring if your print is very tight.
+[powder_cup_handle.stl](STL/powder_cup_handle.stl)
 ![Powder_cup_1.jpg](resources/Powder_cup_1.jpg)
 ![Powder_cup_2.jpg](resources/Powder_cup_2.jpg)
 ![Powder_cup_3.jpg](resources/Powder_cup_3.jpg)  
@@ -102,6 +105,8 @@ It is possible not to use the o-ring if your print is very tight.
 ## Options:
 ### Powder hopper:
 Clear acrylic tube, outer diameter: 60mm and inner diameter: 56mm
+[hopper_base_plexi.stl](STL/hopper_base_plexi.stl)
+[hopper_cap.stl](STL/hopper_cap.stl)
 ![Hopper.jpg](resources/Hopper.jpg)  
 
 ### Rear body:
