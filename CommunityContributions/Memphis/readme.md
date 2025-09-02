@@ -46,8 +46,14 @@ Side the front body cover and the OpenTrickler assembly is complete. The last st
 
 ## Options:
 ### Powder hopper:
+Clear acrylic tube, outer diameter: 60mm and inner diameter: 56mm
+![Hopper.jpg](resources/Hopper.jpg)
 
-### Main body:
+### Rear body:
+Rear body without holes on the sides ([rear_body_without_holes.stl](STL/rear_body_without_holes.stl))
+![Rear_body_memphis.jpg](resources/Rear_body_memphis.jpg)
+
+
 
 
 
