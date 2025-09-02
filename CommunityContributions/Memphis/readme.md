@@ -19,29 +19,39 @@
 - A shot glass, height: 50mm, diameter at top: 41.6mm
 - An o-ring 35mm in diameter
 
-- A WS2812B led with cable and connector
+- WS2812B led with cable and connector
+- 13mm lens
+
+## LED preparation
+Use one of the connectors provided with the 3D mellow PCB.
+Be sure to use the LED's DI pin.
+You need a 13mm diameter lens.
+![Led_1.jpg](resources/Led_1.jpg)
+![Led_2.jpg](resources/Led_2.jpg)
 
 
 
-## Print and Assembly Guide
+## Assembly guide
 
-Install the Neopixel LED (with both in and out cables) to the pocket of [front_discharger_mount_with_led.stl](STL/front_discharger_mount_with_led.stl). Make sure both cables are tucked into the cable channel and stay in flush or below than the top surface. 
 
-![install_neopixel_at_discharge_port.png](resources/install_neopixel_at_discharge_port.png)
 
-Continue with front and rear body assembly. Once the OpenTrickler is mounted to the [trickler_adapter_plate.stl](STL/trickler_adapter_plate.stl), you need to run the cable with the Neopixel LED, from the front discharger mount, through the cut out behind the [front_body_with_shutter_with_led.stl](STL/front_body_with_shutter_with_led.stl), following the red line as shown below: The other cable with JST connector (blue line) can be left floating at this stage. 
+## Scale base
+Use the first weighing plate and add a piece of tape.
+![Scale_base.jpg](resources/Scale_base.jpg)
 
-![cable_layout_bottom.png](resources/cable_layout_bottom.png)
 
-Install the Neopixel LED (with only one set of cable) to the pocket of [FrontVolumeReductionInsert_Bottom_with_LED.stl](STL/FrontVolumeReductionInsert_Bottom_with_LED.stl), and run the cable through the cable channel on [FrontVolumeReductionInsert_Top_with_LED.stl.stl](STL/FrontVolumeReductionInsert_Top_with_LED.stl.stl) and [front_body_with_shutter_with_led.stl](STL/front_body_with_shutter_with_led.stl)
 
-![cable_layout_top.png](resources/cable_layout_top.png)
+## Rear discharger cup
+![Rear_discharger_cup.jpg](resources/Rear_discharger_cup.jpg)
 
-Side the front body cover and the OpenTrickler assembly is complete. The last step is to ensure both cables are sitting nicely in the cut out on [scale_shield_with_led.stl](STL/scale_shield_with_led.stl). Pluging the cable to the PWNOUT port on the controller board and your assembly is now complete. 
 
-![cable_layout_outside.png](resources/cable_layout_outside.png)
 
 ## Powder cup
+It is possible not to use the gasket if your print is very tight.
+![Powder_cup_1.jpg](resources/Powder_cup_1.jpg)
+![Powder_cup_2.jpg](resources/Powder_cup_2.jpg)
+![Powder_cup_3.jpg](resources/Powder_cup_3.jpg)
+
 
 
 ## Options:
@@ -53,12 +63,3 @@ Clear acrylic tube, outer diameter: 60mm and inner diameter: 56mm
 Rear body without holes on the sides ([rear_body_without_holes.stl](STL/rear_body_without_holes.stl))
 ![Rear_body_memphis.jpg](resources/Rear_body_memphis.jpg)
 
-
-
-
-
-
-
-
-
-![software_config.png](resources/software_config.png)
