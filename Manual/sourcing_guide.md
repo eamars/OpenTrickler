@@ -29,13 +29,15 @@ You will need 3x 2mm pitch female jumper per board.
 * [Aliexpress](https://www.aliexpress.com/item/3256803974952256.html)
 * [RS-Online](https://nz.rs-online.com/web/p/jumpers-shunts/6742404)
 
-### Raspbery Pi Pico W
+### Raspbery Pi Pico 2W
 
-The Pico W (with wireless) can be purchased according to the [Rasperry Pi offial site](https://www.raspberrypi.com/products/raspberry-pi-pico/?variant=raspberry-pi-pico-w). 
+The Pico 2W (with wireless) can be purchased according to the [Rasperry Pi offial site](https://www.raspberrypi.com/products/raspberry-pi-pico-2/?variant=pico-2-w). 
 
 You can choose with or without the GPIO headers. If no GPIO header version is selected then you need to source and solder the 2x 40 single row 2.54mm pitch header yourself. 
 
-#### 2.54mm pitch header for Pico W
+Note: The first gen Pico W is supported but not recommended to use anymore due to the potential software incompatibility. 
+
+#### 2.54mm pitch header for Pico 2W
 
 You can buy single row of 40 pin header and cut into 2x 20 pin header yourself. Below are recommended sources. 
 
@@ -44,7 +46,7 @@ You can buy single row of 40 pin header and cut into 2x 20 pin header yourself. 
 
 Additional 3 pin header can be soldered to the front of the Pico W to pair with [PicoProbe](https://github.com/raspberrypi/picoprobe) for advanced debugging/developing purpose.
 
-#### MicroUSB cable for Pico W
+#### MicroUSB cable for Pico 2W
 
 Any MicroUSB data cable can be used to program the Pico W firmware. Those cable were commonly used for last generation of cell phones. Below are example parts. 
 
