@@ -27,6 +27,7 @@ The printer need to be tuned at least for extruder e-stepts and flow as it has p
 
 * Main Material: ABS/PETG/PLA you name it.
 * Belt: TPU 95A.
+* 0.2mm layer height.
 * 4x walls
 * 5x tops and bottoms layers.
 * 0.4~0.45mm line width
