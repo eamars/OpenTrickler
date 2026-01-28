@@ -1,4 +1,4 @@
-FrontBodyCover 0.6mm Wider - My printed top covers are always too tight (both V1 and V2). I'm sure its something with my printer setting, but this mod was easier and faster to do than troubleshoot my print settings. I widened the gap by 0.6mm, which seams to be perfect. 
+FrontBodyCover 0.6mm Wider - My printed top covers are always too tight (both V1 and V2). I'm sure its something with my printer setting, but this mod was easier and faster to do than troubleshoot my print settings. I widened the gap by 0.6mm, which seems to be perfect. 
 
 FrontBodyV2.Windowed - This is my mod to use a DIY rectangular cut piece of plexiglass. I order this 2mm but it measured 1.8mm: https://www.amazon.com/dp/B0CN16MRHP?ref_=ppx_hzsearch_conn_dt_b_fed_asin_title_1&th=1
 Print the Window Test Piece to see if it slides in correctly. You can mod the CAD file if yours is a different thickness.
