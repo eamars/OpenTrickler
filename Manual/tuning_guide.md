@@ -10,7 +10,7 @@ The fine trickler stop threshold should be set to the accuracy of the scale. For
 
 ## Profile
 
-The OpenTrickler controller is buit based on the [Proportional-Integral-Derivative (PID) Controller](https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller). Thus the Tuning Methods for a PID applies for the OpenTrickler. Except, the overshoot is unacceptable for which translate to the overthrow. 
+The OpenTrickler controller is built based on the [Proportional-Integral-Derivative (PID) Controller](https://en.wikipedia.org/wiki/Proportional%E2%80%93integral%E2%80%93derivative_controller). Thus the Tuning Methods for a PID applies for the OpenTrickler. Except, the overshoot is unacceptable for which translate to the overthrow. 
 
 The Coarse Trickler should be tuned separately from the fine trickler. Below is the effect of Kp, Ki and Kd to the system. 
 
