@@ -1,5 +1,6 @@
 # OpenTricklerDeweyMods
-<img width="575" height="914" alt="image" src="https://github.com/user-attachments/assets/86de40e0-ca92-495e-abe9-34bfa2c49cc5" />
+<img width="1500" height="1311" alt="image" src="https://github.com/user-attachments/assets/1e4c23bd-4b36-40e8-ba12-58a4777f703c" />
+
 
 My personal mods for OpenTrickler!
 
@@ -9,6 +10,7 @@ I have made both Version 1 and 2 of the OpenTrickler, and it's my all-time favor
 I've included some of my personal mods and my mods of other contributors. Have a look around and see if anything jumps out.
 
 Mod highlights:
+- Update 2/7/2026 - added Cup Holster for the Powder Cup in the A&D Shield Section
 - Bearing Body for test fitting
 - Hide the wires under the shield plate
 - New rear bearing plate works with Ball Powder, both in version 1 and 2 of the Open Trickler
