@@ -8,6 +8,11 @@ Join our [discord server](https://discord.gg/ZhdThA2vrW) for help and developmen
 
 # Documentations
 
+> [!TIP]
+> You can follow the [Long Range Lab](https://www.youtube.com/@Longrangelab) build series to help understanding the build procedure.
+> 
+> * [Part 1 - Electronics](https://www.youtube.com/watch?v=DNZ34U0TyB8) 
+
 * Bill of Material (BOM): [LINK](Manual/assembly.md#bom)
 * Sourcing Guide: [LINK](Manual/sourcing_guide.md)
 * Assembly Manual: [LINK](Manual/assembly.md)
