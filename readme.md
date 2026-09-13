@@ -23,6 +23,7 @@ Other supporting documents:
 
 * Guide to order PCB from JLCPCB: [LINK](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board/blob/main/production/README.md)
 * A&D Scale Configuration Guide: [LINK](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/OpenTrickler%20manual%20for%20ADFX%20scale.pdf)
+* G&G Scale Configuration Guide: [LINK](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/configure_g%26g_scales.md)
 * OpenTrickler - Connect to Wireless: [LINK](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/connect_to_wireless.md)
 * OpenTrickler - Update Firmware via USB: [LINK](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/firmware_update_via_usb.md)
 * OpenTrickler - Build Companion (community-built interactive wizard for configuring, sourcing, printing, and tracking your build): [LINK](https://physikal.github.io/opentrickassist/)
