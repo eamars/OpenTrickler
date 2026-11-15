@@ -38,7 +38,7 @@ Run every command from the repo root with `venv/Scripts/python.exe`. Every comma
 
    A body the owner drew straight into an assembly (not in a component of its own) shows as `[body]` under that assembly: `display_adapter`, `front_shutter_blank`. New printable parts often arrive this way, so read the `[body]` lines, not only the components. Bodies still called `Body1` are not listed: a part that matters has a name.
 
-3. **Ask which printed parts are in scope** when the STEP holds more than the folder you were sent to. The shield STEP carries the whole OpenTrickler, a display case and electronics. What the owner said in November 2026: the shield parts and the display parts belong to `STL/A&D FX Shield`, `front_shutter_blank` belongs to the OpenTrickler (`STL/OpenTrickler/ServoGate`, as the choice for people who do not want the shutter gate), and `opentrickler_assembly_base`, `handle1`, `handle2` were left out.
+3. **Ask which printed parts are in scope** when the STEP holds more than the folder you were sent to. The shield STEP carries the whole OpenTrickler, a display case and electronics. **Never export the electronics** (display modules such as `fly-mini12684` and `Bigtreetech Mini12864`, the Pico expansion board, motors, servos, bearings): the owner models them only to check the fit. What the owner said in November 2026: the shield parts and the display parts belong to `STL/A&D FX Shield`, `front_shutter_blank` belongs to the OpenTrickler (`STL/OpenTrickler/ServoGate`, as the choice for people who do not want the shutter gate), and `opentrickler_assembly_base`, `handle1`, `handle2` were left out.
 
 4. **Learn the published orientation before you overwrite anything.** `check` compares each published STL with the CAD part and says which axis of the part points up in the file. Run it first, while the old files are still there:
 
@@ -112,6 +112,8 @@ Each of these cost a wrong or broken file before it was found.
 
 - `bambu-studio.exe` prints nothing to the terminal. Its answer is `result.json` in `--outputdir`; without that option it drops the file into the current folder. The `slice` command uses a temporary folder.
 - A STEP is far too large to read as text. Use `tree`, or grep for `=PRODUCT(` (components) and `MANIFOLD_SOLID_BREP('` (body names).
+- Fusion leaves a hidden body out of the STEP, also when its component is shown. When the owner names a part that `tree` does not list, grep the file for the name. If it is not there, it was not exported: say so with the grep result and the file's save time, and ask for a new export. Do not guess at a similar part.
+  - The cause the owner found for `mini_12864_display_fly_top`: the display case is its own design, linked into the shield assembly, and a linked copy shows what its original shows. The body has to be made visible in the original design; un-hiding in the main assembly is not enough.
 - Write pictures, old STEP files and other scratch output to the scratchpad, not into the repo.
 
 ## The November 2026 export, as a worked example
@@ -122,3 +124,5 @@ Each of these cost a wrong or broken file before it was found.
 - Unchanged in the CAD, but the 2023 STL was older than the CAD: `scale_base_adapter_ring` (the CAD has two lug cuts the old file lacked).
 - Unchanged and identical to the published file: the other ten. They were written again from the v3 STEP so the whole folder has one source and one quality.
 - New: `display_adapter` (`-Z`, the owner's choice), `mini_12864_display_bottom` (`+Z`), `mini_12864_display_btt_top` (`-Z`), and `front_shutter_blank` (`+Z`) in `STL/OpenTrickler/ServoGate`.
+- Added after a second export of the STEP: `mini_12864_display_fly_top` (`-Z`, front face on the bed like its BTT sibling). The same export brought in the electronics and the two printed halves of the Pico expansion board enclosure (`pico_expansion_board_enclosure_side_mnt_top`, `_bottom`); none of these were exported.
+- `CAD/OpenTrickler Display Case.step` is the display case on its own. Its three printed bodies were identical to the ones in the shield STEP (`diff --all`), so the manifest keeps reading them from the shield STEP. If the two ever differ, ask the owner which one is current.

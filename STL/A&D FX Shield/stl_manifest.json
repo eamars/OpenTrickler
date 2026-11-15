@@ -7,6 +7,7 @@
     {"stl": "front_discharger_mount.stl", "part": "front_discharger_mount", "up": "+Z"},
     {"stl": "mini_12864_display_bottom.stl", "part": "mini_12864_display_bottom", "up": "+Z"},
     {"stl": "mini_12864_display_btt_top.stl", "part": "mini_12864_display_btt_top", "up": "-Z"},
+    {"stl": "mini_12864_display_fly_top.stl", "part": "mini_12864_display_fly_top", "up": "-Z"},
     {"stl": "pan_cover.stl", "part": "pan_cover", "up": "+Z"},
     {"stl": "pan_cover_lid.stl", "part": "pan_cover_lid", "up": "-Z"},
     {"stl": "rear_discharge_cup_ring.stl", "part": "rear_discharge_cup_ring", "up": "+Z"},
