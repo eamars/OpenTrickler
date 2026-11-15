@@ -38,7 +38,17 @@ Run every command from the repo root with `venv/Scripts/python.exe`. Every comma
 
    A body the owner drew straight into an assembly (not in a component of its own) shows as `[body]` under that assembly: `display_adapter`, `front_shutter_blank`. New printable parts often arrive this way, so read the `[body]` lines, not only the components. Bodies still called `Body1` are not listed: a part that matters has a name.
 
-3. **Ask which printed parts are in scope** when the STEP holds more than the folder you were sent to. The shield STEP carries the whole OpenTrickler, a display case and electronics. **Never export the electronics** (display modules such as `fly-mini12684` and `Bigtreetech Mini12864`, the Pico expansion board, motors, servos, bearings): the owner models them only to check the fit. What the owner said in November 2026: the shield parts and the display parts belong to `STL/A&D FX Shield`, `front_shutter_blank` belongs to the OpenTrickler (`STL/OpenTrickler/ServoGate`, as the choice for people who do not want the shutter gate), and `opentrickler_assembly_base`, `handle1`, `handle2` were left out.
+3. **Ask which printed parts are in scope** when the STEP holds more than the folder you were sent to. The shield STEP carries the whole OpenTrickler, a display case and electronics. **Never export the electronics** (display modules such as `fly-mini12684` and `Bigtreetech Mini12864`, the Pico expansion board, motors, servos, bearings): the owner models them only to check the fit. Printed cases for the electronics are parts like any other. Where the owner put things in November 2026:
+
+   | Printed parts | Folder |
+   |---|---|
+   | The shield itself | `STL/A&D FX Shield` |
+   | Display case halves and `display_adapter` | `STL/Electronics/Mini 12864 Case` |
+   | Pico expansion board enclosure, top and bottom | `STL/Electronics/Controller` |
+   | `front_shutter_blank` (for people who do not want the shutter gate) | `STL/OpenTrickler/ServoGate` |
+   | `opentrickler_assembly_base`, `handle1`, `handle2` | left out |
+
+   The owner moves published files between folders by hand. When a file has moved, move its manifest line to a manifest in the new folder and run `check` there; do not export it again.
 
 4. **Learn the published orientation before you overwrite anything.** `check` compares each published STL with the CAD part and says which axis of the part points up in the file. Run it first, while the old files are still there:
 
@@ -101,7 +111,7 @@ Run every command from the repo root with `venv/Scripts/python.exe`. Every comma
 Each of these cost a wrong or broken file before it was found.
 
 - **Own frame, not assembly pose.** A part is read in the coordinates of its own Fusion component. The display case sits tilted in the assembly; in assembly axes none of its faces is level, in its own frame it is square. `up` therefore does not change when the owner re-poses the assembly.
-- **Absolute tessellation tolerance.** Facets stay within 0.01 mm of the surface and turn at most 0.1 rad (`LIN_DEFLECTION`, `ANG_DEFLECTION` at the top of the script). cadquery's own `tessellate()` takes the tolerance relative to the part size and came out several times coarser. The owner asked for high quality for printing; these values give about 3.4 times the triangles of the earlier Fusion exports (6.4 MB became 21.8 MB for the same 14 files; 25 MB with the three display parts). Halving both triples the size again (the shield alone becomes 15 MB) and moves the surface by 0.03 mm at most.
+- **Absolute tessellation tolerance.** Facets stay within 0.01 mm of the surface and turn at most 0.1 rad (`LIN_DEFLECTION`, `ANG_DEFLECTION` at the top of the script). cadquery's own `tessellate()` takes the tolerance relative to the part size and came out several times coarser. The owner asked for high quality for printing; these values give about 3.4 times the triangles of the earlier Fusion exports (6.4 MB became 21.8 MB for the same 14 shield files). Halving both triples the size again (the shield alone becomes 15 MB) and moves the surface by 0.03 mm at most.
 - **Faces OpenCascade leaves empty.** At a fine tolerance the mesher gives up on some narrow cone bands, such as a 0.2 mm chamfer round a hole, and silently leaves a hole in the mesh. The script meshes only those faces again, coarser, keeping the fine edges they share with their neighbours.
 - **Welding.** Faces meet at corners a hair apart, which leaves pinholes; vertices closer than 0.00001 mm are joined. A larger weld radius collapses real small triangles and breaks the solid.
 - **Body names.** The names of loose bodies are not in the STEP's assembly structure; they are read from the solid entities.
@@ -123,6 +133,7 @@ Each of these cost a wrong or broken file before it was found.
 - Changed: `scale_shield`, `trickler_adapter_plate`, `front_discharger_mount`. Each kept its published orientation (`+Z`, `-Z`, `+Z`).
 - Unchanged in the CAD, but the 2023 STL was older than the CAD: `scale_base_adapter_ring` (the CAD has two lug cuts the old file lacked).
 - Unchanged and identical to the published file: the other ten. They were written again from the v3 STEP so the whole folder has one source and one quality.
-- New: `display_adapter` (`-Z`, the owner's choice), `mini_12864_display_bottom` (`+Z`), `mini_12864_display_btt_top` (`-Z`), and `front_shutter_blank` (`+Z`) in `STL/OpenTrickler/ServoGate`.
-- Added after a second export of the STEP: `mini_12864_display_fly_top` (`-Z`, front face on the bed like its BTT sibling). The same export brought in the electronics and the two printed halves of the Pico expansion board enclosure (`pico_expansion_board_enclosure_side_mnt_top`, `_bottom`); none of these were exported.
-- `CAD/OpenTrickler Display Case.step` is the display case on its own. Its three printed bodies were identical to the ones in the shield STEP (`diff --all`), so the manifest keeps reading them from the shield STEP. If the two ever differ, ask the owner which one is current.
+- New, display: `display_adapter` (`-Z`, the owner's choice), `mini_12864_display_bottom` (`+Z`), `mini_12864_display_btt_top` (`-Z`), and, after a second export of the STEP, `mini_12864_display_fly_top` (`-Z`, front face on the bed like its BTT sibling). First written to the shield folder, then moved by the owner to `STL/Electronics/Mini 12864 Case`.
+- New, controller: `pico_expansion_board_enclosure_side_mnt_bottom` (`+Z`) and `pico_expansion_board_enclosure_side_mnt_top` (`-Z`), both open side up, in `STL/Electronics/Controller`.
+- New, OpenTrickler: `front_shutter_blank` (`+Z`) in `STL/OpenTrickler/ServoGate`.
+- `CAD/OpenTrickler Display Case.step` is the display case on its own. Its three printed bodies were identical to the ones in the shield STEP (`diff --all`), so the manifest reads them from the shield STEP, which also holds `display_adapter`. If the two ever differ, ask the owner which one is current.

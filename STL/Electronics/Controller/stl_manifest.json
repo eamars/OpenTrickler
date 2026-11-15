@@ -1,0 +1,8 @@
+{
+  "step": "CAD/A&D FX Shield v3.step",
+  "out": "STL/Electronics/Controller",
+  "parts": [
+    {"stl": "pico_expansion_board_enclosure_side_mnt_bottom.stl", "part": "pico_expansion_board_enclosure_side_mnt_bottom", "up": "+Z"},
+    {"stl": "pico_expansion_board_enclosure_side_mnt_top.stl", "part": "pico_expansion_board_enclosure_side_mnt_top", "up": "-Z"}
+  ]
+}

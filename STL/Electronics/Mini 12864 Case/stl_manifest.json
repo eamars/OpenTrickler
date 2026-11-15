@@ -1,0 +1,10 @@
+{
+  "step": "CAD/A&D FX Shield v3.step",
+  "out": "STL/Electronics/Mini 12864 Case",
+  "parts": [
+    {"stl": "display_adapter.stl", "part": "display_adapter", "up": "-Z"},
+    {"stl": "mini_12864_display_bottom.stl", "part": "mini_12864_display_bottom", "up": "+Z"},
+    {"stl": "mini_12864_display_btt_top.stl", "part": "mini_12864_display_btt_top", "up": "-Z"},
+    {"stl": "mini_12864_display_fly_top.stl", "part": "mini_12864_display_fly_top", "up": "-Z"}
+  ]
+}
