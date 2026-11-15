@@ -1,0 +1,9 @@
+# Host tools for the CAD: uv venv venv; uv pip install --python venv/Scripts/python.exe -r requirements.txt
+# CAD: read the STEP assemblies with part and body names and placements, tessellate (cadquery on OpenCascade/OCP).
+# cadquery brings vtk, which tools/step_stl.py uses to draw the print-orientation pictures.
+cadquery>=2.5
+# Mesh work on the STL: watertight check, volume, overhang, compare a published STL with the CAD
+trimesh>=5,<6
+rtree
+scipy
+numpy

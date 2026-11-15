@@ -11,3 +11,8 @@ BUILD
 # ignore SolidWorks temporary files
 ~$*.SLDPRT
 ~$*.SLDASM
+
+# Host tools (see requirements.txt): the venv is built locally, the scripts are tracked
+venv/
+__pycache__/
+!tools/*.py

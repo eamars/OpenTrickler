@@ -1,0 +1,23 @@
+{
+  "step": "CAD/A&D FX Shield v3.step",
+  "out": "STL/A&D FX Shield",
+  "parts": [
+    {"stl": "cup_base_7mm.stl", "part": "cup_base", "up": "+Z"},
+    {"stl": "display_adapter.stl", "part": "display_adapter", "up": "-Z"},
+    {"stl": "front_discharger_mount.stl", "part": "front_discharger_mount", "up": "+Z"},
+    {"stl": "mini_12864_display_bottom.stl", "part": "mini_12864_display_bottom", "up": "+Z"},
+    {"stl": "mini_12864_display_btt_top.stl", "part": "mini_12864_display_btt_top", "up": "-Z"},
+    {"stl": "pan_cover.stl", "part": "pan_cover", "up": "+Z"},
+    {"stl": "pan_cover_lid.stl", "part": "pan_cover_lid", "up": "-Z"},
+    {"stl": "rear_discharge_cup_ring.stl", "part": "rear_discharge_cup_ring", "up": "+Z"},
+    {"stl": "rear_discharge_mount.stl", "part": "rear_discharge_mount", "up": "+Z"},
+    {"stl": "rear_discharger_cup.stl", "part": "rear_discharger_cup", "up": "+Z"},
+    {"stl": "rear_discharger_sliding_door.stl", "part": "rear_discharger_sliding_door", "up": "+Z"},
+    {"stl": "scale_base_adapter_ring.stl", "part": "scale_base_adapter_ring", "up": "-Z"},
+    {"stl": "scale_pan_cover.stl", "part": "scale_pan_cover", "up": "-Z"},
+    {"stl": "scale_shield.stl", "part": "scale_shield", "up": "+Z"},
+    {"stl": "scale_weighing_pan_adapter.stl", "part": "scale_weighing_pan_adapter", "up": "+Z"},
+    {"stl": "trickler_adapter_plate.stl", "part": "trickler_adapter_plate", "up": "-Z"},
+    {"stl": "weighing_pan_27mm.stl", "part": "weighing_pan_with_coin", "up": "+Z"}
+  ]
+}
