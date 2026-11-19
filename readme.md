@@ -13,7 +13,7 @@ Join our [discord server](https://discord.gg/ZhdThA2vrW) for help and developmen
 > 
 > * [Part 1 - Electronics](https://www.youtube.com/watch?v=DNZ34U0TyB8) 
 
-* Bill of Material (BOM): [LINK](Manual/assembly.md#bom)
+* Bill of Material (BOM): [LINK](Manual/assembly.md) (each sub-assembly guide has its own BOM)
 * Sourcing Guide: [LINK](Manual/sourcing_guide.md)
 * Assembly Manual: [LINK](Manual/assembly.md)
 * Initialization Guide: [LINK](Manual/initialization_guide.md)
@@ -21,7 +21,7 @@ Join our [discord server](https://discord.gg/ZhdThA2vrW) for help and developmen
 
 Other supporting documents:
 
-* Guide to order PCB from JLCPCB: [LINK](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board/blob/main/production/README.md)
+* Guide to order PCB from JLCPCB: [LINK](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board/blob/main/motor_expansion_board_v2/production/README.md)
 * A&D Scale Configuration Guide: [LINK](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/OpenTrickler%20manual%20for%20ADFX%20scale.pdf)
 * G&G Scale Configuration Guide: [LINK](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/configure_g%26g_scales.md)
 * OpenTrickler - Connect to Wireless: [LINK](https://github.com/eamars/OpenTrickler-RP2040-Controller/blob/main/manuals/connect_to_wireless.md)

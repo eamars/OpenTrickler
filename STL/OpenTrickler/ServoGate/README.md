@@ -1,12 +1,12 @@
 # OpenTrickler Front Body with Servo Gate Assembly Guide
 
-![assembly_overview](resources/assembly_overview.png)
+![assembly_overview](../resources/assembly_overview.png)
 
 ## Print Guide
 
 | Filename                                                   | Quantity | Remarks |
 | ---------------------------------------------------------- | -------- | ------- |
-| [front_body_with_shutter.stl](front_body_with_shutter.stl) | 1        |         |
+| [front_body.stl](../front_body.stl)                        | 1        |         |
 | [left_servo_hanger.stl](left_servo_hanger.stl)             | 1        |         |
 | [left_shutter.stl](left_shutter.stl)                       | 1        |         |
 | [right_servo_hanger.stl](right_servo_hanger.stl)           | 1        |         |
@@ -33,15 +33,15 @@
 
 The [Pico Motor Expansion Board v2](https://github.com/eamars/RaspberryPi-Pico-Motor-Expansion-Board) assumes the servo motor comes with the JST PH2.54 connector. You may need to re-crimp the connector to 3pin JST PH 2.54 connectors in order to connect the servo motor to the motor expansion board. The colour code for MG90s servo motor is provided below. 
 
-![wiring_colour_code](resources/wiring_colour_code.png)
+![wiring_colour_code](../resources/wiring_colour_code.png)
 
 ## Component Prep
 
-* [front_body_with_shutter.stl](front_body_with_shutter.stl)
+* [front_body.stl](../front_body.stl)
 
 Melt 4x heatset inserts to the bottom of the front body then melt 2x heatset inserts to both side of the front body. Make sure the heatset inserts are sitting flush with the surface. 
 
-![install_heatset_inserts](resources/install_heatset_inserts.png)
+![install_heatset_inserts](../resources/open_trickler_front_body_install_heatset_inserts.png)
 
 ## Assembly
 
@@ -51,17 +51,17 @@ Use 2x M3x12 SHCS to fix the left and right servo hangers to both sides. Servo h
 
 * [right_servo_hanger.stl](right_servo_hanger.stl)
 
-![install_servo_hangers](resources/install_servo_hangers.png)
+![install_servo_hangers](../resources/install_servo_hangers.png)
 
 Slide the spur gears to the output gear of both servo motors. Make sure the side with the teeth is pushed against the gear. Use the M2.5x3.5 BHCS (came with the servo motor) to fix the spur gear in place. 
 
 * [spur_gear_x2.stl](spur_gear_x2.stl)
 
-![install_spur_gear](resources/install_spur_gear.png)
+![install_spur_gear](../resources/install_spur_gear.png)
 
 Use 4x M2x8 self-tapping screw to fix the servo motor to the front body. Make sure the servo motors are installed so the spur gear is closer to the rear of the body. 
 
-![install_servo_motors](resources/install_servo_motors.png)
+![install_servo_motors](../resources/install_servo_motors.png)
 
 The assembly of the front body with servo gate is complete. In order to continue with the assembly, you need to tune the servo gate opening and closing duty cycle before the final assembly. 
 
@@ -79,7 +79,7 @@ The assembly of the front body with servo gate is complete. In order to continue
 
 The TowerPro MG90s uses PWM duty cycle to accept external command for position control. The period of the "on" cycle determines the absolute position shown in the table below. Intermediate positions between -90 to 90 degrees are linearly interpolated with respect to the duration of the "on" period.
 
-![pwm_servo_control](resources/pwm_servo_control.png)
+![pwm_servo_control](../resources/pwm_servo_control.png)
 
 The OpenTrickler uses the duty cycle (the ratio of the time between on and off per cycle) as the input to control the opening and closing of the servo gate.
 
@@ -95,7 +95,7 @@ The servo gate opening and closing duty cycle need to be tuned before the final 
 
 The servo gate is disabled by default. You need to navigate to the WebUI -> Settings -> Servo Gate, toggle the "Servo Gate Enable" option from No to Yes, then hit the Apply button with "Save to EEPROM" option. Then restart the OpenTrickler controller by pressing the reset button, or reset from the WebUI. 
 
-![enable_servo_gate](resources/enable_servo_gate.png)
+![enable_servo_gate](../resources/enable_servo_gate.png)
 
 ### Tune the Shutters
 
@@ -108,7 +108,7 @@ The left shutter is assigned to Shutter 0. By default the shutter is operating a
 3. Navigate to the Trickler page, click the Gate Close button. Wait for the servo motor to change position.
 
 4. Place the left shutter to the bottom cut out at the closed position (demonstrated below). Make sure the left shutter engages with the spur gear. If not, adjust the shutter 0 close duty cycle up a bit (around 0.005) from the settings and click the Gate Close button again. 
-   ![place_left_shutter](resources/place_left_shutter.png)
+   ![place_left_shutter](../resources/place_left_shutter.png)
 
 5. Click Gate Open Button, wait for the servo motor to change position. 
 

@@ -14,13 +14,11 @@ You could find details for Pico Motor Expansion Board from the [repository](http
 
 ### (For OpenTrickler Controller v1) 12/24V Power Supply
 
-You can use either 12V or 24V power supply. It is recommended to have minimum 2A output capacity to avoid any potential brown out when the motors draw too much current. Belows are recommended power supplys. 
-
-* [Meanwell LRS-50-24 from Digikey](https://www.digikey.co.nz/en/products/detail/mean-well-usa-inc/LRS-50-24/7705048)
+You can use either 12V or 24V power supply. It is recommended to have minimum 2A output capacity to avoid any potential brown out when the motors draw too much current.
 
 ### (For OpenTrickler Controller v2) USB-C PD Power Supply
 
-* [VOLTME 30W Type C Charger](https://www.aliexpress.com/item/1005004696508238.html)
+* VOLTME 30W Type C Charger
 
 ### 2mm Pitch Jumper Cap
 
@@ -44,13 +42,11 @@ You can buy single row of 40 pin header and cut into 2x 20 pin header yourself. 
 * ✅[LCSC](https://www.lcsc.com/product-detail/_ZHOURI-_C2977586.html)
 * [Aliexpress](https://www.aliexpress.com/item/3256805561549792.html)
 
-Additional 3 pin header can be soldered to the front of the Pico W to pair with [PicoProbe](https://github.com/raspberrypi/picoprobe) for advanced debugging/developing purpose.
+Additional 3 pin header can be soldered to the front of the Pico W to pair with [Debug Probe](https://github.com/raspberrypi/debugprobe) for advanced debugging/developing purpose.
 
 #### MicroUSB cable for Pico 2W
 
-Any MicroUSB data cable can be used to program the Pico W firmware. Those cable were commonly used for last generation of cell phones. Below are example parts. 
-
-* [Aliexpress](https://www.aliexpress.com/item/3256805656009583.html)
+Any MicroUSB data cable can be used to program the Pico W firmware. Those cable were commonly used for last generation of cell phones.
 
 ### Servo Motors
 
@@ -64,9 +60,8 @@ Full metal and 180 deg rotation angle ones are recommended.
 
 **A&D FX-120i/300i** You will need a **female to female** DB9 cable. 
 **G&G JJ100B** You will need a **male to female** DB9 cable.
-You can use either straight-through or NULL-modem cable. Subject to the type of the cable you will need to insert the [2mm pitch jumper](#2mm Pitch Female Jumper) accordingly. Below are example parts. 
+You can use either straight-through or NULL-modem cable. Subject to the type of the cable you will need to insert the [2mm pitch jumper](#2mm-pitch-jumper-cap) accordingly. Below are example parts. 
 
-* [Aliexpress](https://www.aliexpress.com/item/3256805572553474.html)
 * [Aliexpress](https://www.aliexpress.com/item/3256805240818006.html)
 
 ### Stepper Motor Driver
